@@ -1,0 +1,227 @@
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+
+<title>后台管理</title>
+<link rel="stylesheet" type="text/css" href="css/bootstrap.css">
+<link rel="stylesheet" type="text/css" href="css/theme.css">
+<link rel="stylesheet" href="css/buy.css" />
+<script type="text/javascript" src="js/jquery-2.0.0.min.js"></script>
+<script type="text/javascript" src="js/main.js"></script>
+</head>
+<body>
+	<div class="navbar-inner">
+		<div class="header">
+			<h1 class="page-title">仓库管理</h1>
+		</div>
+		<ul class="breadcrumb">
+			<li><a href="">仓库管理</a><span class="divider">/</span></li>
+			<li class="active">物品分发</li>
+		</ul>
+		<div class="container-fluid">
+			<div class="row-fluid">
+				<form action="shopoutAction/queryOutShop.do" method="post">
+					<ul class="nav nav-tabs">
+						<li class="active">
+							<a href="#home" data-toggle="tab">商品分发记录</a>
+						</li>
+						<li>
+							<input type="text" value="$" name="goodsname" placeholder=" 请输入商品名称" id="spinp11">
+							<input type="submit" value="GO" id="spinp21">
+						</li>
+					</ul>
+				</form>
+				<div id="bcre1">
+					
+							<div class="bgsright5">
+								<div class="shopno">商品编号</div>
+								<div class="shopname">商品名称</div>
+								<div>商品单价</div>
+								<div>商品数量</div>
+								<div>商品总价</div>
+								<div>领取时间</div>
+								<div>领取人</div>
+								<div>所属酒店</div>
+								<div class="shopprice11">用途</div>
+							</div>
+							
+						
+							
+							<div id="buybut">
+								<input type="button" value="首页" id="shouye"> 
+								<input type="button" value="上一页" id="pageup"> 
+								<input type="button" value="下一页" id="pagedown"> 
+								第 <span id="dqpage"></span> 页 
+								共 <span id="maxpage"></span> 页 
+								跳到 <input type="text" id="ye"> 页 
+								<input type="button" value="确定" id="tz">
+							</div>
+						
+					<script type="text/javascript">
+						$(function() {
+							$("#shouye").click(function() {
+								var page = parseInt($("#dqpage").html());
+								if (page == 1) {
+									alert("已经是首页了！");
+								} else {
+									location.href = "shopoutAction/queryOutShop.do?page=1&goodsname="+ $('#spinp11').val();
+								}
+							});
+							$("#pageup").click(function() {
+								var page = parseInt($("#dqpage").html()) - 1;
+								if (page < 1) {
+									alert("已经是第一页！");
+								} else {
+									location.href = "shopoutAction/queryOutShop.do?page="+ page+"&goodsname="+ $('#spinp11').val();
+								}
+							});
+							$("#pagedown").click(function() {
+								var page = parseInt($("#dqpage").html()) + 1;
+								var maxpage = parseInt($("#maxpage").html());
+								if (page > maxpage) {
+									alert("已经是最后一页！");
+								} else {
+									location.href = "shopoutAction/queryOutShop.do?page="+ page+"&goodsname="+ $('#spinp11').val();
+								}
+							});
+							$("#tz").click(function() {
+								var page = $("#ye").val();
+								var reg = /\d/;
+								var maxpage = parseInt($("#maxpage").html());
+								if (reg.exec(page)) {
+									if (page<1||page>maxpage) {
+										alert("输入页数超出范围");
+										$("#ye").val("");
+									} else {
+										location.href = "shopoutAction/queryOutShop.do?page="+page+"&goodsname="+ $('#spinp11').val();
+									}
+								} else {
+									alert("请输入数字");
+									$("#ye").val("");
+								}
+							});
+						});
+					</script>
+				</div>
+				<div class="bgsright2">
+					<ul class="nav nav-tabs">
+						<li class="active"><a href="#home" data-toggle="tab">商品分发</a>
+						</li>
+					</ul>
+					<div id="bgr">
+						<form action="shopoutAction/insertOutShop.do" method="post">
+							<div id="spn">商品名称：</div>
+							<div id="spn1">
+								<select name="goodsname" id="shopName">
+									<option>请选择分发商品名称</option>
+									
+											<option value='${st }'>${st }</option>
+									
+								</select>
+							</div>
+
+							<div id="spn2"></div>
+
+							<div id="spp">商品单价：</div>
+							<div id="spp1">
+								<select name="consumption_price" id="price1">
+									<option>请选择分发商品名称</option>
+								</select>
+							</div>
+							<div id="spp2"></div>
+
+							<div id="sps">商品数量：</div>
+							<div id="sps1">
+								<input type="text" name="consumption_count" id="sum1"
+									placeholder="请输入分发商品数量">
+							</div>
+							<div id="sps2"></div>
+
+							<div id="sptp">商品总价：</div>
+							<div id="sptp1">
+								<input type="text" name="total_price" id="totalprice"
+									placeholder="商品总价（88.00）" readonly="readonly">
+							</div>
+							<div id="sptp2"></div>
+
+							<div id="spyt">商品用途：</div>
+							<div id="spyt1">
+								<input type="text" name="used" id="shopused"
+									placeholder="请输入分发商品用途">
+							</div>
+							<div id="spyt2"></div>
+							<div id="buymit">
+								<input type="submit" value="更新仓库商品信息">
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<script>
+		$("#shopName").change(function() {
+			if ($("#shopName").val() == "请选择亏损商品名称") {
+				alert("请选择亏损商品名称");
+			} else {
+				$("#price1").empty();
+				$("#price1").html("<option>请选择亏损商品价钱</option>");
+				$.ajax({
+					type : "post",
+					url : "checkshopAction/getPrice.do",
+					dataType : "text",
+					data : {
+						goodsname : $(this).val()
+					},
+					success : function(data) {
+						var str = data.split("-");
+						for ( var i = 0; i < str.length - 1; i++) {
+							var $option = $("<option></option>");
+							$option.text(str[i]);
+							$("#price1").append($option);
+						}
+					},
+					error : function(e) {
+						alert("error");
+					}
+				});
+			}
+		});
+		$("#price1").change(
+				function() {
+					if ($(this).val() == "请选择亏损商品价钱") {
+						alert("请选择亏损商品价钱");
+					} else {
+						$("#sum1").empty();
+						$("#sum1").html("<option>请选择商品数量</option>");
+						$.ajax({
+							type : "post",
+							url : "checkshopAction/getSum.do",
+							dataType : "text",
+							data : {
+								goodsprice : $(this).val(),
+								goodsname : $("#shopName").val()
+							},
+							success : function(data) {
+								var str = parseInt(data);
+								$("#sps2").html(
+										"库存剩余:<span id='spsum'>" + str
+												+ "</span>");
+							},
+							error : function(e) {
+								alert("error");
+							}
+						});
+					}
+				});
+	</script>
+	<script src="js/bootstrap.js"></script>
+	<script type="text/javascript">
+		$(function() {
+			$('.demo-cancel-click').click(function() {
+				return false;
+			});
+		});
+	</script>
+</body>

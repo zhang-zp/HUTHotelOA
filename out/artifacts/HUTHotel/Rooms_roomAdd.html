@@ -1,0 +1,101 @@
+
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+
+<meta charset="UTF-8">
+<title></title>
+<link rel="stylesheet" type="text/css" href="css/bootstrap.css">
+<link rel="stylesheet" type="text/css" href="css/theme.css">
+</head>
+<script src="js/jquery-2.0.0.min.js" type="text/javascript"></script>
+<script src="js/bootstrap.js"></script>
+<script type="text/javascript">
+	$(function(){
+		$("#hotel_id").empty();
+		$("#hotel_id").html("<option>酒店名称</option>");
+		var url="hotel/selectAll.do";
+		$.post(url,function(data){
+			for(var i=0;i<data.length;i++){
+		 		var $option =$("<option value="+data[i].hotel_id+"></option>");
+				$option.text(data[i].hotel_name);
+				$("#hotel_id").append($option); 
+			}
+		},"json");
+		
+	 	$("#floor_id").empty();
+		$("#floor_id").append("<option>楼层</option>");
+		var url="floor/selectAll.do";
+		$.post(url,function(data){
+			for(var i=0;i<data.length;i++){
+		 		var $option =$("<option value="+data[i].floor_id+"></option>");
+				$option.text(data[i].floor_name);
+				$("#floor_id").append($option); 
+			}
+		},"json");
+		
+		$("#roomtype_id").empty();
+		$("#roomtype_id").append("<option>房间类型</option>");
+		var url="roomtype/selectAll.do";
+		$.post(url,function(data){
+			for(var i=0;i<data.length;i++){
+		 		var $option =$("<option value="+data[i].roomtype_id+"></option>");
+				$option.text(data[i].roomtype_name);
+				$("#roomtype_id").append($option); 
+			}
+		},"json");
+		$("#sub").click(function(){
+			var hotel_id=$("#hotel_id").val();
+			var floor_id=$("input[name='floor_id']").val();
+			var roomtype_id=$("input[name='roomtype_id']").val();
+			var room_name=$("input[name='room_name']").val();
+			if(hotel_id!=0 && floor_id!=0 && roomtype_id!=0 && room_name!=""){
+				 $("#tab").submit(); 
+			}
+			else{
+				alert("请填写完整！");
+			}
+		});
+	});
+</script>
+<body>
+	
+	<div class="navbar-inner">
+		<div class="header">
+			<h1 class="page-title">客房管理</h1>
+		</div>
+		<ul class="breadcrumb">
+			<li><a href="">客房管理</a><span class="divider">/</span></li>
+			<li class="active">添加房间</li>
+		</ul>
+		<div class="container-fluid">
+			<div class="row-fluid">
+				<div class="well">
+					<ul class="nav nav-tabs">
+						<li class="active"><a href="#home" data-toggle="tab">添加房间</a>
+						</li>
+					</ul>
+					<div id="myTabContent" class="tab-content">
+						<div class="tab-pane active in" id="home">
+							<form id="tab" action="room/insertRoom.do" method="post">
+								<label>酒店</label> 
+								<select class="span2" id="hotel_id" name="hotel_id"></select> 
+								<label>楼层</label> 
+								<select class="span2" id="floor_id" name="floor_id"></select> 
+								<label>房间类型</label>
+								<select class="span2" id="roomtype_id" name="roomtype_id"></select>
+								<label>房间名称</label> 
+								<input type="text" class="span2" name="room_name">
+								<div class="btn-toolbar">
+								<input type="button" value="添加" class="btn btn-default" id="sub">
+								</div>
+							</form>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+</html>

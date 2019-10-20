@@ -1,0 +1,188 @@
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+  <head>
+    <base href="<%=basePath%>">
+   	<title>房间登记</title>
+	<link rel="stylesheet" type="text/css" href="css/bootstrap-responsive.min.css"/>
+	<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css"/>
+	<link rel="stylesheet" type="text/css" href="css/common.css"/>
+	<link rel="stylesheet" type="text/css" href="css/bootstrap.css"> 
+	<link rel="stylesheet" type="text/css" href="css/theme.css"> 
+	<script type="text/javascript" src="js/jquery-2.0.0.min.js"></script>
+	<script type="text/javascript" src="js/bootstrap.js"></script> 
+	<script type="text/javascript" src="js/roomcheck.js"></script>
+	<style type="text/css">
+	#left{
+		float: left;
+		margin-left:10px;
+		width: auto;
+		text-align: center;
+	}
+	#right{
+		float: right;
+		width: auto;
+		text-align: center;	
+	}
+</style>
+
+	
+</head>
+
+
+
+<body>
+	<div class="navbar-inner">
+		<div class="header">
+			<h1 class="page-title">住宿管理</h1>
+		</div>
+		<ul class="breadcrumb">
+			<li><a href="">住宿管理</a><span class="divider">/</span></li>
+			<li class="active">客房管理</li>
+		</ul>
+		<div class="container-fluid">
+			<div class="row-fluid">
+				<div class="well">
+					<ul class="nav nav-tabs">
+						<li class="active"><a data-toggle="tab">客房管理</a>
+						</li>
+					</ul>
+					<div id="myTabContent" class="tab-content">
+							<div id="left">
+								<form action="roomManage/getRoomByRoomTypeAndState.do" method="post">
+								<input type="hidden" id="hidden_roomtype" value="${roomtypeName}">
+								<span>房间类型：</span><select  name="roomtypeName" id="roomTypeName" style="width: 150px;height: 30px"></select>
+								<span>状态：</span>
+								<input type="hidden" id="hidden_state" value="${state}">
+								<select  name="state" style="width: 100px;height: 30px">
+									<option>请选择</option>
+									<option>未入住</option>
+									<option>已入住</option>
+								</select>
+								<input type="submit" value="查询" class="btn btn-info" >
+								</form>
+							</div>
+							<div id="right">
+								<form action="roomManage/getRoomByRoomName.do">
+									<input type="text"  placeholder="房间名" style="width: 200px;height: 30px" name="roomName" value='$'>
+									<input type="submit" value="搜索" class="btn btn-info" >
+								</form>
+							 </div>
+						<div class="tab-pane  fade active in" id="home">
+							
+								<div><h1>$</h1></div>
+							
+							<table class="table table-hover">
+								
+										<caption></caption>
+										<thead>
+											<tr>
+												<th>房间名</th>
+												<th>房间类型</th>
+												<th>状态</th>
+											</tr>
+										</thead>
+										<tbody>
+									
+									<tr>
+										<td>$</td>
+										<td>$</td>
+										
+												<td><div class="btn btn-primary">净房</div></td>
+											
+												<td><div class="btn btn-success">已住</div></td>
+											
+												<td><div class="btn btn-danger">脏房</div></td>
+											
+											<td><a data-toggle="modal" id="${room.room_name },${room.roomtype.roomtype_name}" name="home_reserve" href="#reserve"><i class="icon-home" ></i></a></td>
+											
+											<td><a data-toggle="modal" id="${room.room_name },${room.roomtype.roomtype_name}" name="home_exist" href="#existRoom"><i class="icon-remove" ></i></a></td>
+											
+											<td><a data-toggle="modal" href="roomManage/Refresh.do?rname=${room.room_name}&nowPage=${list.pageNum}"><i class="icon-refresh" ></i></a></td>
+											
+									</tr>
+									
+								</tbody>
+							</table>
+							
+								 	<div style="margin-left:72%">
+										<input class="btn btn-default" type="button" value="上一页" id="lastPage">
+										<input class="btn btn-default" type="button" value="下一页" id="nextPage">
+										<span>第</span><span id="nowPage">$</span><span>页，</span>
+										<span>共</span><span id="pageSum">$</span><span>页，跳到第</span>
+										<input type="text" class="span1" style="margin-top:8px" id="aimPage"><span>页</span>
+										<input class="btn btn-default" type="button" value="GO" id="aimButton">
+								 	</div>
+							</c:if>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="modal fade" id="reserve">
+						<div class="modal-header">
+							<button type="button" class="close" data-dismiss="modal"
+								aria-hidden="true">×</button>
+							<h4 class="modal-title">客房登记</h4>
+						</div>
+						<div class="modal-form block-left">
+							<form id="roomCheck" action="roomManage/checkRoom.do?nowPage=${list.pageNum}" method="post">
+						 		<label>姓名</label>
+						 		<input type="text"  name="name"  style="width: 200px;height: 30px;">&nbsp;<span id="person_name" class="label label-important"></span>
+								<label>电话</label> 
+								<input type="text"  name="tell"	 style="width: 200px;height: 30px;">&nbsp;<span id="person_tell" class="label label-important"></span>
+								<label>身份证号</label> 
+								<input type="text" name="idcard" style="width: 200px;height: 30px;">&nbsp;<span id="person_idcard" class="label label-important"></span>
+								<label>会员类型</label> 
+								<select id="viptype" class="span3" name="viptypename" id="vipType" style="width: 200px;height: 30px;" >
+								</select>
+								<label>房间类型</label> 
+								<select class="span3" name="rtype" id="roomType" style="width: 200px;height: 30px;" >
+								</select>
+								<label>房间名</label> 
+								<select class="span3" name="rname" id="roomName" style="width: 200px;height: 30px;">
+								</select>
+								<div class="btn-toolbar">
+									<input type="button" id="deepRoom" class="btn btn-info" value="入住" />							
+								</div>
+							</form>
+						</div>
+						<div class="modal-footer">
+							<button aria-hidden="true" data-dismiss="modal" class="btn">关闭</button>
+						</div>
+			</div>
+			<div class="modal fade" id="existRoom">
+						<div class="modal-header">
+							<button type="button" class="close" data-dismiss="modal"
+								aria-hidden="true">×</button>
+							<h4 class="modal-title">客房结算</h4>
+						</div>
+						<div class="modal-form block-left">
+							<form action="roomManage/Existroom.do?nowPage=${list.pageNum}" method="post">
+						 		<label>姓名</label> 
+						 		<input type="text"  name="name"  readonly="readonly" id="stayName"	 style="width: 200px;height: 30px;">
+								<label>电话</label> 
+								<input type="text"  name="tell"	 readonly="readonly" id="stayTel"	style="width: 200px;height: 30px;">
+								<label>身份证号</label> 
+								<input type="text" name="idcard" readonly="readonly" id="stayIdcard"	style="width: 200px;height: 30px;">
+								<label>会员类型</label> 
+									<select  name="viptypename" id="vType" style="width: 200px;height: 30px;" >
+									</select>
+								<label>房间类型</label> 
+									<select  name="rtype" id="rType" style="width: 200px;height: 30px;" >
+									</select>
+								<label>房间名</label> 
+									<select  name="rname" id="rName" style="width: 200px;height: 30px;">
+									</select>
+								<label>费用(RMB)</label>
+								<input style="width: 200px;height: 30px;" readonly="readonly" name="price" id="roomPrice">
+								<div class="btn-toolbar">
+									<input type="submit" class="btn btn-info" value="结算" />							
+								</div>
+							</form>
+						</div>
+						<div class="modal-footer">
+							<button aria-hidden="true" data-dismiss="modal" class="btn">关闭</button>
+					</div>
+			</div>
+		</body>
+</html>
