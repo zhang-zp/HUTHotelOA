@@ -1,0 +1,179 @@
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+
+<title>仓库采购</title>
+<link rel="stylesheet" type="text/css" href="../css/bootstrap.css">
+<link rel="stylesheet" type="text/css" href="../css/theme.css">
+<link rel="stylesheet" href="../css/buy.css" />
+<script type="text/javascript" src="../js/jquery-2.0.0.min.js"></script>
+<script type="text/javascript" src="../js/main.js"></script>
+</head>
+<body>
+	<div class="navbar-inner">
+		<div class="header">
+			<h1 class="page-title">仓库管理</h1>
+		</div>
+		<ul class="breadcrumb">
+			<li><a href="">仓库管理</a><span class="divider">/</span></li>
+			<li class="active">物品采购</li>
+		</ul>
+		<div class="container-fluid">
+			<div class="row-fluid">
+				<form action="buyshopAction/queryBuyShop.do" method="post">
+					<ul class="nav nav-tabs">
+						<li class="active">
+							<a href="#home" data-toggle="tab">商品采购记录：</a>
+						</li>
+						<li>
+							<input type="text" value="" name="goodsname" placeholder=" 请输入商品名称" id="spinp12"> 
+							<input type="submit" value="GO" id="spinp22">
+						</li>
+					</ul>
+				</form>
+				<div id="bcre">
+					
+							<div class="bgsright5">
+								<div class="shopno">商品编号</div>
+								<div class="shopname">商品名称</div>
+								<div>商品单价</div>
+								<div>商品数量</div>
+								<div>商品总价</div>
+								<div>采购时间</div>
+								<div>所属酒店</div>
+								<div class="shopprice">采购人</div>
+							</div>
+							
+							
+							<div id="buybut">
+								<input type="button" value="首页" id="shouye"> <input
+									type="button" value="上一页" id="pageup"> <input
+									type="button" value="下一页" id="pagedown"> 第 <span
+									id="dqpage"></span> 页 共 <span id="maxpage"></span> 页 
+									跳到 <input type="text" id="ye"> 页 <input
+									type="button" value="确定" id="tz">
+							</div>
+						
+					<script type="text/javascript">
+						$(function() {
+							$("#shouye").click(function() {
+								var page = parseInt($("#dqpage").html());
+								if (page == 1) {
+									alert("已经是首页了！");
+								} else {
+									location.href = "buyshopAction/queryBuyShop.do?page=1&goodsname="+ $('#spinp12').val();
+								}
+							});
+							$("#pageup").click(function() {
+								var page = parseInt($("#dqpage").html()) - 1;
+								if (page < 1) {
+									alert("已经是第一页！");
+								} else {
+									location.href = "buyshopAction/queryBuyShop.do?page="+ page+ "&goodsname="+ $('#spinp12').val();
+								}
+							});
+							$("#pagedown").click(function() {
+								var page = parseInt($("#dqpage").html()) + 1;
+								var maxpage = parseInt($("#maxpage").html());
+								if (page > maxpage) {
+									alert("已经是最后一页！");
+								} else {
+									location.href = "buyshopAction/queryBuyShop.do?page="+ page+ "&goodsname="+ $('#spinp12').val();
+								}
+							});
+							$("#tz").click(function() {
+								var page = $("#ye").val();
+								var reg = /\d/;
+								var maxpage = parseInt($("#maxpage").html());
+								if (reg.exec(page)) {
+									if (page<1||page>maxpage) {
+										alert("输入页数超出范围");
+										$("#ye").val("");
+									} else {
+										location.href = "buyshopAction/queryBuyShop.do?page="+ page+ "&goodsname="+ $('#spinp12').val();
+									}
+								} else {
+									alert("请输入数字");
+									$("#ye").val("");
+								}
+							});
+						});
+					</script>
+				</div>
+				<ul class="nav nav-tabs">
+					<li class="active"><a href="#home" data-toggle="tab">商品采购：</a></li>
+				</ul>
+				<div id="bgr">
+					<form action="buyshopAction/insertBuyShop.do" method="post">
+						<div id="spn">商品名称：</div>
+						<div id="spn1">
+							<input type="text" name="goodsname" id="shopname"
+								placeholder="请输入采购商品名称">
+						</div>
+						<div id="spn2"></div>
+
+						<div id="spp">商品单价：</div>
+						<div id="spp1">
+							<input type="text" name="price" id="shopprice"
+								placeholder="请输入采购商品价格（10.00）">
+						</div>
+						<div id="spp2"></div>
+
+						<div id="sps">商品数量：</div>
+						<div id="sps1">
+							<input type="text" name="buytable_count" id="sum"
+								placeholder="请输入采购商品数量">
+						</div>
+						<div id="sps2"></div>
+
+						<div id="sptp">商品总价：</div>
+						<div id="sptp1">
+							<input type="text" name="total_price" id="totalprice"
+								placeholder="商品总价（88.00）" readonly="readonly">
+						</div>
+						<div id="sptp2"></div>
+
+						<div id="buymit">
+							<input type="submit" value="更新仓库商品信息">
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+	<script>
+		//商品数量
+		$("#sum").blur(function() {
+			$("#sps2").html("");
+			var sum = /^[1-9]\d*$/;
+			if (sum.test($(this).val())) {
+				if ($("#shopprice").val() == "") {
+					alert("请输入商品价格");
+				} else {
+					var p = parseFloat($("#shopprice").val());
+					var sum = parseInt($(this).val());
+					var c = (p * sum).toFixed(2);
+					$("#totalprice").val(c);
+					$("#sps2").html("<img src='../img/li_ok.gif'>");
+					if ($("#shopname").val() == "") {
+						alert("请输入采购商品名称");
+					}
+					return true;
+				}
+			} else if ($(this).val() != "") {
+				$("#sps2").html("输入商品数量不正确");
+				$("#sps2").css("color", "red");
+				return false;
+			};
+		});
+	</script>
+	<script src="../js/bootstrap.js"></script>
+	<script type="text/javascript">
+		$(function() {
+			$('.demo-cancel-click').click(function() {
+				return false;
+			});
+		});
+	</script>
+</body>

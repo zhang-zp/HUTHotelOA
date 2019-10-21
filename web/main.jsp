@@ -89,26 +89,6 @@
 
     </ul>
 
-    <!--<a href="#accounts-menu" class="nav-header" data-toggle="collapse"><i
-        class="icon-refresh"></i>酒店管理</a>
-    <ul id="accounts-menu" class="nav nav-list collapse">
-        <li><a href="hotel/getHotel_All.do?page=1" target="source">查看酒店</a>
-        </li>
-        <li><a href="room/getRoom_All.do?page=1" target="source">查看房间</a>
-        </li>
-
-                <li><a href="roomtype/selectRoomType_All.do" target="source">修改房间价格</a>
-                </li>
-                <li><a href="hotel/getHotel_add.do" target="source">添加酒店</a></li>
-                <li><a href="hoteltype/getHoteltype_add.do" target="source">添加酒店类型</a>
-                </li>
-                <li><a href="floor/getFloor_add.do" target="source">添加楼层</a></li>
-                <li><a href="roomtype/getRoomtype_add.do" target="source">添加房间类型</a>
-                </li>
-                <li><a href="room/getRoom_add.do" target="source">添加房间</a></li>
-
-    </ul>-->
-
     <a href="#error-menu" class="nav-header collapsed"
        data-toggle="collapse"><i class="icon-lock"></i>财务管理</a>
     <ul id="error-menu" class="nav nav-list collapse">
@@ -132,15 +112,12 @@
         <li>
             <a href="buyshopAction/queryBuyShop.do" target="source">物品采购</a>
 
-
         <li><a href="shopoutAction/queryOutShop.do" target="source">物品分发</a>
         </li>
 
         <li><a href="managerAction/queryallShop.do" target="source">仓库管理</a>
         </li>
 
-        <li><a href="checkshopAction/queryCheck.do" target="source">物品核查</a>
-        </li>
     </ul>
 
 
@@ -149,18 +126,18 @@
     <ul id="person_manger" class="nav nav-list collapse">
         <!--			<li><a href="employee/getPwd.do" target="source">查看密码</a></li>-->
         <!--<li><a href="employee/updatePwd.do" target="source">修改密码</a></li>-->
-        <li><a href="employeeCheck/selfInfo.do" target="source">查看个人信息</a>
+        <li><a href="#" target="source">查看个人信息</a>
         </li>
-        <li><a href="employeeUpdate/selfInfo.do" target="source">更新个人信息</a>
+        <li><a href="#" target="source">更新个人信息</a>
         </li>
 
-        <li><a href="employee/employeeAdd.do" target="source">添加新员工</a></li>
-        <li><a href="employee/employeeAdd.do" target="source">添加用户</a></li>
-        <li><a href="employeeDelete/deletable_allInfo.do"
+        <li><a href="#" target="source">添加新员工</a></li>
+        <li><a href="#" target="source">添加用户</a></li>
+        <li><a href="#"
                target="source">删除员工</a></li>
         <!--<li><a href="employeeCheck/departmentInfo.do" target="source">查看本部门内员工信息</a>-->
 
-        <li><a href="employeeCheck/allInfo.do" target="source">查看全部员工信息</a>
+        <li><a href="allInfo.staff" target="source">查看全部员工信息</a>
         </li>
         <!--<li><a href="employeeUpdate/get_employeeInfo.do"
             target="source">更新全部员工信息</a></li>

@@ -1,0 +1,176 @@
+
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+	<head>
+	
+		<title></title>
+		<link rel="stylesheet" type="text/css" href="../css/bootstrap.css">
+		<link rel="stylesheet" type="text/css" href="../css/theme.css">
+		<link rel="stylesheet" type="text/css" href="../css/hr.css">
+	</head>
+	<script src="My97DatePicker/WdatePicker.js"></script>
+	<script src="../js/jquery-2.0.0.min.js" type="text/javascript"></script>
+	<script src="../js/main.js" type="text/javascript"></script>
+	<body>
+	
+	<div class="navbar-inner">
+			<div class="header">
+				<h1 class="page-title">人事管理</h1>
+			</div>
+			<ul class="breadcrumb">
+				<li>
+					<a href="">人事管理</a><span class="divider">/</span></li>
+				<li class="active">更新员工信息</li>
+			</ul>
+			<div class="container-fluid" style="-moz-box-shadow:10px 10px 20px #20332F; -webkit-box-shadow:10px 10px 20px #20332F; box-shadow:10px 10px 20px #20332F;">
+				<div class="row-fluid">
+					<div class="well">
+						<ul class="nav nav-tabs">
+							<li class="active">
+								<a href="#home" data-toggle="tab">更新全部员工信息</a>
+							</li>
+						</ul>
+						<div id="myTabContent" class="tab-content">
+							<div class="tab-pane active in" id="home">
+								<div id="u1">
+								<form action="employeeUpdate/get_employeeInfo.do" method="post">
+									<div>
+						               <input type="text" placeholder=" 请输入姓名、性别、部门、职位" id="spinp1" name="condition" value="$">
+						               <input type="submit" value="GO" id="spinp2">
+					          		</div>
+					          	</form>
+									<table class="table table-striped">
+										<tr>
+											<th>职工编号</th>
+											<th>职工名称</th>
+											<th>职工性别</th>
+											<th>职工年龄</th>
+											<th>手机号码</th>
+											<th>职工部门</th>
+											<th>职工职位</th>
+											<th>职工薪资</th>
+											<th>身份证号</th>
+											<th>所属酒店</th>
+											<th>入职时间</th>
+											<th>修改</th>
+										</tr>
+									
+										 <tr><td colspan="11" style="color:red;"><h1>该酒店还没有任何员工，赶快去招募把！</h1></td></tr>
+										
+											<tr>
+												<td>$</td>
+												<td>$</td>
+												<td>$</td>
+												<td>$</td>
+												<td>$</td>
+												<td>$</td>
+												<td>$</td>
+												<td>￥</td>
+												<td>$</td>
+												<td>$</td>
+												<td>$</td>
+												<td><input type="button" value="修改" class="btn xiugai"/></td>
+											</tr>
+										
+									</table>
+										<div style="margin-left:70%;">
+										<input type="button" value="首页" id="firstPage">
+										<input  type="button" value="上一页" id="upPage">
+										<input  type="button" value="下一页" id="downPage">
+										第<span id="currentpage">$</span>页，
+										共<span id="allpage">$</span>页，跳到第 
+										<input type="text" class="span1" style="margin-top:10px " id="jumpPage">页 
+										<input  type="button" value="跳" id="jump">
+									    </div>
+								</div>
+								<div id="u2">
+							
+									修改
+									<form action="employeeUpdate/employeeInfo.do?currentpage=${employeeInfo.pageNum}&condition=${condition}" method="post">	
+										&emsp;&emsp;姓名：<input type="text" name="ename" readonly="readonly" class="span2" /><br>
+										&emsp;&emsp;性别：<input type="radio" name="sex" checked value="男" />男<input type="radio" name="sex" value="女" />女<br> 
+										&emsp;&emsp;年龄：<input type="text" name="age" class="span2" id="age1"><span id="age"></span><br> 
+										&emsp;&emsp;电话：<input type="text" name="tel" class="span2" maxlength="11" id="tel1"><span id="tel"></span><br>
+										&emsp;&emsp;部门： 
+										<select class="span2"  id="depart" name="department">
+										</select><br> 
+										&emsp;&emsp;职位： 
+										<select class="span2" id="rk" name="rank" >
+											<option>董事长</option>
+											<option>总经理</option>
+											<option>部门经理</option>
+											<option>人事职员</option>
+											<option>采购职员</option>
+											<option>财务职员</option>
+											<option>前台职员</option>
+											<option>保洁</option>
+											<option>保安</option>
+										</select><br> 
+										身份证号：<input type="text" name="idcard" class="span2"  maxlength="18" id="idcard1"><span id="idcard"></span><br> 
+										所属酒店：<input type="text" name="hotel"  class="span2"  id="hotel1"><span id="hotel"></span><br> 
+										入职时间：<input type="text" name="starttime"  onclick="WdatePicker()" class="span2" id="starttime1"/><span id="starttime"></span><br> 
+										<input type="hidden" value="" name="employeeId">
+										<input type="submit" value="修改" class="span1">
+									    <input type="button" value="重置" id="update_employee_reset" class="span1">										
+									</form>
+								</div>
+
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		
+		<script src="../js/bootstrap.js"></script>
+		<script type="text/javascript">
+		$(function(){
+			//下一页
+			$("#downPage").click(function(){
+				var currentpage=$("#currentpage").text();
+				var allpage=$("#allpage").text();
+				if(currentpage<allpage){
+					currentpage++;
+				}else{
+					alert("已经是最后一页了。");
+				}
+				window.location.href="employeeUpdate/get_employeeInfo.do?currentpage="+currentpage+"&condition="+$("#spinp1").val();
+			});
+			//上一页
+			$("#upPage").click(function(){
+				var currentpage=$("#currentpage").text();
+				if(currentpage>1){
+					currentpage--;
+				}else{
+					currentpage=1;
+					alert("已经是第一页了。");
+				}
+				window.location.href="employeeUpdate/get_employeeInfo.do?currentpage="+currentpage+"&condition="+$("#spinp1").val();
+			});
+			//首页
+			$("#firstPage").click(function(){
+				window.location.href="employeeUpdate/get_employeeInfo.do?condition="+$("#spinp1").val();
+			});
+			//跳转页
+			$("#jump").click(function(){
+				var currentpage=$("#jumpPage").val();
+				var allpage=$("#allpage").text();
+				if(currentpage==""){
+					alert("您还没输入任何有效页码。");
+				}else{
+					if(currentpage-allpage>0){
+						currentpage=allpage;
+						alert("您输入的页码超过了最大页码，已为您跳到最后一页。");
+					}
+					if(currentpage<1){
+						currentpage=1;
+						alert("您输入的页码小于1，已为您跳到首页。");
+					}
+				window.location.href="employeeUpdate/get_employeeInfo.do?currentpage="+currentpage+"&condition="+$("#spinp1").val();
+				}
+			});
+		});
+		</script>
+	</body>
+</html>

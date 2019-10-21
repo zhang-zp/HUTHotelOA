@@ -1,0 +1,174 @@
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+  
+<title></title>
+<link rel="stylesheet" type="text/css" href="../css/bootstrap.css">
+<link rel="stylesheet" type="text/css" href="../css/theme.css">
+<script src="../js/jquery-2.0.0.min.js" type="text/javascript"></script>
+<script src="My97DatePicker/WdatePicker.js"></script>
+<script type="text/javascript">
+	$(function(){
+		$("#hotel_id").empty();
+		$("#hotel_id").html("<option value=0>酒店名称</option>");
+		var url="hotel/selectAll.do";
+		$.post(url,function(data){
+			for(var i=0;i<data.length;i++){
+		 		var $option =$("<option value="+data[i].hotel_id+"></option>");
+				$option.text(data[i].hotel_name);
+				$("#hotel_id").append($option); 
+			}
+			$("#hotel_id").val("${hotel_id}");
+			$("#start").val("${starttime}");
+			$("#end").val("${endtime}");
+		},"json"); 
+		
+		$("#jump").click(function(){
+			var hotel_id=$("#hotel_id").val();
+			var page=parseInt($("#jumpPage").val());
+			var pages="${pageList.pages }";
+			var pagen="${pageList.pageNum }";
+			var starttime=$("#start").val();
+			var endtime=$("#end").val();
+			if(page>pages){
+				alert("输入错误！共"+pages+"页。");
+				page=pagen;
+			}else if(page<=0){
+				alert("输入错误！")
+				page=pagen;
+			}else{
+				if(hotel_id!=0){
+					if(starttime==""||endtime==""){
+					window.location.href="finance/selectIncomeByHotel_id.do?page="+page+"&hotel_id="+hotel_id;
+					}
+					else{
+						location.href="finance/findIncomeByHotel_idAndTime.do?hotel_id="+hotel_id+"&starttime="+starttime+"&endtime="+endtime+"&page="+page;	
+					}
+				}else{
+					if(starttime==""||endtime==""){
+					window.location.href="finance/selectIncomeAll.do?page="+page;
+					}else{
+						location.href="finance/selectIncomeAllByTime.do?&starttime="+starttime+"&endtime="+endtime+"&page="+page;
+					}
+				}
+			}
+		});
+		$('.demo-cancel-click').click(function() {
+			return false;
+		});
+		$("#hotel_id").change(function(){
+			var hotel_id=$(this).val();
+			var url;
+			if(hotel_id==0){
+				url="finance/selectIncomeAll.do?page=1";
+			}else{
+				url="finance/selectIncomeByHotel_id.do?page=1&hotel_id="+hotel_id;
+			}
+			window.location.href=url;
+		});
+	
+		$("#sel").click(function(){
+		
+			var page=1;
+			var starttime=$("#start").val();
+			var endtime=$("#end").val();
+			var hotel_id=$("#hotel_id").val();
+			if(""==starttime&&""==endtime){
+				alert("请正确选择日期！");
+			}else{
+				if(hotel_id!=0){
+					location.href="finance/findIncomeByHotel_idAndTime.do?hotel_id="+hotel_id+"&starttime="+starttime+"&endtime="+endtime;
+				}else{
+					location.href="finance/selectIncomeAllByTime.do?&starttime="+starttime+"&endtime="+endtime;
+				}
+			 }  
+		});
+	});
+</script>
+</head>
+<body>
+	<div class="navbar-inner">
+		<div class="header">
+			<h1 class="page-title">财务管理</h1>
+		</div>
+		<ul class="breadcrumb">
+			<li><a href="">财务管理</a><span class="divider">/</span></li>
+			<li class="active">收入明细</li>
+		</ul>
+		<div class="container-fluid">
+			<div class="row-fluid">
+
+				<div class="well">
+					<ul class="nav nav-tabs">
+						<li class="active"><a href="#home" data-toggle="tab">收入明细</a>
+						</li>
+					</ul>
+					<div id="myTabContent" class="tab-content">
+					
+						<div class="tab-pane active in" id="home">
+						<h5>所有分类：</h5>
+						<form>
+							酒店：<select class="span2" id="hotel_id"  name="hotelName"></select>
+						
+							<br>
+							时间 ：
+							<input id="start" class="span3"   onclick="WdatePicker()"/>
+							至
+							<input id="end" class="span3"   onclick="WdatePicker()"/>
+					 		<input type="button" id="sel" value="查询" />
+					 		</form>
+							
+									<table class="table table-striped" id="tab">
+								<thead>
+									<tr>
+										<th>住店日期</th>
+										<th>离店日期</th>
+										<th>酒店</th>
+										<th>房间</th>
+										<th>收入</th>
+									</tr>
+								</thead>
+										<tbody>
+											
+												<tr>
+													<td>$</td>
+													<td>$</td>
+													<td>$</td>
+													<td>$</td>
+													<td>
+													
+													</td>
+												</tr>
+											
+										</tbody>
+									</table>
+									
+									<div style=" width:95%;text-align:right">
+										<a href="finance/selectIncomeAll.do">首页</a>
+										
+											<a href="finance/selectIncomeAll.do?page=${pageList.prePage}">上一页</a>
+										
+											<a href="finance/selectIncomeAll.do?page=${pageList.nextPage}">下一页</a>
+										
+										第$页， 共$页，跳到第 <input
+											type="text" class="span1"
+											style="margin-top:10px ;width:30px " id="jumpPage">页
+										<input class="btn btn-default" type="button" value="跳"
+											id="jump">
+									</div>
+									
+									
+						</div>
+					</div>
+
+				</div>
+
+			</div>
+		</div>
+	</div>
+
+	<script src="../js/bootstrap.js"></script>
+</body>
+</html>
+

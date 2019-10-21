@@ -8,7 +8,7 @@ public class StaffInfo {
     private String staff_name;
     private String staff_num;//员工身份证号
     private String staff_sex;
-    private String depr_name;
+    private String dept_name;
     private String staff_job;
     private double staff_salary;
     private String entry_time;
@@ -47,12 +47,12 @@ public class StaffInfo {
         this.staff_sex = staff_sex;
     }
 
-    public String getDepr_name() {
-        return depr_name;
+    public String getDept_name() {
+        return dept_name;
     }
 
-    public void setDepr_name(String depr_name) {
-        this.depr_name = depr_name;
+    public void setDept_name(String depr_name) {
+        this.dept_name = depr_name;
     }
 
     public String getStaff_job() {
