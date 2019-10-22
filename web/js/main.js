@@ -129,7 +129,7 @@ $(function() {
 					$("#tel").html("员工手机号须以13、15、18开头，且长度为11");
 				}else{
 					$.ajax({
-						url:"employeeAdd/getPhone.do?tel="+tel,
+						url:"checkTell.staff?tel="+tel,
 						type:"post",
 						async:false,
 						cache:false,
@@ -152,7 +152,7 @@ $(function() {
 	});	
 	//员工身份证号
 	$("#idcard1").blur(function(){
-		var idcard=$("#idcard1").val();
+		var idcard = $("#idcard1").val();
 		var reg=/^\d{18}$/g;
 		if(idcard.length==0){
 			$("#idcard").html("");
@@ -162,7 +162,7 @@ $(function() {
 				$("#idcard").html("员工身份证号需为18位");
 			}else{
 				$.ajax({
-					url:"employeeAdd/getIdcard.do?idcard="+idcard,
+					url:"checkID.staff?idcard="+idcard,
 					type:"post",
 					async:false,
 					cache:false,

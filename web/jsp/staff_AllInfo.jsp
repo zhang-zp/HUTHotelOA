@@ -12,35 +12,34 @@
 
     <title></title>
     <meta charset="utf-8" />
-    <link rel="stylesheet" type="text/css" href="css/bootstrap.css">
-    <link rel="stylesheet" type="text/css" href="css/theme.css">
-    <link rel="stylesheet" type="text/css" href="css/hr.css">
+    <link rel="stylesheet" type="text/css" href="../css/bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="../css/theme.css">
+    <link rel="stylesheet" type="text/css" href="../css/hr.css">
 </head>
 <script src="../js/jquery-2.0.0.min.js" type="text/javascript"></script>
 
 <body>
 <div class="navbar-inner">
-    <div class="header">
-        <h1 class="page-title">人事管理</h1>
-    </div>
+<%--    <div class="header">--%>
+<%--        <h1 class="page-title">人事管理</h1>--%>
+<%--    </div>--%>
     <ul class="breadcrumb">
-        <li>
-            <a href="">人事管理</a><span class="divider">/</span></li>
+        <li>人事管理/</li>
         <li class="active">查看员工信息</li>
     </ul>
     <div class="container-fluid" style="-moz-box-shadow:10px 10px 20px #20332F; -webkit-box-shadow:10px 10px 20px #20332F; box-shadow:10px 10px 20px #20332F;">
         <div class="row-fluid">
             <div class="well">
-                <ul class="nav nav-tabs">
-                    <li class="active">
-                        <a href="#home" data-toggle="tab">查看全部员工信息</a>
-                    </li>
-                </ul>
+<%--                <ul class="nav nav-tabs">--%>
+<%--                    <li class="active">--%>
+<%--                        <a href="#home" data-toggle="tab">查看全部员工信息</a>--%>
+<%--                    </li>--%>
+<%--                </ul>--%>
                 <div id="myTabContent" class="tab-content">
                     <div class="tab-pane active in" id="home">
                         <form action="employeeCheck/allInfo.do?currentpage=1" method="post">
                             <div>
-                                <input type="text" placeholder=" 请输入姓名、性别、部门、职位" id="spinp1" name="condition" value="$" >
+                                <input style="margin-left: 70%" type="text" placeholder=" 请输入姓名、性别、部门、职位" id="spinp1" name="condition" value="垃圾东西" >
                                 <input type="submit" value="GO" id="spinp2">
                             </div>
                         </form>
@@ -57,8 +56,7 @@
                                 <th>身份证号</th>
                                 <th>入职时间</th>
                             </tr>
-
-                            <tr><td colspan="11" style="color:red;"><h1>该酒店还没有任何员工，赶快去招募把！</h1></td></tr>
+<%--                            <tr><td colspan="11" style="color:red;"><h1>该酒店还没有任何员工，赶快去招募把！</h1></td></tr>--%>
                             <c:forEach var="list" items="${staffInfo}">
                                 <tr>
                                     <td>${list.staff_id}</td>
@@ -77,7 +75,7 @@
 
                         </table>
 
-                        <div style="margin-left:70%">
+                        <div style="margin-left:55%">
                             <input class="btn btn-default" type="button" value="首页" id="firstPage">
                             <input class="btn btn-default" type="button" value="上一页" id="upPage">
                             <input class="btn btn-default" type="button" value="下一页" id="downPage">

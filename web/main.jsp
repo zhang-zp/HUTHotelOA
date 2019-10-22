@@ -12,7 +12,7 @@
     <title>首页</title>
     <meta charset="utf-8" />
     <link rel="stylesheet" type="text/css" href="css/bootstrap.css">
-    <link rel="stylesheet" type="text/css" href="css/bootstrap1.css">
+    <link rel="stylesheet" type="text/css" href="css/bootstrap_1.css">
     <link rel="stylesheet" type="text/css" href="css/theme.css">
     <style type="text/css">
         #line-chart {
@@ -126,15 +126,14 @@
     <ul id="person_manger" class="nav nav-list collapse">
         <!--			<li><a href="employee/getPwd.do" target="source">查看密码</a></li>-->
         <!--<li><a href="employee/updatePwd.do" target="source">修改密码</a></li>-->
-        <li><a href="#" target="source">查看个人信息</a>
+        <li><a href="selfInfo.staff" target="source">查看个人信息</a>
         </li>
         <li><a href="#" target="source">更新个人信息</a>
         </li>
 
-        <li><a href="#" target="source">添加新员工</a></li>
+        <li><a href="jsp/staff_Add.jsp" target="source">添加新员工</a></li>
         <li><a href="#" target="source">添加用户</a></li>
-        <li><a href="#"
-               target="source">删除员工</a></li>
+        <li><a href="#" target="source">删除员工</a></li>
         <!--<li><a href="employeeCheck/departmentInfo.do" target="source">查看本部门内员工信息</a>-->
 
         <li><a href="allInfo.staff" target="source">查看全部员工信息</a>
