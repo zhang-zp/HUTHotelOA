@@ -1,7 +1,8 @@
 package control;
 
+import com.alibaba.fastjson.JSON;
 import dao.daoImp.FinanceImp;
-import entity.RentRoom;
+import entity.*;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -9,6 +10,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.List;
 
 @WebServlet("*.finance")
@@ -17,15 +19,39 @@ public class FinanceControl extends HttpServlet {
     protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         FinanceImp financeImp=new FinanceImp();
         String uri = req.getRequestURI();
-        if(uri.indexOf("findiincome")>=0){
+        PrintWriter out=resp.getWriter();
+        //按时间段查找工资
+        if(uri.indexOf("findincome")>=0){
             String start=req.getParameter("starttime");
             String end=req.getParameter("endtime");
             try {
                 List<RentRoom> rentRoomList=financeImp.findorderBytime(start,end);
-                req.setAttribute("order",rentRoomList);
+                String jsonstr= JSON.toJSONString(rentRoomList);
+                out.print(jsonstr);
             } catch (Exception e) {
                 e.printStackTrace();
             }
+            //查询支出明细
+        }else if(uri.indexOf("findexpend")>=0){
+            try {
+                List<Expend> purchaseList=financeImp.findexpend();
+                String jsonstr=JSON.toJSONString(purchaseList);
+                out.print(jsonstr);
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            //查询工资支出
+        }else if(uri.indexOf("findsalary")>=0){
+            List<Payoff> payoffList= null;
+            try {
+                payoffList = financeImp.payoff();
+                String jsonstr=JSON.toJSONString(payoffList);
+                out.print(jsonstr);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
         }
     }
 }

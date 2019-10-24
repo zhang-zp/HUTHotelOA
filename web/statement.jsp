@@ -9,8 +9,8 @@
 <html>
 <head>
     <title>Title</title>
-    <link rel="stylesheet" type="text/css" href="../css/bootstrap.css">
-    <link rel="stylesheet" type="text/css" href="../css/theme.css">
+    <link rel="stylesheet" type="text/css" href="css/bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="css/theme.css">
     <script src="js/jquery-2.0.0.min.js" type="text/javascript"></script>
     <script src="js/bootstrap.js"></script>
 <%--    <script src="My97DatePicker/WdatePicker.js"></script>--%>

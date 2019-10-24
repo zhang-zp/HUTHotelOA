@@ -9,24 +9,39 @@
 <html>
 <head>
     <title>Title</title>
-    <link rel="stylesheet" type="text/css" href="../css/bootstrap.css">
-    <link rel="stylesheet" type="text/css" href="../css/theme.css">
+    <link rel="stylesheet" type="text/css" href="css/bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="css/theme.css">
     <script src="js/jquery-2.0.0.min.js" type="text/javascript"></script>
     <script src="js/bootstrap.js"></script>
     <script type="text/javascript">
-        $(function(){
-            $("#hotel_id").empty();
-            $("#hotel_id").html("<option value=0>酒店名称</option>");
-            var url="hotel/selectAll.do";
-            $.post(url,function(data){
-                for(var i=0;i<data.length;i++){
-                    var $option =$("<option value="+data[i].hotel_id+"></option>");
-                    $option.text(data[i].hotel_name);
-                    $("#hotel_id").append($option);
-                }
-                $("#hotel_id").val("${hotel_id}");
-            },"json");
+            $(function(){
+                $.ajax({
+                    'tpye':'post',
+                    'url':'findsalary.finance',
+                    'success':function (data,textStatus) {
+                        if(data==null){
+                            alert("没加到数据");
+                        }else{
+                            // alert("有数据");
+                            var order=JSON.parse(data);
+                            // alert(order.length);
+                            for(var i=0;i<order.length;i++){
+                                // alert(order[i].expend_id);
+                                $("#tbody").append("<tr style='text-align: center'>" +
+                                    "<td>"+order[i].salary_id+"</td>"+
+                                    "<td>"+order[i].salary_time+"</td>"+
+                                    "<td>"+order[i].staff_id+"</td>" +
+                                    "<td>"+order[i].staff_name+"</td>"+
+                                    "<td>"+order[i].dept_name+"</td>"+
+                                    "<td>"+order[i].staff_job+"</td>"+
+                                    "<td>"+order[i].staff_salary+"</td>"+
+                                    "<td>"+order[i].renish_amount+"</td>"+
+                                    "</tr>");
+                            }
+                        }
 
+                    }
+                })
             $("#jump").click(function(){
                 var hotel_id=$("#hotel_id").val();
                 var page=parseInt($("#jumpPage").val());
@@ -39,20 +54,11 @@
                     alert("输入错误！")
                     page=pagen;
                 }else{
-                    if(hotel_id!=0){
-                        window.location.href="finance/selectSalaryByHotel_id.do?page="+page+"&hotel_id="+hotel_id;
-                    }else{
-                        window.location.href="finance/selectSalaryAll.do?page="+page;
-                    }
+                    window.location.href="finance/selectSalaryAll.do?page="+page;
                 }
             });
             $('.demo-cancel-click').click(function() {
                 return false;
-            });
-            $("#hotel_id").change(function(){
-                var hotel_id=$(this).val();;
-                var url="finance/selectSalaryByHotel_id.do?page=1&hotel_id="+hotel_id;
-                window.location.href=url;
             });
         });
     </script>
@@ -86,26 +92,13 @@
                                 <th>发放时间</th>
                                 <th>员工编号</th>
                                 <th>员工姓名</th>
-                                <th>酒店</th>
                                 <th>部门</th>
                                 <th>职位</th>
-                                <th>本月薪资</th>
+                                <th>月薪</th>
+                                <th>本次发放薪资</th>
                             </tr>
                             </thead>
-                            <tbody>
-
-                            <tr>
-                                <td>$</td>
-                                <td>$</td>
-                                <td>$</td>
-                                <td>$</td>
-                                <td>$</td>
-                                <td>$</td>
-                                <td>$</td>
-                                <td>
-
-                                </td>
-                            </tr>
+                            <tbody id="tbody">
 
                             </tbody>
                         </table>
