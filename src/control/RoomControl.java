@@ -2,6 +2,7 @@ package control;
 
 import dao.RoomDao;
 import dao.daoImp.RoomDaoImp;
+import entity.RentRoom;
 import entity.RoomInfo;
 
 import javax.servlet.ServletException;
@@ -18,7 +19,7 @@ import java.util.List;
 public class RoomControl extends HttpServlet {
 
         RoomDao rd = new RoomDaoImp();
-        PrintWriter pw;
+        PrintWriter pw ;
     @Override
     protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String uri = req.getRequestURI();
@@ -48,14 +49,38 @@ public class RoomControl extends HttpServlet {
                 double price1 = Double.parseDouble(price);
                 //进行修改
                 rd.update(type,price1);
-                pw.write("msg修改成功");
                 //获取修改后的房间类型和价格
                 List<RoomInfo> list = rd.getInfo();
                 req.setAttribute("RoomPrice",list);
-                req.getRequestDispatcher("Room_Price.jsp").forward(req,resp);
+                pw = resp.getWriter();
+                pw.write("msg修改成功");
             } catch (SQLException e) {
                 e.printStackTrace();
             }
+        }
+        else if(uri.indexOf("RoomPreplot")>=0){
+
+        }else if(uri.indexOf("RoomReg")>=0){
+            RentRoom rentRoom = new RentRoom();
+            rentRoom.setPeople_name(req.getParameter("name"));
+            rentRoom.setPeople_id(req.getParameter("ID"));
+            rentRoom.setRent_tel(req.getParameter("tel"));
+            rentRoom.setRoom_type(req.getParameter("type"));
+            rentRoom.setRent_num(Integer.parseInt(req.getParameter("num")));
+            rentRoom.setEnter_time(req.getParameter("enter"));
+            rentRoom.setLeave_time(req.getParameter("leave"));
+            rentRoom.setRent_status("已入住");
+            try {
+                //添加开房信息
+                rd.addRoom(rentRoom);
+                pw = resp.getWriter();
+                pw.write("msg开房成功");
+            } catch (SQLException e) {
+//                pw = resp.getWriter();
+//                pw.write("msg信息不完整，请补全信息");
+                e.printStackTrace();
+            }
+
         }
     }
 }

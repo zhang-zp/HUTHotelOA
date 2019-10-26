@@ -16,20 +16,29 @@
 <%--    <script src="My97DatePicker/WdatePicker.js"></script>--%>
     <script type="text/javascript">
         $(function(){
-            $("#hotel_id").empty();
-            $("#hotel_id").html("<option value=0>酒店名称</option>");
-            var url="hotel/selectAll.do";
-            $.post(url,function(data){
-                for(var i=0;i<data.length;i++){
-                    var $option =$("<option value="+data[i].hotel_id+"></option>");
-                    $option.text(data[i].hotel_name);
-                    $("#hotel_id").append($option);
-                }
-                $("#hotel_id").val("${hotel_id}");
+            $.ajax({
+                'tpye':'post',
+                'url':'findexpend.finance',
+                'success':function (data,textStatus) {
+                    if(data==null){
+                        alert("没加到数据");
+                    }else{
+                        // alert("有数据");
+                        var order=JSON.parse(data);
+                         // alert(order.length);
+                        for(var i=0;i<order.length;i++){
+                            // alert(order[i].expend_id);
+                            $("#tbody").append("<tr style='text-align: center'>" +
+                                "<td>"+(order[i].goods_time==null?order[i].salary_time:order[i].goods_time)+"</td>"+
+                                "<td>"+(order[i].goods_price==0?'':order[i].goods_price)+"</td>" +
+                                "<td>"+(order[i].renish_amount==0?'':order[i].renish_amount)+"</td>" +
+                                "</tr>");
+                        }
+                    }
 
-            },"json");
+                }
+            })
             $("#jump").click(function(){
-                var hotel_id=$("#hotel_id").val();
                 var page=parseInt($("#jumpPage").val());
                 var pages="${pageList.pages }";
                 var pagen="${pageList.pageNum }";
@@ -40,22 +49,9 @@
                     alert("输入错误！")
                     page=pagen;
                 }else{
-                    if(hotel_id!=0){
-                        window.location.href="finance/selectSpendingByHotel_id.do?page="+page+"&hotel_id="+hotel_id;
-                    }else{
-                        location.href="finance/selectSpendingAll.do?page="+page;
-                    }
+                    location.href="finance/selectSpendingAll.do?page="+page;
                 }
             });
-            $("#hotel_id").change(function(){
-                var hotel_id=$(this).val();
-                if(hotel_id==0){
-                    location.href="finance/selectSpendingAll.do";
-                }else{
-                    location.href="finance/selectSpendingByHotel_id.do?hotel_id="+hotel_id;
-                }
-            });
-
         });
     </script>
 </head>
@@ -79,47 +75,16 @@
                 <div id="myTabContent" class="tab-content">
 
                     <div class="tab-pane active in" id="home">
-                        <h5>所有分类：</h5>
-                        <form >
-                            酒店：<select class="span2" id="hotel_id" name="hotelName"></select>
-                            <br>
-                            <!-- 时间 ：
-                            <input id="start" class="span3"   onclick="WdatePicker()"/>
-                            至
-                            <input id="end" class="span3"   onclick="WdatePicker()"/>
-                             <input type="button" id="sel" value="查询" /> -->
-                        </form>
 
                         <table class="table table-striped" id="tab">
                             <thead>
                             <tr>
                                 <th>日期</th>
-                                <th>采购订单号</th>
                                 <th>采购支出</th>
-                                <th>工资支出编号</th>
                                 <th>工资支出</th>
                             </tr>
                             </thead>
-                            <tbody>
-
-                            <tr>
-                                <td>
-
-                                </td>
-                                <td>
-
-                                </td>
-                                <td>
-
-                                </td>
-                                <td>
-
-                                </td>
-                                <td>
-
-                                </td>
-                            </tr>
-
+                            <tbody id="tbody" >
                             </tbody>
                         </table>
 

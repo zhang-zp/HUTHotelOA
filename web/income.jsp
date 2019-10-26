@@ -8,9 +8,10 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <link rel="stylesheet" type="text/css" href="../css/bootstrap.css">
-    <link rel="stylesheet" type="text/css" href="../css/theme.css">
+    <link rel="stylesheet" type="text/css" href="css/bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="css/theme.css">
     <script src="js/jquery-2.0.0.min.js" type="text/javascript"></script>
+    <script src="js/json2.js"></script>
     <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%--     <script src="My97DatePicker/WdatePicker.js"></script>--%>
     <script type="text/javascript">
@@ -39,7 +40,7 @@
             $('.demo-cancel-click').click(function() {
                 return false;
             });
-
+            var order;
             $("#sel").click(function(){
                 var page=1;
                 var starttime=$("#start").val();
@@ -53,10 +54,23 @@
                         'data':{'starttime':starttime,'endtime':endtime},
                         'success':function (data,textStatus) {
                             if(data==null){
-                                var order=data;
+
                                alert("没加到数据");
                             }else{
+                                 // alert("有数据");
+                               order=JSON.parse(data);
+                               // alert(order.length);
+                                for(var i=0;i<order.length;i++){
+                                    // alert(order[i].enter_time);
 
+                                    $("#tbody").append("<tr style='text-align: center'>" +
+                                        "<td>"+order[i].rent_id+"</td>"+
+                                        "<td>"+order[i].enter_time+"</td>" +
+                                        "<td>"+order[i].leave_time+"</td>" +
+                                        "<td>"+order[i].room_id+"</td>" +
+                                        "<td>"+order[i].room_price+"</td>" +
+                                        "</tr>");
+                                }
                             }
 
                         }
@@ -86,16 +100,16 @@
                 <div id="myTabContent" class="tab-content">
 
                     <div class="tab-pane active in" id="home">
-                        <h5>所有分类：</h5>
+                        <h5>请输入需要查询的时间段：</h5>
                         <form>
                             时间 ：
-                            <input id="start" class="span3" />
+                            <input id="start" class="span3" placeholder="起始时间：YYYY-MM-DD"/>
                             至
-                            <input id="end" class="span3"   />
+                            <input id="end" class="span3"   placeholder="截止时间：YYYY-MM-DD"/>
                             <input type="button" id="sel" value="查询" />
                         </form>
 
-                        <table class="table table-striped" id="tab">
+                        <table class="table table-striped" id="tab" width="80%" >
                             <thead>
                             <tr>
                                 <th>订单号</th>
@@ -106,26 +120,8 @@
                             </tr>
                             </thead>
 
-                            <tbody>
-                            <c:forEach items="${order}" var="p">
-                                <TR>
-                                    <td>
-                                            ${p.rent_id}
-                                    </td>
-                                    <td>
-                                            ${p.enter_time}
-                                    </td>
-                                    <TD>
-                                            ${p.leave_time}
-                                    </TD>
-                                    <TD>
-                                            ${p.room_id}
-                                    </TD>
-                                    <td>
-                                            ${p.room_price}
-                                    </td>
-                                </TR>
-                            </c:forEach>
+                            <tbody id="tbody">
+
                             </tbody>
                         </table>
 

@@ -84,8 +84,8 @@
         <li><a href="roomManage/getRoom.do" target="source">住宿管理</a></li>
         <li><a href="roomManage/SelectExist.do" target="source">退宿查询</a></li>
 
-        <li><a href="roomManage/getRoomType.do" target="source">房价调整</a></li>
-        <li><a href="room/getRoom_All.do?page=1" target="source">查看房间</a>
+        <li><a href="RoomPrice.room" target="source">房价调整</a></li>
+        <li><a href="RoomAll.room" target="source">查看房间</a>
 
     </ul>
 
@@ -136,7 +136,7 @@
         <li><a href="#" target="source">删除员工</a></li>
         <!--<li><a href="employeeCheck/departmentInfo.do" target="source">查看本部门内员工信息</a>-->
 
-        <li><a href="allInfo.staff" target="source">查看全部员工信息</a>
+        <li><a href="jsp/allInfo.staff" target="source">查看全部员工信息</a>
         </li>
         <!--<li><a href="employeeUpdate/get_employeeInfo.do"
             target="source">更新全部员工信息</a></li>
