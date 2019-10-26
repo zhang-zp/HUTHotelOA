@@ -82,10 +82,9 @@
                 </ul>
                 <div id="myTabContent" class="tab-content">
                     <div class="tab-pane active in" id="home">
-                        <select class="span2" id="hotel_id">
                         </select>
 
-                        <table class="table table-striped">
+                        <table class="table table-striped" border="1">
                             <thead>
                             <tr>
                                 <th>编号</th>

@@ -76,7 +76,7 @@
 
                     <div class="tab-pane active in" id="home">
 
-                        <table class="table table-striped" id="tab">
+                        <table class="table table-striped" id="tab" border="1">
                             <thead>
                             <tr>
                                 <th>日期</th>

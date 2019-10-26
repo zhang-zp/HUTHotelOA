@@ -42,12 +42,14 @@
             });
             var order;
             $("#sel").click(function(){
+
                 var page=1;
                 var starttime=$("#start").val();
                 var endtime=$("#end").val();
                 if(""==starttime&&""==endtime){
                     alert("请正确选择日期！");
                 }else{
+                    $("#tbody").empty();
                     $.ajax({
                         'tpye':'post',
                         'url':'findincome.finance',
@@ -76,7 +78,8 @@
                         }
                     })
                 }
-            });
+            }
+            );
         });
     </script>
 </head>
@@ -103,13 +106,13 @@
                         <h5>请输入需要查询的时间段：</h5>
                         <form>
                             时间 ：
-                            <input id="start" class="span3" placeholder="起始时间：YYYY-MM-DD"/>
+                            <input type="date" id="start" class="span3" placeholder="起始时间：YYYY-MM-DD"/>
                             至
-                            <input id="end" class="span3"   placeholder="截止时间：YYYY-MM-DD"/>
+                            <input type="date" id="end" class="span3"   placeholder="截止时间：YYYY-MM-DD"/>
                             <input type="button" id="sel" value="查询" />
                         </form>
 
-                        <table class="table table-striped" id="tab" width="80%" >
+                        <table class="table table-striped" id="tab" width="80%"  border="1">
                             <thead>
                             <tr>
                                 <th>订单号</th>

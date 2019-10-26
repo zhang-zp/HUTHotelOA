@@ -52,6 +52,22 @@ public class FinanceControl extends HttpServlet {
                 e.printStackTrace();
             }
 
+        }else if(uri.indexOf("statementmonth")>=0){
+            try {
+                List<Statistic> statisticList=financeImp.statistic();
+                String jsonstr=JSON.toJSONString(statisticList);
+                out.print(jsonstr);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }else if(uri.indexOf("statementyear")>=0){
+            try {
+                List<StatisticYear> statisticList=financeImp.statisticyear();
+                String jsonstr1=JSON.toJSONString(statisticList);
+                out.print(jsonstr1);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
     }
 }

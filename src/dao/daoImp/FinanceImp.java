@@ -25,8 +25,30 @@ public class FinanceImp implements Financedao {
 
     @Override
     public List<Payoff> payoff() throws Exception {
-        String sql="SELECT * from SALARY,STAFF_INFO where STAFF_INFO.STAFF_ID=SALARY.STAFF_ID";
+        String sql="SELECT * from SALARY,STAFF_INFO where STAFF_INFO.STAFF_ID=SALARY.STAFF_ID order by salary_time";
         return queryRunner.query(sql,new BeanListHandler<Payoff>(Payoff.class));
+    }
+
+    @Override
+    public List<Statistic> statistic() throws Exception {
+        String sql="select * from \n" +
+                "(select * from (select  to_char(to_date(ENTER_TIME,'yyyy-mm-dd'),'yyyy-mm') as month,sum(room_price) as room_price from rent_room GROUP BY to_char(to_date(ENTER_TIME,'yyyy-mm-dd'),'yyyy-mm') ORDER BY month)  t1 full join  \n" +
+                "              (select  to_char(to_date(goods_time,'yyyy-mm-dd'),'yyyy-mm') as month1,sum(goods_price*goods_num) as goods_price from purchase GROUP BY to_char(to_date(goods_time,'yyyy-mm-dd'),'yyyy-mm') ORDER BY month1)  t2  \n" +
+                "              on t1.month=t2.month1) t3 full join \n" +
+                "              (select  to_char(to_date(salary_time,'yyyy-mm-dd'),'yyyy-mm') as month2,sum(renish_amount) as salary_price from salary GROUP BY to_char(to_date(salary_time,'yyyy-mm-dd'),'yyyy-mm') ORDER BY month2) t4\n" +
+                "              on t3.month=t4.month2";
+        return queryRunner.query(sql,new BeanListHandler<Statistic>(Statistic.class));
+    }
+
+    @Override
+    public List<StatisticYear> statisticyear() throws Exception {
+        String sql="select * from \n" +
+                "(select * from (select  to_char(to_date(ENTER_TIME,'yyyy-mm-dd'),'yyyy') as year,sum(room_price) as room_price from rent_room GROUP BY to_char(to_date(ENTER_TIME,'yyyy-mm-dd'),'yyyy') ORDER BY year)  t1 full join  \n" +
+                "              (select  to_char(to_date(goods_time,'yyyy-mm-dd'),'yyyy') as year1,sum(goods_price*goods_num) as goods_price from purchase GROUP BY to_char(to_date(goods_time,'yyyy-mm-dd'),'yyyy') ORDER BY year1)  t2  \n" +
+                "              on t1.year=t2.year1) t3 full join \n" +
+                "              (select  to_char(to_date(salary_time,'yyyy-mm-dd'),'yyyy') as year2,sum(renish_amount) as salary_price from salary GROUP BY to_char(to_date(salary_time,'yyyy-mm-dd'),'yyyy') ORDER BY year2) t4\n" +
+                "              on t3.year=t4.year2";
+        return queryRunner.query(sql,new BeanListHandler<StatisticYear>(StatisticYear.class));
     }
 
 }
