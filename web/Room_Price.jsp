@@ -14,7 +14,7 @@
     <link rel="stylesheet" type="text/css" href="css/theme.css">
     <script src="js/jquery-2.0.0.min.js" type="text/javascript"></script>
     <script src="js/bootstrap.js"></script>
-    <script src="ajax.js"></script>
+    <script src="js/ajax.js" type="text/javascript"></script>
 <%--    <script type="text/javascript">--%>
 <%--        $(function() {--%>
 
@@ -96,27 +96,29 @@
                             <tr>
                                 <td>${i.room_type}</td>
                                 <td>${i.room_price}</td>
-                                <td><input type="text" class="span2" id="price"></td>
+                                <td><input type="text" class="span2" id="p"></td>
                                 <td><button class="btn btn-info" name="sub" onclick="javascript:alter('${i.room_type}')">提交</button></td>
-                                <script type="text/javascript">
-                                    function  alter(type){
-                                        $ajax({
-                                            url:"update.room",
-                                            type:"post",
-                                            data:{
-                                                type:type,
-                                                price:$('#price').val()
-                                            },
-                                            success:function (data) {
-                                                alert(data)
-                                            },
-                                            error:function (data) {
-                                                alert("不行");
-                                            }
-                                        });
+
+                        </tr>
+                            <script type="text/javascript">
+                            function  alter(type){
+                                $ajax({
+                                    url:"update.room",
+                                    type:"post",
+                                    data:{
+                                        type:type,
+                                        price:$('#p').val()
+                                    },
+                                    success:function (data) {
+                                        alert(data)
+                                        window.location.href='Room_Price.jsp';
+                                    },
+                                    error:function (error) {
+                                        alert(error)
                                     }
-                                </script>
-                            </tr>
+                                });
+                            }
+                        </script>
                         </c:forEach>
                             </tbody>
                         </table>

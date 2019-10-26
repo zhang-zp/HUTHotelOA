@@ -1,6 +1,7 @@
 package dao.daoImp;
 
 import dao.RoomDao;
+import entity.RentRoom;
 import entity.RoomInfo;
 import org.apache.commons.dbutils.QueryRunner;
 import org.apache.commons.dbutils.handlers.BeanListHandler;
@@ -33,4 +34,20 @@ public class RoomDaoImp implements RoomDao {
         String sql = "update ROOM_INFO set room_price = ? where ROOM_TYPE = ?";
         queryRunner.update(sql,price,type);
     }
+
+    @Override
+    //预定管理
+    public List<RentRoom> preplot() throws SQLException {
+        return null;
+    }
+
+    @Override
+    //开房
+    public  void addRoom(RentRoom rentRoom) throws SQLException {
+        String sql = "insert into rent_room values(?,?,?,?,?,?,?,?)";
+         queryRunner.update(sql,rentRoom.getPeople_name(),rentRoom.getPeople_id(),rentRoom.getRoom_type(), rentRoom.getRent_num(),
+                 rentRoom.getEnter_time(),rentRoom.getLeave_time(),rentRoom.getRent_status(),rentRoom.getRent_tel());
+    }
+
+
 }

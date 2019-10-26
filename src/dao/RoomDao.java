@@ -1,5 +1,6 @@
 package dao;
 
+import entity.RentRoom;
 import entity.RoomInfo;
 
 import java.sql.SQLException;
@@ -12,4 +13,8 @@ public interface RoomDao {
     List<RoomInfo> getInfo() throws SQLException;
     //修改房间价格
     void  update(String type, double price) throws SQLException;
+    //预定管理
+    List<RentRoom> preplot() throws SQLException;
+    //开房
+    void addRoom(RentRoom rentRoom) throws SQLException;
 }

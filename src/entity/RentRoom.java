@@ -4,29 +4,29 @@ package entity;
  * 开房信息表
  */
 public class RentRoom {
-    private int rent_id;
-    private int room_id;
+    private String people_name;
+    private String people_id;
     private String room_type;
+    private int rent_num;
     private String enter_time;
     private String leave_time;
-    private String status;//订单状态，完成、未完成
-    private int rent_num;
-    private double room_price;
+    private String rent_status;
+    private String rent_tel;
 
-    public int getRent_id() {
-        return rent_id;
+    public String getPeople_name() {
+        return people_name;
     }
 
-    public void setRent_id(int rent_id) {
-        this.rent_id = rent_id;
+    public void setPeople_name(String people_name) {
+        this.people_name = people_name;
     }
 
-    public int getRoom_id() {
-        return room_id;
+    public String getPeople_id() {
+        return people_id;
     }
 
-    public void setRoom_id(int room_id) {
-        this.room_id = room_id;
+    public void setPeople_id(String people_id) {
+        this.people_id = people_id;
     }
 
     public String getRoom_type() {
@@ -35,6 +35,14 @@ public class RentRoom {
 
     public void setRoom_type(String room_type) {
         this.room_type = room_type;
+    }
+
+    public int getRent_num() {
+        return rent_num;
+    }
+
+    public void setRent_num(int rent_num) {
+        this.rent_num = rent_num;
     }
 
     public String getEnter_time() {
@@ -53,27 +61,19 @@ public class RentRoom {
         this.leave_time = leave_time;
     }
 
-    public String getStatus() {
-        return status;
+    public String getRent_status() {
+        return rent_status;
     }
 
-    public void setStatus(String status) {
-        this.status = status;
+    public void setRent_status(String rent_status) {
+        this.rent_status = rent_status;
     }
 
-    public int getRent_num() {
-        return rent_num;
+    public String getRent_tel() {
+        return rent_tel;
     }
 
-    public void setRent_num(int rent_num) {
-        this.rent_num = rent_num;
-    }
-
-    public double getRoom_price() {
-        return room_price;
-    }
-
-    public void setRoom_price(double room_price) {
-        this.room_price = room_price;
+    public void setRent_tel(String rent_tel) {
+        this.rent_tel = rent_tel;
     }
 }

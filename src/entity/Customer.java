@@ -11,6 +11,15 @@ public class Customer {
     private int room_id;
     private String enter_time;
     private String leave_time;
+    private String people_tel;
+
+    public String getPeople_tel() {
+        return people_tel;
+    }
+
+    public void setPeople_tel(String people_tel) {
+        this.people_tel = people_tel;
+    }
 
     public int getRent_id() {
         return rent_id;
