@@ -73,9 +73,51 @@ $(function() {
 		$("#bgscenter").load("hrManage.jsp");
 		
 	});
-	//添加新员工
+
+
+	//添加新员工--张赵鹏
+	var flag7=false;var flag1=false;var flag2=false;var flag3=false;var flag4=false;var flag5=false;var flag6=false;
+	//员工工号
+	$("#staff_id").blur(function () {
+		var reg=/\d{4}$/;
+		var staff_id = $("#staff_id").val();
+		if(staff_id.length==0){
+			$("#staff_id1").css("color","red");
+			$("#staff_id1").html("工号不能为空");
+		}else{
+			if(staff_id.length>4){
+				$("#staff_id1").css("color","red");
+				$("#staff_id1").html("工号必须为四位");
+			} else {
+				if(!reg.test(staff_id)){
+					$("#staff_id1").css("color","red");
+					$("#staff_id1").html("工号必须全为数字");
+				}else{
+					$.ajax({
+						url:"CheckStaff_id.staff",
+						type:"post",
+						data:{
+							staff_id:staff_id
+						},
+						success:function (data) {
+							if(data.indexOf("工号已存在")>=0){
+								$("#staff_id1").css("color","red");
+								$("#staff_id1").html("工号已存在！");
+							}else{
+								$("#staff_id1").html("<img src='img/li_ok.gif'>");
+								flag7=true;
+							}
+						},error:function (error) {
+							alert(error)
+						}
+					})
+
+				}
+			}
+		}
+	});
 	//员工姓名
-	var flag1=false;var flag2=false;var flag3=false;var flag4=false;var flag5=false;var flag6=false;
+
 	$("#cname1").blur(function(){
 		var cname=$("#cname1").val();
 		var reg=/^[\u4e00-\u9fa5]{2,10}$/g;
@@ -100,13 +142,15 @@ $(function() {
 	//员工年龄
 	$("#age1").blur(function(){
 		var age=$("#age1").val();
-		var reg=/(^[1][0-4][0-9]$)|(^150$)|(^[1-9][0-9]$)|(^[1-9]$)/g;
+		// var reg=/(^[1][0-4][0-9]$)|(^150$)|(^[1-9][0-9]$)|(^[1-9]$)/g;
+		// var reg =/^1[89]|[2-5]\d|60$/;
+		var reg = /^(1[89]|[2-5][0-9]|60)$/;
 		if(age.length==0){
 			$("#age").html("");
 		}else{
 			if(!reg.test(age)){
 				$("#age").css("color","red");
-				$("#age").html("员工年龄必须在0-150岁之间");
+				$("#age").html("员工年龄必须在18-60岁之间");
 			}else{
 				$("#age").html("<img src='img/li_ok.gif'>");
 				flag2=true;
@@ -234,14 +278,18 @@ $(function() {
 	 	    } 
 	    }   
 	});
-	//添加的onsubmit事件
-	$("#add").submit(function(e){
-		if(flag1==true&&flag2==true&&flag3==true&&flag4==true&&flag5==true&&flag6==true){
-			return true;
+	// 添加的onsubmit事件
+	$("#add_submit").submit(function(){
+		if(flag1==true&&flag2==true&&flag3==true&&flag4==true&&flag5==true&&flag6==true&&flag7==true){
+			return false;
 		}
-		return false;
+		return true;
 	});
-	
+	// if(flag1==true&&flag2==true&&flag3==true&&flag4==true&&flag6==true&&flag7==true){
+	// 	document.getElementById("add_submit").disabled=false;
+	// }else{
+	// 	document.getElementById("add_submit").disabled=true;
+	// }
 	function update1(obj){
 		$("#u2 input:eq(0)").val(obj.children("td:eq(1)").html());
 		if(obj.children("td:eq(2)").html()=="男"){

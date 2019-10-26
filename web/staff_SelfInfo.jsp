@@ -12,30 +12,27 @@
 <head>
     <title></title>
     <meta charset="utf-8" />
-    <link rel="stylesheet" type="text/css" href="../css/bootstrap.css">
-    <link rel="stylesheet" type="text/css" href="../css/theme.css">
-    <link rel="stylesheet" type="text/css" href="../css/hr.css">
+
+    <link rel="stylesheet" type="text/css" href="css/bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="css/theme.css">
+    <link rel="stylesheet" type="text/css" href="css/hr.css">
+    <script src="js/jquery-2.0.0.min.js" type="text/javascript"></script>
 </head>
-<script src="../js/jquery-2.0.0.min.js" type="text/javascript"></script>
+
 
 <body>
 <div class="navbar-inner">
-<%--    <div class="header">--%>
-<%--        <h1 class="page-title">人事管理</h1>--%>
-<%--    </div>--%>
+    <div class="header">
+        <h1 class="page-title">人事管理</h1>
+    </div>
     <ul class="breadcrumb">
         <li>
-            <a href="">人事管理</a><span class="divider">/</span></li>
+            人事管理<span class="divider">/</span></li>
         <li class="active">查看自己信息</li>
     </ul>
     <div class="container-fluid" style="-moz-box-shadow:10px 10px 20px #20332F; -webkit-box-shadow:10px 10px 20px #20332F; box-shadow:10px 10px 20px #20332F;">
         <div class="row-fluid">
             <div class="well">
-<%--                <ul class="nav nav-tabs">--%>
-<%--                    <li class="active">--%>
-<%--                        <a href="#home" data-toggle="tab">查看个人信息</a>--%>
-<%--                    </li>--%>
-<%--                </ul>--%>
                 <div id="myTabContent" class="tab-content">
                     <div class="tab-pane active in" id="add_employee">
                         <label>姓名：</label>
@@ -43,9 +40,9 @@
                         <label>性别：</label>
                         <input type="text"   value="${staffInfo.staff_sex}"class="span2" disabled>
                         <label>年龄：</label>
-                        <input type="text"   value="年龄未知" class="span2" disabled>
+                        <input type="text"   value="${staffInfo.staff_age}" class="span2" disabled>
                         <label>电话：</label>
-                        <input type="text"   value="电话未知" class="span2" disabled>
+                        <input type="text"   value="${staffInfo.staff_tel}" class="span2" disabled>
                         <label>部门：</label>
                         <input type="text"    value="${staffInfo.dept_name}"class="span2" disabled>
                         <label>职位：</label>
@@ -64,3 +61,4 @@
 </div>
 </body>
 </html>
+

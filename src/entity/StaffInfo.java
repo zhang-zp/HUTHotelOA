@@ -14,6 +14,8 @@ public class StaffInfo {
     private String entry_time;
     private String fire_time;
     private String staff_status;
+    private String staff_tel;
+    private int staff_age;
 
     public int getStaff_id() {
         return staff_id;
@@ -93,5 +95,39 @@ public class StaffInfo {
 
     public void setStaff_status(String staff_status) {
         this.staff_status = staff_status;
+    }
+
+    public String getStaff_tel() {
+        return staff_tel;
+    }
+
+    public void setStaff_tel(String staff_tel) {
+        this.staff_tel = staff_tel;
+    }
+
+    public int getStaff_age() {
+        return staff_age;
+    }
+
+    public void setStaff_age(int staff_age) {
+        this.staff_age = staff_age;
+    }
+
+    @Override
+    public String toString() {
+        return "StaffInfo{" +
+                "staff_id=" + staff_id +
+                ", staff_name='" + staff_name + '\'' +
+                ", staff_num='" + staff_num + '\'' +
+                ", staff_sex='" + staff_sex + '\'' +
+                ", dept_name='" + dept_name + '\'' +
+                ", staff_job='" + staff_job + '\'' +
+                ", staff_salary=" + staff_salary +
+                ", entry_time='" + entry_time + '\'' +
+                ", fire_time='" + fire_time + '\'' +
+                ", staff_status='" + staff_status + '\'' +
+                ", staff_tel='" + staff_tel + '\'' +
+                ", staff_age=" + staff_age +
+                '}';
     }
 }
