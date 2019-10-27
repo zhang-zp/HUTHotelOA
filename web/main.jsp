@@ -120,23 +120,17 @@
 
     </ul>
 
-
+<%--人事管理--张赵鹏--%>
     <a href="#person_manger" class="nav-header" data-toggle="collapse"><i
             class="icon-user icon-black"></i>人事管理</a>
     <ul id="person_manger" class="nav nav-list collapse">
-        <!--			<li><a href="employee/getPwd.do" target="source">查看密码</a></li>-->
-        <!--<li><a href="employee/updatePwd.do" target="source">修改密码</a></li>-->
-        <li><a href="selfInfo.staff" target="source">查看个人信息</a>
-        </li>
-        <li><a href="#" target="source">更新个人信息</a>
-        </li>
-
-        <li><a href="jsp/staff_Add.jsp" target="source">添加新员工</a></li>
+        <li><a href="selfInfo.staff" target="source">查看个人信息</a></li>
+        <li><a href="updateSelfInfo.staff" target="source">更新个人信息</a></li>
+        <li><a href="staff_Add.jsp" target="source">添加新员工</a></li>
         <li><a href="#" target="source">添加用户</a></li>
-        <li><a href="#" target="source">删除员工</a></li>
+        <li><a href="staff_Delete.jsp" target="source">删除员工</a></li>
         <!--<li><a href="employeeCheck/departmentInfo.do" target="source">查看本部门内员工信息</a>-->
-
-        <li><a href="jsp/allInfo.staff" target="source">查看全部员工信息</a>
+        <li><a href="allInfo.staff" target="source">查看全部员工信息</a>
         </li>
         <!--<li><a href="employeeUpdate/get_employeeInfo.do"
             target="source">更新全部员工信息</a></li>
