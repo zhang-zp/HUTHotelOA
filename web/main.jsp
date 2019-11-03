@@ -80,12 +80,12 @@
     <a href="#dashboard-menu" class="nav-header" data-toggle="collapse"><i
             class="icon-home icon-black"></i>住宿管理</a>
     <ul id="dashboard-menu" class="nav nav-list collapse">
-        <li><a href="roomManage/SelectPreplot.do" target="source">预定管理</a></li>
-        <li><a href="roomManage/getRoom.do" target="source">住宿管理</a></li>
-        <li><a href="roomManage/SelectExist.do" target="source">退宿查询</a></li>
-
+        <li><a href="Room_Reg.jsp" target="source">客房登记</a></li>
+        <li><a href="Room_Spend.jsp" target="source">退宿结算</a></li>
+        <li><a href="Room_Preplot.jsp" target="source">预定客房</a></li>
+        <li><a href="Room_Change.jsp" target="source">客房更换</a></li>
         <li><a href="RoomPrice.room" target="source">房价调整</a></li>
-        <li><a href="RoomAll.room" target="source">查看房间</a>
+        <li><a href="RoomAll.room" target="source">查看房间</a></li>
 
     </ul>
 
