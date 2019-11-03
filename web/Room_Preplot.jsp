@@ -1,8 +1,9 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%--
   Created by IntelliJ IDEA.
   User: Yhc
   Date: 2019/10/26
-  Time: 15:36
+  Time: 14:37
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
@@ -39,7 +40,7 @@
         <h1 class="page-title">客房管理</h1>
     </div>
     <ul class="breadcrumb">
-<%--        <li><a href="">客房管理</a><span class="divider">/</span></li>--%>
+        <%--        <li><a href="">客房管理</a><span class="divider">/</span></li>--%>
         <li class="active">开房登记</li>
     </ul>
     <div class="container-fluid">
@@ -50,20 +51,20 @@
                         <table class="table table-striped">
                             <tr>
                                 <td>姓名：</td>
-                                <td><input type="text" id="name"></td>
+                                <td><input type="text" id="pName"></td>
                             </tr>
                             <tr>
                                 <td>身份证号：</td>
-                                <td><input type="text" id="ID"></td>
+                                <td><input type="text" id="pID"></td>
                             </tr>
                             <tr>
                                 <td>联系电话：</td>
-                                <td><input type="text" id="tel"></td>
+                                <td><input type="text" id="pTel"></td>
                             </tr>
                             <tr>
                                 <td>房间类型：</td>
                                 <td>
-                                    <select id="type">
+                                    <select id="pType">
                                         <option selected>--请选择--</option>
                                         <option>单人间</option>
                                         <option>双人间</option>
@@ -74,36 +75,36 @@
                             </tr>
                             <tr>
                                 <td>房间数量：</td>
-                                <td><input type="text" id="num"></td>
+                                <td><input type="text" id="pNum"></td>
                             </tr>
                             <tr>
                                 <td>入住时间：</td>
-                                <td><input type="date" id="enter"></td>
+                                <td><input type="date" id="pEnter"></td>
                             </tr>
                             <tr>
                                 <td>离开时间：</td>
-                                <td><input type="date" id="leave"></td>
+                                <td><input type="date" id="pLeave"></td>
                             </tr>
                         </table>
-                            <button onclick="javascript:add()">开房</button>
+                        <button onclick="javascript:add()">开房</button>
                         <script>
                             function  add(type){
                                 $ajax({
-                                    url:"RoomReg.room",
+                                    url:"RoomPre.room",
                                     type:"post",
                                     data:{
-                                        name:$('#name').val(),
-                                        ID:$('#ID').val(),
-                                        tel:$('#tel').val(),
-                                        type:$('#type').val(),
-                                        num:$('#num').val(),
-                                        enter:$('#enter').val(),
-                                        leave:$('#leave').val()
+                                        name:$('#Name').val(),
+                                        ID:$('#pID').val(),
+                                        tel:$('#pTel').val(),
+                                        type:$('#pType').val(),
+                                        num:$('#pNum').val(),
+                                        enter:$('#pEnter').val(),
+                                        leave:$('#pLeave').val()
                                     },
                                     success:function (data) {
                                         var info = data.substring(3,data.length);
                                         alert(info)
-                                        window.location.href='Room_Reg.jsp';
+                                        window.location.href='Room_Preplot.jsp';
                                     },
                                     error:function (error) {
                                         alert("信息不完整，请补全信息")
