@@ -12,10 +12,13 @@
     <link rel="stylesheet" type="text/css" href="css/theme.css">
     <script src="js/jquery-2.0.0.min.js" type="text/javascript"></script>
     <script src="js/json2.js"></script>
+    <script src="js/jquery.pagination.js"></script>
+    <script src="css/pagination.css"></script>
     <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%--     <script src="My97DatePicker/WdatePicker.js"></script>--%>
     <script type="text/javascript">
         $(function(){
+
             $("#jump").click(function(){
                 var page=parseInt($("#jumpPage").val());
                 var pages="${pageList.pages }";
@@ -41,15 +44,19 @@
                 return false;
             });
             var order;
+            //搜索点击事件
             $("#sel").click(function(){
 
                 var page=1;
+                //拿到开始日期和截止日期
                 var starttime=$("#start").val();
                 var endtime=$("#end").val();
                 if(""==starttime&&""==endtime){
                     alert("请正确选择日期！");
                 }else{
+                    //清空表格
                     $("#tbody").empty();
+                    //向后台传参（开始时间和结束时间）
                     $.ajax({
                         'tpye':'post',
                         'url':'findincome.finance',
@@ -59,12 +66,11 @@
 
                                alert("没加到数据");
                             }else{
-                                 // alert("有数据");
-                               order=JSON.parse(data);
-                               // alert(order.length);
-                                for(var i=0;i<order.length;i++){
-                                    // alert(order[i].enter_time);
 
+                                //将后台数据转成json对象
+                               order=JSON.parse(data);
+                               //动态添加到表格中
+                                for(var i=0;i<order.length;i++){
                                     $("#tbody").append("<tr style='text-align: center'>" +
                                         "<td>"+order[i].rent_id+"</td>"+
                                         "<td>"+order[i].enter_time+"</td>" +
@@ -112,7 +118,7 @@
                             <input type="button" id="sel" value="查询" />
                         </form>
 
-                        <table class="table table-striped" id="tab" width="80%"  border="1">
+                        <table class="table table-striped" id="tab" width="80%"  border="1" cellpadding="0" cellspacing="0">
                             <thead>
                             <tr>
                                 <th>订单号</th>
@@ -128,7 +134,7 @@
                             </tbody>
                         </table>
 
-                        <div style=" width:95%;text-align:right">
+                        <div style=" width:95%;text-align:right" id="page">
                             <a href="selectIn">首页</a>
 
                             <a href="selectIncomeAll.do?page=${pageList.prePage}">上一页</a>

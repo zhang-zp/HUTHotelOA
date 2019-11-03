@@ -26,8 +26,8 @@ public class FinanceControl extends HttpServlet {
             String end=req.getParameter("endtime");
             try {
                 List<RentRoom> rentRoomList=financeImp.findorderBytime(start,end);
-                String jsonstr= JSON.toJSONString(rentRoomList);
-                out.print(jsonstr);
+                String jsonstr0= JSON.toJSONString(rentRoomList);
+                out.print(jsonstr0);
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -35,8 +35,8 @@ public class FinanceControl extends HttpServlet {
         }else if(uri.indexOf("findexpend")>=0){
             try {
                 List<Expend> purchaseList=financeImp.findexpend();
-                String jsonstr=JSON.toJSONString(purchaseList);
-                out.print(jsonstr);
+                String jsonstr1=JSON.toJSONString(purchaseList);
+                out.print(jsonstr1);
 
             } catch (Exception e) {
                 e.printStackTrace();
@@ -46,8 +46,8 @@ public class FinanceControl extends HttpServlet {
             List<Payoff> payoffList= null;
             try {
                 payoffList = financeImp.payoff();
-                String jsonstr=JSON.toJSONString(payoffList);
-                out.print(jsonstr);
+                String jsonstr2=JSON.toJSONString(payoffList);
+                out.print(jsonstr2);
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -55,16 +55,25 @@ public class FinanceControl extends HttpServlet {
         }else if(uri.indexOf("statementmonth")>=0){
             try {
                 List<Statistic> statisticList=financeImp.statistic();
-                String jsonstr=JSON.toJSONString(statisticList);
-                out.print(jsonstr);
+                String jsonstr3=JSON.toJSONString(statisticList);
+                out.print(jsonstr3);
             } catch (Exception e) {
                 e.printStackTrace();
             }
         }else if(uri.indexOf("statementyear")>=0){
             try {
                 List<StatisticYear> statisticList=financeImp.statisticyear();
-                String jsonstr1=JSON.toJSONString(statisticList);
-                out.print(jsonstr1);
+                String jsonstr4=JSON.toJSONString(statisticList);
+                out.print(jsonstr4);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }else if(uri.indexOf("histogrammonth")>=0){
+            String selectyear=req.getParameter("selectyear");
+            try {
+                List<Statistic> statisticList1=financeImp.selectyear(selectyear);
+                String jsonstr5=JSON.toJSONString(statisticList1);
+                out.write(jsonstr5);
             } catch (Exception e) {
                 e.printStackTrace();
             }

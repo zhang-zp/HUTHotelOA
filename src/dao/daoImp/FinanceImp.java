@@ -32,11 +32,11 @@ public class FinanceImp implements Financedao {
     @Override
     public List<Statistic> statistic() throws Exception {
         String sql="select * from \n" +
-                "(select * from (select  to_char(to_date(ENTER_TIME,'yyyy-mm-dd'),'yyyy-mm') as month,sum(room_price) as room_price from rent_room GROUP BY to_char(to_date(ENTER_TIME,'yyyy-mm-dd'),'yyyy-mm') ORDER BY month)  t1 full join  \n" +
-                "              (select  to_char(to_date(goods_time,'yyyy-mm-dd'),'yyyy-mm') as month1,sum(goods_price*goods_num) as goods_price from purchase GROUP BY to_char(to_date(goods_time,'yyyy-mm-dd'),'yyyy-mm') ORDER BY month1)  t2  \n" +
-                "              on t1.month=t2.month1) t3 full join \n" +
-                "              (select  to_char(to_date(salary_time,'yyyy-mm-dd'),'yyyy-mm') as month2,sum(renish_amount) as salary_price from salary GROUP BY to_char(to_date(salary_time,'yyyy-mm-dd'),'yyyy-mm') ORDER BY month2) t4\n" +
-                "              on t3.month=t4.month2";
+                "                (select * from (select  to_char(to_date(ENTER_TIME,'yyyy-mm-dd'),'yyyy-mm') as month,sum(room_price) as room_price from rent_room GROUP BY to_char(to_date(ENTER_TIME,'yyyy-mm-dd'),'yyyy-mm') ORDER BY month)  t1 full outer join \n" +
+                "                              (select  to_char(to_date(goods_time,'yyyy-mm-dd'),'yyyy-mm') as month1,sum(goods_price*goods_num) as goods_price from purchase GROUP BY to_char(to_date(goods_time,'yyyy-mm-dd'),'yyyy-mm') ORDER BY month1)  t2 \n" +
+                "                              on t2.month1=t1.month ) t3 full outer join \n" +
+                "                              (select  to_char(to_date(salary_time,'yyyy-mm-dd'),'yyyy-mm') as month2,sum(renish_amount) as salary_price from salary GROUP BY to_char(to_date(salary_time,'yyyy-mm-dd'),'yyyy-mm') ORDER BY month2) t4\n" +
+                "                              on ( T3.month1=T4.month2 or T4.month2=T3.month) ORDER BY T3.month,T3.month1,T4.month2";
         return queryRunner.query(sql,new BeanListHandler<Statistic>(Statistic.class));
     }
 
@@ -49,6 +49,21 @@ public class FinanceImp implements Financedao {
                 "              (select  to_char(to_date(salary_time,'yyyy-mm-dd'),'yyyy') as year2,sum(renish_amount) as salary_price from salary GROUP BY to_char(to_date(salary_time,'yyyy-mm-dd'),'yyyy') ORDER BY year2) t4\n" +
                 "              on t3.year=t4.year2";
         return queryRunner.query(sql,new BeanListHandler<StatisticYear>(StatisticYear.class));
+    }
+
+    @Override
+    public List<Statistic> selectyear(String selectyear) throws Exception {
+//        String q1=selectyear;
+//        System.out.println(q1.length());
+//        System.out.println(q1.trim().length());
+//        System.out.println(q1);
+        String sql="select * from \n" +
+                "                (select * from (select  to_char(to_date(ENTER_TIME,'yyyy-mm-dd'),'yyyy-mm') as month,sum(room_price) as room_price from rent_room GROUP BY to_char(to_date(ENTER_TIME,'yyyy-mm-dd'),'yyyy-mm') ORDER BY month)  t1 full outer join \n" +
+                "                              (select  to_char(to_date(goods_time,'yyyy-mm-dd'),'yyyy-mm') as month1,sum(goods_price*goods_num) as goods_price from purchase GROUP BY to_char(to_date(goods_time,'yyyy-mm-dd'),'yyyy-mm') ORDER BY month1)  t2 \n" +
+                "                              on t2.month1=t1.month ) t3 full outer join \n" +
+                "                              (select  to_char(to_date(salary_time,'yyyy-mm-dd'),'yyyy-mm') as month2,sum(renish_amount) as salary_price from salary GROUP BY to_char(to_date(salary_time,'yyyy-mm-dd'),'yyyy-mm') ORDER BY month2) t4\n" +
+                "                              on ( T3.month1=T4.month2 or T4.month2=T3.month) WHERE T3.month like ?||'%' or t3.month1 like ?||'%' or T4.month2 like ?||'%'  ORDER BY T3.month,T3.month1,T4.month2";
+        return queryRunner.query(sql,new BeanListHandler<Statistic>(Statistic.class),selectyear,selectyear,selectyear);
     }
 
 }

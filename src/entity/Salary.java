@@ -4,9 +4,28 @@ package entity;
  * 工资表
  */
 public class Salary {
+    private String salary_id;
+    private  String salary_time;
     private String staff_id;
     private double renish_amount;
     private String renish_reason;
+
+    public String getSalary_id() {
+        return salary_id;
+    }
+
+    public void setSalary_id(String salary_id) {
+        this.salary_id = salary_id;
+    }
+
+
+    public String getSalary_time() {
+        return salary_time;
+    }
+
+    public void setSalary_time(String salary_time) {
+        this.salary_time = salary_time;
+    }
 
     public String getStaff_id() {
         return staff_id;

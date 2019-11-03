@@ -14,6 +14,26 @@
     <link rel="stylesheet" type="text/css" href="css/bootstrap.css">
     <link rel="stylesheet" type="text/css" href="css/bootstrap_1.css">
     <link rel="stylesheet" type="text/css" href="css/theme.css">
+    <script src="js/jquery-3.3.1.min.js"></script>
+    <script>
+       // var staff=JSON.parse(staffInfo);
+
+        $(function () {
+            $("#qiantai,#caiwu,#cangku,#renshi").hide();
+            var dept=$("#id").text().split(" ")[1];
+            if(dept=="前台部" && dept=="客房部"){
+                $("#qiantai").show();
+            }else if(dept=="财务部"){
+                $("#caiwu").show();
+            }else if(dept=="人事部"){
+                $("#renshi").show();
+            }else if(dept=="采购部"){
+                $("#cangku").show();
+            }else if(dept=="行政管理部"){
+                $("#qiantai,#caiwu,#cangku,#renshi").show();
+            }
+        })
+    </script>
     <style type="text/css">
         #line-chart {
             height: 300px;
@@ -61,25 +81,25 @@
         <ul class="nav pull-right">
             <li id="fat-menu" class="dropdown"><a href="#" role="button"
                                                   class="dropdown-toggle" data-toggle="dropdown"> <i
-                    class="icon-user icon-white"></i> $ <i
+                    class="icon-user icon-white"></i><span id="id">${name} ${dept}</span><i
                     class="icon-caret-down"></i>
             </a>
                 <ul class="dropdown-menu">
-                    <li><a tabindex="-1" href="employeeCheck/selfInfo.do"
+                    <li><a tabindex="-1" href="staff_SelfInfo.jsp"
                            target="source">个人信息</a></li>
                     <li class="divider"></li>
-                    <li><a tabindex="-1" href="loginAction/exit.do">退出</a></li>
+                    <li><a tabindex="-1" href="login.jsp">退出</a></li>
                 </ul></li>
         </ul>
     </div>
 </div>
 
 <div class="sidebar-nav">
-
-
-    <a href="#dashboard-menu" class="nav-header" data-toggle="collapse"><i
-            class="icon-home icon-black"></i>住宿管理</a>
-    <ul id="dashboard-menu" class="nav nav-list collapse">
+<%--    增加了div用于隐藏和显示模块--%>
+<div id="qiantai">
+    <a href="#dashboard-menu" class="nav-header" data-toggle="collapse" ><i
+            class="icon-home icon-black" ></i>住宿管理</a>
+    <ul id="dashboard-menu" class="nav nav-list collapse" >
         <li><a href="roomManage/SelectPreplot.do" target="source">预定管理</a></li>
         <li><a href="roomManage/getRoom.do" target="source">住宿管理</a></li>
         <li><a href="roomManage/SelectExist.do" target="source">退宿查询</a></li>
@@ -88,25 +108,29 @@
         <li><a href="RoomAll.room" target="source">查看房间</a>
 
     </ul>
-
+</div>
+<%--    增加了div用于隐藏和显示模块--%>
+    <div id="caiwu" >
     <a href="#error-menu" class="nav-header collapsed"
-       data-toggle="collapse"><i class="icon-lock"></i>财务管理</a>
+       data-toggle="collapse"><i class="icon-lock" hidden></i>财务管理</a>
     <ul id="error-menu" class="nav nav-list collapse">
         <li>
-            <a href="finance/selectIncomeAll.do" target="source">收入明细</a>
+            <a href="income.jsp" target="source">收入明细</a>
         </li>
         <li>
-            <a href="finance/selectSpendingAll.do" target="source">支出明细</a>
+            <a href="expend.jsp" target="source">支出明细</a>
         </li>
         <li>
-            <a href="finance/selectFinance.do" target="source">财务报表</a>
+            <a href="statement.jsp" target="source">财务报表</a>
         </li>
         <li>
-            <a href="finance/selectSalaryAll.do" target="source">员工薪资</a>
+            <a href="salary.jsp" target="source">员工薪资</a>
         </li>
     </ul>
-
-    <a href="#legal-menu" class="nav-header" data-toggle="collapse"><i
+    </div>
+<%--    增加了div用于隐藏和显示模块--%>
+    <div id="cangku" >
+    <a href="#legal-menu" class="nav-header" data-toggle="collapse" hidden><i
             class="icon-shopping-cart"></i>仓库管理</a>
     <ul id="legal-menu" class="nav nav-list collapse">
         <li>
@@ -120,8 +144,10 @@
 
     </ul>
 
-
-    <a href="#person_manger" class="nav-header" data-toggle="collapse"><i
+    </div>
+<%--    增加了div用于隐藏和显示模块--%>
+    <div id="renshi" >
+    <a href="#person_manger" class="nav-header" data-toggle="collapse" hidden><i
             class="icon-user icon-black"></i>人事管理</a>
     <ul id="person_manger" class="nav nav-list collapse">
         <!--			<li><a href="employee/getPwd.do" target="source">查看密码</a></li>-->
@@ -142,6 +168,7 @@
             target="source">更新全部员工信息</a></li>
     -->
     </ul>
+    </div>
 </div>
 <div id="myDiv">
     <iframe src="content.jsp" id="iframe" name="source" scrolling="no"

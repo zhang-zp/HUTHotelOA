@@ -16,6 +16,7 @@
 <%--    <script src="My97DatePicker/WdatePicker.js"></script>--%>
     <script type="text/javascript">
         $(function(){
+            //页面开始时直接向后台发请求，拿取数据
             $.ajax({
                 'tpye':'post',
                 'url':'findexpend.finance',

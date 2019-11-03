@@ -6,7 +6,7 @@ package entity;
 public class Purchase {
     private int goods_id;
     private String goods_name;
-    private double goods_prices;
+    private double goods_price;
     private int goods_num;
     private String goods_time;
 
@@ -26,12 +26,12 @@ public class Purchase {
         this.goods_name = goods_name;
     }
 
-    public double getGoods_prices() {
-        return goods_prices;
+    public double getGoods_price() {
+        return goods_price;
     }
 
-    public void setGoods_prices(double goods_prices) {
-        this.goods_prices = goods_prices;
+    public void setGoods_prices(double goods_price) {
+        this.goods_price = goods_price;
     }
 
     public int getGoods_num() {
