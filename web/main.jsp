@@ -10,10 +10,13 @@
 <head>
     <base href="#">
     <title>首页</title>
-    <meta charset="utf-8" />
+    <meta charset="utf-8"/>
     <link rel="stylesheet" type="text/css" href="css/bootstrap.css">
     <link rel="stylesheet" type="text/css" href="css/bootstrap_1.css">
     <link rel="stylesheet" type="text/css" href="css/theme.css">
+    <script src="js/jquery-2.0.0.min.js" type="text/javascript"></script>
+    <script type="text/javascript" src="lib/layer/1.9.3/layer.js"></script>
+    <script type="text/javascript" src="js/alert.js"></script>
     <style type="text/css">
         #line-chart {
             height: 300px;
@@ -69,7 +72,8 @@
                            target="source">个人信息</a></li>
                     <li class="divider"></li>
                     <li><a tabindex="-1" href="loginAction/exit.do">退出</a></li>
-                </ul></li>
+                </ul>
+            </li>
         </ul>
     </div>
 </div>
@@ -80,29 +84,28 @@
     <a href="#dashboard-menu" class="nav-header" data-toggle="collapse"><i
             class="icon-home icon-black"></i>住宿管理</a>
     <ul id="dashboard-menu" class="nav nav-list collapse">
-        <li><a href="roomManage/SelectPreplot.do" target="source">预定管理</a></li>
-        <li><a href="roomManage/getRoom.do" target="source">住宿管理</a></li>
-        <li><a href="roomManage/SelectExist.do" target="source">退宿查询</a></li>
-
+        <li><a href="Room_Reg.jsp" target="source">客房登记</a></li>
+        <li><a href="#" target="source">退宿结算</a></li>
+        <li><a href="RoomPreplot.room" target="source">预定客房</a></li>
+        <li><a href="RoomType.room" target="source">客房更换</a></li>
         <li><a href="RoomPrice.room" target="source">房价调整</a></li>
         <li><a href="RoomAll.room" target="source">查看房间</a>
-
     </ul>
 
     <a href="#error-menu" class="nav-header collapsed"
        data-toggle="collapse"><i class="icon-lock"></i>财务管理</a>
     <ul id="error-menu" class="nav nav-list collapse">
         <li>
-            <a href="finance/selectIncomeAll.do" target="source">收入明细</a>
+            <a href="income.jsp" target="source">收入明细</a>
         </li>
         <li>
-            <a href="finance/selectSpendingAll.do" target="source">支出明细</a>
+            <a href="expend.jsp" target="source">支出明细</a>
         </li>
         <li>
-            <a href="finance/selectFinance.do" target="source">财务报表</a>
+            <a href="statement.jsp" target="source">财务报表</a>
         </li>
         <li>
-            <a href="finance/selectSalaryAll.do" target="source">员工薪资</a>
+            <a href="salary.jsp" target="source">员工薪资</a>
         </li>
     </ul>
 
@@ -110,31 +113,41 @@
             class="icon-shopping-cart"></i>仓库管理</a>
     <ul id="legal-menu" class="nav nav-list collapse">
         <li>
-            <a href="buyshopAction/queryBuyShop.do" target="source">物品采购</a>
-
-        <li><a href="shopoutAction/queryOutShop.do" target="source">物品分发</a>
+            <a href="warehouse_buyshop.jsp" target="source">物品采购</a>
+        <%--            <a href="showRecord.goods" target="source">物品采购</a>--%>
+        </li>
+        <li>
+            <a href="javascript:;" onclick="member_add('物品分发','warehouse_shopout.html','','510')"
+               target="source">物品分发</a>
         </li>
 
-        <li><a href="managerAction/queryallShop.do" target="source">仓库管理</a>
+        <li>
+            <a href="#" target="source">仓库管理</a>
         </li>
-
     </ul>
 
-<%--人事管理--张赵鹏--%>
+    <%--人事管理--张赵鹏--%>
     <a href="#person_manger" class="nav-header" data-toggle="collapse"><i
             class="icon-user icon-black"></i>人事管理</a>
     <ul id="person_manger" class="nav nav-list collapse">
-        <li><a href="selfInfo.staff" target="source">查看个人信息</a></li>
-        <li><a href="updateSelfInfo.staff" target="source">更新个人信息</a></li>
-        <li><a href="staff_Add.jsp" target="source">添加新员工</a></li>
-        <li><a href="#" target="source">添加用户</a></li>
-        <li><a href="staff_Delete.jsp" target="source">删除员工</a></li>
-        <!--<li><a href="employeeCheck/departmentInfo.do" target="source">查看本部门内员工信息</a>-->
-        <li><a href="allInfo.staff" target="source">查看全部员工信息</a>
+        <li>
+            <a href="selfInfo.staff" target="source">个人信息</a>
         </li>
-        <!--<li><a href="employeeUpdate/get_employeeInfo.do"
-            target="source">更新全部员工信息</a></li>
-    -->
+<%--        <li>--%>
+<%--            <a href="updateSelfInfo.staff" target="source">更新个人信息</a>--%>
+<%--        </li>--%>
+        <li>
+            <a href="staff_Add.jsp" target="source">添加新员工</a>
+        </li>
+        <li>
+            <a href="staff_LoginAdd.jsp" target="source">添加管理</a>
+        </li>
+        <li>
+            <a href="staff_Delete.jsp" target="source">删除员工</a>
+        </li>
+        <li>
+            <a href="allInfo.staff" target="source">查看全部员工信息</a>
+        </li>
     </ul>
 </div>
 <div id="myDiv">
@@ -143,5 +156,11 @@
 </div>
 <script src="js/jquery-2.0.0.min.js" type="text/javascript"></script>
 <script src="js/bootstrap.min.js"></script>
+<script>
+    /*弹出页面*/
+    function member_add(title, url, w, h) {
+        layer_show(title, url, w, h);
+    }
+</script>
 </body>
 </html>

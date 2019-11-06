@@ -1,6 +1,5 @@
-var i=0;
-$(function() {
-	//张国钊
+var flag7=false;var flag1=false;var flag2=false;var flag3=false;var flag4=false;var flag5=false;var flag6=false;
+$(function () {
 	//购买商品验证信息
 	//商品名称
 	$("#shopname").blur(function(){
@@ -37,31 +36,59 @@ $(function() {
 			return false;
 		}
 	});
-	
-	//商品核查数量
-	$("#sum1").blur(function(){
-		var sum=/^[1-9]\d*$/;
-		if($("#price1").val()=="请选择亏损商品价钱"||$("#price1").val()=="请选择亏损商品名称"){
-			alert("请选择商品价钱");
-		}else{
-			if(sum.test($(this).val())){
-				if($(this).val()>parseInt($("#spsum").html())){
-					$(this).val(parseInt($("#spsum").html()));
-					var s=parseInt($(this).val());
-					var p=parseFloat($("#price1").val());
-					var m=(s*p).toFixed(2);
-					$("#totalprice").val(m);
-					return true;
-				}else{
-					var s=parseInt($(this).val());
-					var p=parseFloat($("#price1").val());
-					var m=(s*p).toFixed(2);
-					$("#totalprice").val(m);
+	//商品数量--张赵鹏
+	$("#sum").blur(function() {
+		$("#sps2").html("");
+		var sum = /^[1-9]\d*$/;
+		if (sum.test($(this).val())) {
+			if ($("#shopprice").val() == "") {
+				alert("请输入商品价格");
+			} else {
+				var p = parseFloat($("#shopprice").val());
+				var sum = parseInt($(this).val());
+				var c = (p * sum).toFixed(2);
+				$("#totalprice").val(c);
+				$("#sps2").html("<img src='img/li_ok.gif'>");
+				if ($("#sps2").val() == "") {
+					alert("请输入采购商品名称");
 				}
-			}else if($(this).val()!=""){
-				$("#sps2").html("输入商品数量不正确");
-				$("#sps2").css("color","red");
-				return false;
+				return true;
+			}
+		} else if ($(this).val() != "") {
+			$("#sps2").html("输入商品数量不正确");
+			$("#sps2").css("color", "red");
+			return false;
+		};
+	});
+	//商品分发核查数量
+	$("#sum1").blur(function(){
+		var sum =/^[1-9]\d*$/;
+		var num = $("#sum1").val();
+		if(num.length==0){
+			alert("请输入合理的数量");
+		}else{
+			if(!sum.test(num)){
+				alert("请输入数字");
+			}else{
+				$.ajax({
+					url:"CheckGoodsNum.goods",
+					type:"post",
+					dataType:"json",
+					data:{
+						GoodsNum:sum,
+						GoodsName:$("#shopName").val()
+					},
+					success:function (data) {
+						if(data.indexOf("数量不足")>=0){
+							alert("商品数量不足");
+						}else{
+							alert("成功");
+						}
+					},error:function (error) {
+						console.log(error);
+						alert(error);
+					}
+				})
 			}
 		}
 	});
@@ -74,9 +101,7 @@ $(function() {
 		
 	});
 
-
 	//添加新员工--张赵鹏
-	var flag7=false;var flag1=false;var flag2=false;var flag3=false;var flag4=false;var flag5=false;var flag6=false;
 	//员工工号
 	$("#staff_id").blur(function () {
 		var reg=/\d{4}$/;
@@ -111,13 +136,11 @@ $(function() {
 							alert(error)
 						}
 					})
-
 				}
 			}
 		}
 	});
 	//员工姓名
-
 	$("#cname1").blur(function(){
 		var cname=$("#cname1").val();
 		var reg=/^[\u4e00-\u9fa5]{2,10}$/g;
@@ -197,13 +220,15 @@ $(function() {
 	//员工身份证号
 	$("#idcard1").blur(function(){
 		var idcard = $("#idcard1").val();
-		var reg=/^\d{18}$/g;
+		// var reg=/^\d{18}$/g;
+		var reg = /^[1-9]\d{5}(18|19|([23]\d))\d{2}((0[1-9])|(10|11|12))(([0-2][1-9])|10|20|30|31)\d{3}[0-9Xx]$/;
 		if(idcard.length==0){
-			$("#idcard").html("");
+			$("#idcard").css("color","red");
+			$("#idcard").html("身份证号不能为空");
 		}else{
 			if(!reg.test(idcard)){
 				$("#idcard").css("color","red");
-				$("#idcard").html("员工身份证号需为18位");
+				$("#idcard").html("请输入正确的身份证号");
 			}else{
 				$.ajax({
 					url:"checkID.staff?idcard="+idcard,
@@ -226,39 +251,6 @@ $(function() {
 			}
 		}	
 	});
-	//员工所属酒店
-	$("#hotel1").blur(function(){
-		var hotel=$("#hotel1").val();
-		var reg=/^[\u4e00-\u9fa5]{2,10}$/g;
-		if(hotel.length==0){
-			$("#hotel").css("color","red");
-			$("#hotel").html("员工所属酒店不能为空");
-		}else{
-			if(!reg.test(hotel)){
-				$("#hotel").css("color","red");
-				$("#hotel").html("员工所属酒店不符合规定");
-			}else{
-				$.ajax({
-					url:"employeeAdd/getHotel.do?hotel="+hotel,
-					type:"post",
-					async:false,
-					cache:false,
-					success:function(data){
-						if(data!=""){
-							$("#hotel").html("<img src='img/li_ok.gif'>");
-							flag5=true;
-						}else{
-							$("#hotel").css("color","red");
-							$("#hotel").html("您输入的酒店不是本公司的，请重新输入。");
-						}
-					},
-					error:function(){
-						alert("errors");
-					}
-				});
-			}
-		}
-	});
 	//员工入职时间
 	$("#starttime1").blur(function(){	
 		var starttime=$("#starttime1").val();
@@ -278,18 +270,44 @@ $(function() {
 	 	    } 
 	    }   
 	});
+
+	//class属性为nowTime
+	//时间类型默认显示当前时间--张赵鹏
+	$(document).ready(function () {
+		var time = new Date();
+		var day = ("0" + time.getDate()).slice(-2);
+		var month = ("0" + (time.getMonth() + 1)).slice(-2);
+		var today = time.getFullYear() + "-" + (month) + "-" + (day);
+		$(".nowTime").val(today);
+	})
+
+
+
 	// 添加的onsubmit事件
-	$("#add_submit").submit(function(){
-		if(flag1==true&&flag2==true&&flag3==true&&flag4==true&&flag5==true&&flag6==true&&flag7==true){
-			return false;
-		}
-		return true;
-	});
-	// if(flag1==true&&flag2==true&&flag3==true&&flag4==true&&flag6==true&&flag7==true){
-	// 	document.getElementById("add_submit").disabled=false;
-	// }else{
-	// 	document.getElementById("add_submit").disabled=true;
-	// }
+	// $("#staffAddForm").onsubmit(function(){
+	// 	if(flag1==true&&flag2==true&&flag3==true&&flag4==true&&flag6==true&&flag7==true){
+	// 		return false;
+	// 	}
+	// 	return true;
+	// });
+
+	// $("#add_submit").click(function () {
+	// 	if(flag1==false||flag2==false||flag3==false||flag4==false||flag6==false||flag7==false)
+	// 	{
+	// 		if(flag1==false){
+	// 			$("#cname").html("请输入正确的姓名格式");
+	// 		}
+	// 		if(flag2==false){
+	// 			$("#cname").html("请输入正确的姓名格式");			}
+	// 		if(flag3==false){
+	// 			$("#cname").html("请输入正确的姓名格式");			}
+	// 		if(flag4==false){
+	// 			$("#cname").html("请输入正确的姓名格式");			}
+	// 	}else{
+	// 		$("#add_submit").submit();
+	// 	}
+	// });
+
 	function update1(obj){
 		$("#u2 input:eq(0)").val(obj.children("td:eq(1)").html());
 		if(obj.children("td:eq(2)").html()=="男"){
@@ -341,12 +359,7 @@ $(function() {
 			$("#rk").append("<option value='"+depart[department][i]+"'>"+depart[department][i]+"</option>");
 		} 
 	}); 
-	
-	
-	
-	
-	
-	
+
     //王瑞
 	//财务管理
 	$("#finance").click(function(){
@@ -358,3 +371,34 @@ $(function() {
 		$("#bgscenter").load("Rooms.jsp");
 	});
 });
+function formcheck() {
+	if(flag1==true&&flag2==true&&flag3==true&&flag4==true&&flag6==true&&flag7==true){
+		return true;
+	}else {
+		if(flag7==false){
+			alert("请输入合适的工号")
+			return false;
+		}
+		if(flag1==false){
+			alert("请输入正确的姓名格式");
+			return false;
+		}
+		if(flag2==false){
+			alert("年龄不在范围内");
+			return false;
+		}
+		if(flag3==false){
+			alert("请输入正确的电话号码");
+			return false;
+		}
+		if(flag4==false){
+			alert("请输入正确身份证号");
+			return false;
+		}
+		if(flag6==false){
+			alert("日期格式不正确");
+			return false;
+		}
+	}
+
+};
