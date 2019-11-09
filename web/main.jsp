@@ -17,6 +17,24 @@
     <script src="js/jquery-2.0.0.min.js" type="text/javascript"></script>
     <script type="text/javascript" src="lib/layer/1.9.3/layer.js"></script>
     <script type="text/javascript" src="js/alert.js"></script>
+    <script>
+        // var staff=JSON.parse(staffInfo);
+        $(function () {
+            $("#qiantai,#caiwu,#cangku,#renshi").hide();
+            var dept=$("#id").text().split(" ")[1];
+            if(dept=="前台部" && dept=="客房部"){
+                $("#qiantai").show();
+            }else if(dept=="财务部"){
+                $("#caiwu").show();
+            }else if(dept=="人事部"){
+                $("#renshi").show();
+            }else if(dept=="采购部"){
+                $("#cangku").show();
+            }else if(dept=="行政管理部"){
+                $("#qiantai,#caiwu,#cangku,#renshi").show();
+            }
+        })
+    </script>
     <style type="text/css">
         #line-chart {
             height: 300px;
@@ -64,91 +82,97 @@
         <ul class="nav pull-right">
             <li id="fat-menu" class="dropdown"><a href="#" role="button"
                                                   class="dropdown-toggle" data-toggle="dropdown"> <i
-                    class="icon-user icon-white"></i> $ <i
+                    class="icon-user icon-white"></i><span id="id">${name} ${dept}</span><i
                     class="icon-caret-down"></i>
             </a>
                 <ul class="dropdown-menu">
-                    <li><a tabindex="-1" href="employeeCheck/selfInfo.do"
+                    <li><a tabindex="-1" href="selfInfo.staff"
                            target="source">个人信息</a></li>
                     <li class="divider"></li>
-                    <li><a tabindex="-1" href="loginAction/exit.do">退出</a></li>
-                </ul>
-            </li>
+                    <li><a tabindex="-1" href="login.jsp">退出</a></li>
+                </ul></li>
         </ul>
     </div>
 </div>
 
 <div class="sidebar-nav">
+    <div id="qiantai">
+        <a href="#dashboard-menu" class="nav-header" data-toggle="collapse"><i
+                class="icon-home icon-black"></i>住宿管理</a>
+        <ul id="dashboard-menu" class="nav nav-list collapse">
+            <li><a href="Room_Reg.jsp" target="source">客房登记</a></li>
+            <li><a href="#" target="source">退宿结算</a></li>
+            <li><a href="RoomPreplot.room" target="source">预定客房</a></li>
+            <li><a href="RoomType.room" target="source">客房更换</a></li>
+            <li><a href="RoomPrice.room" target="source">房价调整</a></li>
+            <li><a href="RoomAll.room" target="source">查看房间</a>
+        </ul>
+    </div>
 
+    <div id="caiwu">
+        <a href="#error-menu" class="nav-header collapsed"
+           data-toggle="collapse"><i class="icon-lock"></i>财务管理</a>
+        <ul id="error-menu" class="nav nav-list collapse">
+            <li>
+                <a href="income.jsp" target="source">收入明细</a>
+            </li>
+            <li>
+                <a href="expend.jsp" target="source">支出明细</a>
+            </li>
+            <li>
+                <a href="statement.jsp" target="source">财务报表</a>
+            </li>
+            <li>
+                <a href="salary.jsp" target="source">员工薪资</a>
+            </li>
+        </ul>
+    </div>
 
-    <a href="#dashboard-menu" class="nav-header" data-toggle="collapse"><i
-            class="icon-home icon-black"></i>住宿管理</a>
-    <ul id="dashboard-menu" class="nav nav-list collapse">
-        <li><a href="Room_Reg.jsp" target="source">客房登记</a></li>
-        <li><a href="#" target="source">退宿结算</a></li>
-        <li><a href="RoomPreplot.room" target="source">预定客房</a></li>
-        <li><a href="RoomType.room" target="source">客房更换</a></li>
-        <li><a href="RoomPrice.room" target="source">房价调整</a></li>
-        <li><a href="RoomAll.room" target="source">查看房间</a>
-    </ul>
+    <div id="cangku">
+        <a href="#legal-menu" class="nav-header" data-toggle="collapse"><i
+                class="icon-shopping-cart"></i>仓库管理</a>
+        <ul id="legal-menu" class="nav nav-list collapse">
+            <li>
+                <a href="warehouse_buyshop.jsp" target="source">物品采购</a>
+                <%--            <a href="showRecord.goods" target="source">物品采购</a>--%>
+            </li>
+            <li>
+                <a href="javascript:;" onclick="member_add('物品分发','warehouse_shopout.html','','510')"
+                   target="source">物品分发</a>
+            </li>
 
-    <a href="#error-menu" class="nav-header collapsed"
-       data-toggle="collapse"><i class="icon-lock"></i>财务管理</a>
-    <ul id="error-menu" class="nav nav-list collapse">
-        <li>
-            <a href="income.jsp" target="source">收入明细</a>
-        </li>
-        <li>
-            <a href="expend.jsp" target="source">支出明细</a>
-        </li>
-        <li>
-            <a href="statement.jsp" target="source">财务报表</a>
-        </li>
-        <li>
-            <a href="salary.jsp" target="source">员工薪资</a>
-        </li>
-    </ul>
+            <li>
+                <a href="warehouse.html" target="source">仓库记录</a>
+            </li>
+        </ul>
+    </div>
 
-    <a href="#legal-menu" class="nav-header" data-toggle="collapse"><i
-            class="icon-shopping-cart"></i>仓库管理</a>
-    <ul id="legal-menu" class="nav nav-list collapse">
-        <li>
-            <a href="warehouse_buyshop.jsp" target="source">物品采购</a>
-        <%--            <a href="showRecord.goods" target="source">物品采购</a>--%>
-        </li>
-        <li>
-            <a href="javascript:;" onclick="member_add('物品分发','warehouse_shopout.html','','510')"
-               target="source">物品分发</a>
-        </li>
+    <div id="renshi">
+        <%--人事管理--张赵鹏--%>
+        <a href="#person_manger" class="nav-header" data-toggle="collapse"><i
+                class="icon-user icon-black"></i>人事管理</a>
+        <ul id="person_manger" class="nav nav-list collapse">
+            <li>
+                <a href="selfInfo.staff" target="source">个人信息</a>
+            </li>
+            <%--        <li>--%>
+            <%--            <a href="updateSelfInfo.staff" target="source">更新个人信息</a>--%>
+            <%--        </li>--%>
+            <li>
+                <a href="staff_Add.jsp" target="source">添加新员工</a>
+            </li>
+            <li>
+                <a href="staff_LoginAdd.jsp" target="source">添加管理</a>
+            </li>
+            <li>
+                <a href="staff_Delete.jsp" target="source">删除员工</a>
+            </li>
+            <li>
+                <a href="allInfo.staff" target="source">查看全部员工信息</a>
+            </li>
+        </ul>
+    </div>
 
-        <li>
-            <a href="warehouse.html" target="source">仓库记录</a>
-        </li>
-    </ul>
-
-    <%--人事管理--张赵鹏--%>
-    <a href="#person_manger" class="nav-header" data-toggle="collapse"><i
-            class="icon-user icon-black"></i>人事管理</a>
-    <ul id="person_manger" class="nav nav-list collapse">
-        <li>
-            <a href="selfInfo.staff" target="source">个人信息</a>
-        </li>
-<%--        <li>--%>
-<%--            <a href="updateSelfInfo.staff" target="source">更新个人信息</a>--%>
-<%--        </li>--%>
-        <li>
-            <a href="staff_Add.jsp" target="source">添加新员工</a>
-        </li>
-        <li>
-            <a href="staff_LoginAdd.jsp" target="source">添加管理</a>
-        </li>
-        <li>
-            <a href="staff_Delete.jsp" target="source">删除员工</a>
-        </li>
-        <li>
-            <a href="allInfo.staff" target="source">查看全部员工信息</a>
-        </li>
-    </ul>
 </div>
 <div id="myDiv">
     <iframe src="content.jsp" id="iframe" name="source" scrolling="no"

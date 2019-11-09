@@ -26,12 +26,13 @@ public class UserControl extends HttpServlet {
         if(uri.indexOf("check")>=0){
             String username=req.getParameter("username");
             String password=req.getParameter("password");
+            Login login = new Login();
+            login.setStaff_id(Integer.parseInt(username));
+            login.setPasword(password);
+            req.getSession().setAttribute("loginInfo",login);
             try {
                List<User> userList=userDao.user(Integer.parseInt(username),password);
-
                String json=JSON.toJSONString(userList);
-
-
                out.write(json);
             } catch (Exception e) {
                 e.printStackTrace();

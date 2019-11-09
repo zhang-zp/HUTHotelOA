@@ -112,11 +112,7 @@
     $(function(){
         Victor("container", "output");   //登录背景函数
         $("#username").focus();
-        $(document).keydown(function(event){
-            if(event.keyCode==13){
-                $("#login").click();
-            }
-        });
+
     });
 
 </script>
