@@ -50,6 +50,7 @@ public class RoomControl extends HttpServlet {
             try {
                 String type = req.getParameter("type");
                 String price = req.getParameter("price");
+                System.out.println(type+price);
                 double price1 = Double.parseDouble(price);
                 //进行修改
                 roomDao.update(type,price1);
@@ -57,8 +58,7 @@ public class RoomControl extends HttpServlet {
                 List<RoomInfo> list = roomDao.getInfo();
                 req.setAttribute("RoomPrice",list);
                 pw = resp.getWriter();
-                pw.write("msg修改成功");
-                pw.flush();
+                pw.write("ms修改成功");
             } catch (SQLException e) {
                 e.printStackTrace();
             }
@@ -130,15 +130,14 @@ public class RoomControl extends HttpServlet {
             try {
                 if(data1.equals("房间类型")) {
                     List<RoomInfo> list = roomDao.searchType(data2);
-                    System.out.println(JSON.toJSONString(list));
+//                    System.out.println(JSON.toJSONString(list));
                     resp.getWriter().write(JSON.toJSONString(list));
 //                    resp.getWriter().write("msg你妈死了");
 
                 }else{
                     List<RoomInfo> list = roomDao.searchFloor(Integer.parseInt(data2));
-                    System.out.println(JSON.toJSONString(list));
+//                    System.out.println(JSON.toJSONString(list));
                     resp.getWriter().write(JSON.toJSONString(list));
-//                    resp.getWriter().write("msg你妈死了");
                 }
             } catch (SQLException e) {
                 e.printStackTrace();
@@ -146,15 +145,15 @@ public class RoomControl extends HttpServlet {
         }else if(uri.indexOf("check")>=0){
             //退宿信息查询
             String info = req.getParameter("info");
-            System.out.println(info);
             if(info.indexOf("1")>0){
                 //电话退宿
                 try {
+                    System.out.println(info);
                     List<RentRoom> list = roomDao.checkByTel(info);
-                    int days = roomDao.daysBetween(list.get(0).getEnter_time(),list.get(0).getLeave_time());
+                    long days = roomDao.daysBetween(list.get(0).getEnter_time(),list.get(0).getLeave_time());
                     //此功能有待完善
-                    list.get(0).setRent_num(days);
-                    System.out.println(JSON.toJSONString(list));
+                    list.get(0).setRent_num((int) days);
+//                    System.out.println(JSON.toJSONString(list));
                     resp.getWriter().write(JSON.toJSONString(list));
                 } catch (SQLException | ParseException e) {
                     e.printStackTrace();
@@ -162,10 +161,14 @@ public class RoomControl extends HttpServlet {
             }else{
                 //名字退宿
                 try {
+                    System.out.println(info);
                     List<RentRoom> list = roomDao.checkByName(info);
+                    long days = roomDao.daysBetween(list.get(0).getEnter_time(),list.get(0).getLeave_time());
+                    //此功能有待完善
+                    list.get(0).setRent_num((int) days);
                     System.out.println(JSON.toJSONString(list));
                     resp.getWriter().write(JSON.toJSONString(list));
-                } catch (SQLException e) {
+                } catch (SQLException | ParseException e) {
                     e.printStackTrace();
                 }
             }
