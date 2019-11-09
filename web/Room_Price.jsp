@@ -81,7 +81,7 @@
                 <div id="myTabContent" class="tab-content">
                     <div class="tab-pane active in" id="home">
 
-                        <
+
                         <table class="table table-striped">
                             <thead>
                             <tr>
@@ -93,15 +93,17 @@
                             </thead>
                             <tbody>
                         <c:forEach items="${RoomPrice}" var="i">
-                            <tr>
+                            <tr id="${i.room_type}">
                                 <td>${i.room_type}</td>
                                 <td>${i.room_price}</td>
                                 <td><input type="text" class="span2" id="p"></td>
-                                <td><button class="btn btn-info" name="sub" onclick="javascript:alter('${i.room_type}')">提交</button></td>
+                                <td><button class="btn btn-info" name="sub" onclick="javascript:update('${i.room_type}')">提交</button></td>
 
                         </tr>
                             <script type="text/javascript">
-                            function  alter(type){
+                            function  update(type){
+                                //获得对象下的列的数组
+                                var cells = document.getElementById(type).cells
                                 $ajax({
                                     url:"update.room",
                                     type:"post",
@@ -110,11 +112,13 @@
                                         price:$('#p').val()
                                     },
                                     success:function (data) {
-                                        alert(data)
-                                        window.location.href='Room_Price.jsp';
+                                        alert(data.substring(3,data.length));
+                                        cells[1].innerText = $('#p').val();
+                                        $('#p').val(" ");
+
                                     },
                                     error:function (error) {
-                                        alert(error)
+                                        alert(error);
                                     }
                                 });
                             }

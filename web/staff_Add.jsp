@@ -40,7 +40,7 @@
             <div class="well">
                 <div id="myTabContent" class="tab-content">
                     <div class="tab-pane active in" id="add_employee">
-                        <form  action="staffAdd.staff" method="post" id="staffAddForm" onsubmit="return formcheck()">
+                        <form  action="staffAdd.staff" method="post" id="staffAddForm" onsubmit="return staffAddFormCheck()">
                             <label>工号：</label>
                             <input type="text" class="span2" id="staff_id" name="staff_id"><span id="staff_id1"></span>
                             <label>姓名：</label>

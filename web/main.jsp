@@ -122,7 +122,7 @@
         </li>
 
         <li>
-            <a href="#" target="source">仓库管理</a>
+            <a href="warehouse.html" target="source">仓库记录</a>
         </li>
     </ul>
 
@@ -154,8 +154,11 @@
     <iframe src="content.jsp" id="iframe" name="source" scrolling="no"
             frameborder="0"></iframe>
 </div>
+
 <script src="js/jquery-2.0.0.min.js" type="text/javascript"></script>
 <script src="js/bootstrap.min.js"></script>
+<script src="js/MyPaging.js"></script>
+<script src="js/script.js"></script>
 <script>
     /*弹出页面*/
     function member_add(title, url, w, h) {

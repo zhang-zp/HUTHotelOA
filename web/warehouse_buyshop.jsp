@@ -29,103 +29,20 @@
     </ul>
     <div class="container-fluid">
         <div class="row-fluid">
-            <form action="buyshopAction/queryBuyShop.do" method="post">
-                <ul class="nav nav-tabs">
-                    <li class="active">
-                        <a href="#home" data-toggle="tab">商品采购记录：</a>
-                    </li>
-                    <li>
-                        <input type="text" value="" name="goodsname" placeholder=" 请输入商品名称" id="spinp12">
-                        <input type="submit" value="GO" id="spinp22">
-                    </li>
-                </ul>
-            </form>
-            <div id="bcre">
-                <div class="bgsright5">
-                    <div class="shopno">商品编号</div>
-                    <div class="shopname">商品名称</div>
-                    <div>商品单价</div>
-                    <div>商品数量</div>
-                    <div>商品总价</div>
-                    <div>采购时间</div>
-                    <div class="shopprice">采购人</div>
-                </div>
-                <c:forEach items="${goodsRecord}" var="list" varStatus="next">
-                    <br>
-                    <div class="bgsright5" id="${next.count}">
-                        <div class="shopno">${list.goods_id}</div>
-                        <div class="shopname">${list.goods_name}</div>
-                        <div>${list.goods_price}</div>
-                        <div>${list.goods_num}</div>
-                        <div>${list.goods_price*list.goods_num}</div>
-                        <div>${list.goods_time}</div>
-                        <div class="shopprice">${list.purchaseAgent}</div>
-                    </div>
-                </c:forEach>
-                <div id="buybut">
-                    <input type="button" value="首页" id="shouye"> <input
-                        type="button" value="上一页" id="pageup"> <input
-                        type="button" value="下一页" id="pagedown"> 第 <span
-                        id="dqpage">1</span> 页 共 <span id="maxpage">${fn:length(goodsRecord)/5}</span> 页
-                    跳到 <input type="text" id="ye"> 页 <input
-                        type="button" value="确定" id="tz">
-                </div>
-
-                <script type="text/javascript">
-                    $(function() {
-                        $("#shouye").click(function() {
-                            var page = parseInt($("#dqpage").html());
-                            if (page == 1) {
-                                alert("已经是首页了！");
-                            } else {
-                                location.href = "buyshopAction/queryBuyShop.do?page=1&goodsname="+ $('#spinp12').val();
-                            }
-                        });
-                        $("#pageup").click(function() {
-                            var page = parseInt($("#dqpage").html()) - 1;
-                            if (page < 1) {
-                                alert("已经是第一页！");
-                            } else {
-                                location.href = "buyshopAction/queryBuyShop.do?page="+ page+ "&goodsname="+ $('#spinp12').val();
-                            }
-                        });
-                        $("#pagedown").click(function() {
-                            var page = parseInt($("#dqpage").html()) + 1;
-                            var maxpage = parseInt($("#maxpage").html());
-                            if (page > maxpage) {
-                                alert("已经是最后一页！");
-                            } else {
-                                location.href = "buyshopAction/queryBuyShop.do?page="+ page+ "&goodsname="+ $('#spinp12').val();
-                            }
-                        });
-                        $("#tz").click(function() {
-                            var page = $("#ye").val();
-                            var reg = /\d/;
-                            var maxpage = parseInt($("#maxpage").html());
-                            if (reg.exec(page)) {
-                                if (page<1||page>maxpage) {
-                                    alert("输入页数超出范围");
-                                    $("#ye").val("");
-                                } else {
-                                    location.href = "buyshopAction/queryBuyShop.do?page="+ page+ "&goodsname="+ $('#spinp12').val();
-                                }
-                            } else {
-                                alert("请输入数字");
-                                $("#ye").val("");
-                            }
-                        });
-                    });
-                </script>
-            </div>
-            <ul class="nav nav-tabs">
-                <li class="active"><a href="#home" data-toggle="tab">商品采购：</a></li>
-            </ul>
             <div id="bgr">
-                <form action="buyShopAction.goods" method="post">
+                <form action="buyShopAction.goods" method="post" onsubmit="return buyConfirm()">
                     <div id="spn">商品名称：</div>
                     <div id="spn1">
-                        <input type="text" name="goods_name" id="shopname"
-                               placeholder="请输入采购商品名称">
+                        <select name="buyGoods_name" id="shopname">
+                            <option>请选择采购商品名称</option>
+                            <option>吹风机</option>
+                            <option>洗漱套装</option>
+                            <option>衣柜</option>
+                            <option>笔记本</option>
+                            <option>浴缸</option>
+                            <option>小型冰箱</option>
+                            <option>安全出口灯牌</option>
+                        </select>
                     </div>
                     <div id="spn2"></div>
 
@@ -173,12 +90,5 @@
 
 </script>
 <script src="js/bootstrap.js"></script>
-<script type="text/javascript">
-    $(function() {
-        $('.demo-cancel-click').click(function() {
-            return false;
-        });
-    });
-</script>
 </body>
 </html>

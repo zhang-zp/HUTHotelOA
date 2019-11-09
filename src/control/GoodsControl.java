@@ -1,8 +1,10 @@
 package control;
 
 
+import com.alibaba.fastjson.JSON;
 import dao.WarehouseDao;
 import dao.daoImp.WarehouseDaoImp;
+import entity.Distribute;
 import entity.Purchase;
 
 import javax.servlet.ServletException;
@@ -45,7 +47,7 @@ public class GoodsControl extends HttpServlet {
 //            System.out.println(goods_count+goods_name+goods_price+goods_time+goods_man);
 //  构建商品对象
             Purchase purchase = new Purchase();
-            purchase.setGoods_name(req.getParameter("goods_name"));
+            purchase.setGoods_name(req.getParameter("buyGoods_name"));
             if(req.getParameter("goods_count")!=null){
                 int goods_num = Integer.parseInt(req.getParameter("goods_count"));
                 purchase.setGoods_num(goods_num);
@@ -69,8 +71,6 @@ public class GoodsControl extends HttpServlet {
         }else if(uri.indexOf("CheckGoodsNum")>=0){
             int goodsNum = Integer.parseInt(req.getParameter("GoodsNum"));
             String goodsName = req.getParameter("GoodsName");
-            System.out.println(goodsName+goodsNum);
-            System.out.println("来了老弟");
             try {
                 if(warehouseDao.goodsNum(goodsName)<goodsNum){
                     pw.write("数量不足");
@@ -82,6 +82,38 @@ public class GoodsControl extends HttpServlet {
             }
         }else if(uri.indexOf("shopout")>=0){//商品分发
             System.out.println("商品分发");
+            String goods_name = req.getParameter("goods_name");
+            String goods_count = req.getParameter("goods_count");
+            String goods_use = req.getParameter("goods_use");
+            String receiver = req.getParameter("receiver");
+            String receive_time = req.getParameter("receive_time");
+            System.out.print(receiver+receive_time+goods_name+goods_count+goods_use);
+//            构建对象
+            Distribute distribute = new Distribute();
+            distribute.setGoods_name(req.getParameter("goods_name"));
+            distribute.setGoods_num(Integer.parseInt(req.getParameter("goods_count")));
+            distribute.setDistri_time(req.getParameter("receive_time"));
+            distribute.setReceiver(req.getParameter("receiver"));
+            distribute.setDistri_path(req.getParameter("goods_use"));
+//            数据库插入
+            try {
+                warehouseDao.distribute(distribute);
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        } else if(uri.indexOf("goodsRecord")>=0){
+            //            获取商品采购记录，发送至前台
+            try {
+                List<Purchase> purchasesList = warehouseDao.buyRecord();
+                List<Distribute> distributesList = warehouseDao.outRecord();
+                if (req.getParameter("selectRecord").indexOf("采购记录") >= 0) {
+                    pw.write(JSON.toJSONString(purchasesList));
+                } else {
+                    pw.write(JSON.toJSONString(distributesList));
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
         }
     }
 }

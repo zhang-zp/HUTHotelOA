@@ -4,6 +4,9 @@ package entity;
  * 开房信息表
  */
 public class RentRoom {
+    private String rent_id;
+    private String room_id;
+    private String room_price;
     private String people_name;
     private String people_id;
     private String room_type;
@@ -12,6 +15,30 @@ public class RentRoom {
     private String leave_time;
     private String rent_status;
     private String rent_tel;
+
+    public String getRent_id() {
+        return rent_id;
+    }
+
+    public void setRent_id(String rent_id) {
+        this.rent_id = rent_id;
+    }
+
+    public String getRoom_id() {
+        return room_id;
+    }
+
+    public void setRoom_id(String room_id) {
+        this.room_id = room_id;
+    }
+
+    public String getRoom_price() {
+        return room_price;
+    }
+
+    public void setRoom_price(String room_price) {
+        this.room_price = room_price;
+    }
 
     public String getPeople_name() {
         return people_name;

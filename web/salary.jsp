@@ -15,6 +15,7 @@
     <script src="js/bootstrap.js"></script>
     <script type="text/javascript">
             $(function(){
+                //向后台发请求·，拿取数据
                 $.ajax({
                     'tpye':'post',
                     'url':'findsalary.finance',
@@ -22,11 +23,8 @@
                         if(data==null){
                             alert("没加到数据");
                         }else{
-                            // alert("有数据");
                             var order=JSON.parse(data);
-                            // alert(order.length);
                             for(var i=0;i<order.length;i++){
-                                // alert(order[i].expend_id);
                                 $("#tbody").append("<tr style='text-align: center'>" +
                                     "<td>"+order[i].salary_id+"</td>"+
                                     "<td>"+order[i].salary_time+"</td>"+

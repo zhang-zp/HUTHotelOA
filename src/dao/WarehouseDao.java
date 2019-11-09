@@ -1,5 +1,6 @@
 package dao;
 
+import entity.Distribute;
 import entity.Purchase;
 
 import java.sql.SQLException;
@@ -29,4 +30,22 @@ public interface WarehouseDao {
      * @return
      */
     int goodsNum(String goods_name) throws SQLException;
+
+    /**
+     * 商品分配
+     * @param distribute
+     */
+    void distribute(Distribute distribute) throws SQLException;
+
+    /**
+     * 物品记录--采购记录
+     * @return
+     */
+    List<Purchase>buyRecord() throws SQLException;
+
+    /**
+     * 物品记录--分发记录
+     * @return
+     */
+    List<Distribute>outRecord() throws SQLException;
 }

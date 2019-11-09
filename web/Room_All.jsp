@@ -11,67 +11,70 @@
 <html>
 <head>
     <title></title>
+    <script src="js/ajax.js" type="text/javascript"></script>
+    <script src="js/jquery-2.0.0.min.js" type="text/javascript"></script>
     <link rel="stylesheet" type="text/css" href="css/bootstrap.css">
     <link rel="stylesheet" type="text/css" href="css/theme.css">
-    <script src="js/jquery-2.0.0.min.js" type="text/javascript"></script>
-    <script src="js/bootstrap.js"></script>
-    <script type="text/javascript">
-        $(function() {
+    <script type="text/javascript" src="js/bootstrap.js"></script>
 
-            $("#hotelName").empty();
-            $("#hotelName").html("<option>酒店名称</option>");
-            var url = "hotel/selectAll.do";
-            $.post(url, function(data) {
-                for ( var i = 0; i < data.length; i++) {
-                    var $option = $("<option ></option>");
-                    $option.text(data[i].hotel_name);
-                    $("#hotelName").append($option);
-                }
-                var hotel_name="${hotel_name}";
-                if(hotel_name!=""){
-                    $("#hotelName").val("${hotel_name}");
-                }
-                else{
-                    $("#hotelName").val("酒店名称");
-                }
-            }, "json");
-            $("#jump").click(
-                function() {
-                    var page =parseInt($("#jumpPage").val());
-                    var hotel_name = "${hotel_name}";
-                    var url;
-                    var pages="${pageList.pages }";
-                    var pagen="${pageList.pageNum }";
-                    if(page>pages){
-                        alert("输入错误！共"+pages+"页。");
-                        page=pagen;
-                    }else if(page<=0){
-                        alert("输入错误！")
-                        page=pagen;
-                    }else{
-                        if(hotel_name=="酒店名称"){
-                            url = "room/getRoom_All.do?page=" + page;
-                        }else{
-                            url = "room/getRoomByRoomName.do?page="+page+"&hotel_name=" + hotel_name;
-                        }
-                        window.location.href = url;
-                    }
 
-                });
+<%--    <script type="text/javascript">--%>
+<%--        $(function() {--%>
 
-            $("#hotelName").change(
-                function() {
-                    var hotel_name = $(this).val();
-                    var url ;
-                    if(hotel_name=="酒店名称"){
-                        url="room/getRoom_All.do";
-                    }else{
-                        url = "room/getRoomByRoomName.do?page=1&hotel_name=" + hotel_name;
-                    }
-                    window.location.href = url;
-                });
-        });
-    </script>
+<%--            $("#hotelName").empty();--%>
+<%--            $("#hotelName").html("<option>酒店名称</option>");--%>
+<%--            var url = "hotel/selectAll.do";--%>
+<%--            $.post(url, function(data) {--%>
+<%--                for ( var i = 0; i < data.length; i++) {--%>
+<%--                    var $option = $("<option ></option>");--%>
+<%--                    $option.text(data[i].hotel_name);--%>
+<%--                    $("#hotelName").append($option);--%>
+<%--                }--%>
+<%--                var hotel_name="${hotel_name}";--%>
+<%--                if(hotel_name!=""){--%>
+<%--                    $("#hotelName").val("${hotel_name}");--%>
+<%--                }--%>
+<%--                else{--%>
+<%--                    $("#hotelName").val("酒店名称");--%>
+<%--                }--%>
+<%--            }, "json");--%>
+<%--            $("#jump").click(--%>
+<%--                function() {--%>
+<%--                    var page =parseInt($("#jumpPage").val());--%>
+<%--                    var hotel_name = "${hotel_name}";--%>
+<%--                    var url;--%>
+<%--                    var pages="${pageList.pages }";--%>
+<%--                    var pagen="${pageList.pageNum }";--%>
+<%--                    if(page>pages){--%>
+<%--                        alert("输入错误！共"+pages+"页。");--%>
+<%--                        page=pagen;--%>
+<%--                    }else if(page<=0){--%>
+<%--                        alert("输入错误！")--%>
+<%--                        page=pagen;--%>
+<%--                    }else{--%>
+<%--                        if(hotel_name=="酒店名称"){--%>
+<%--                            url = "room/getRoom_All.do?page=" + page;--%>
+<%--                        }else{--%>
+<%--                            url = "room/getRoomByRoomName.do?page="+page+"&hotel_name=" + hotel_name;--%>
+<%--                        }--%>
+<%--                        window.location.href = url;--%>
+<%--                    }--%>
+
+<%--                });--%>
+
+<%--            $("#hotelName").change(--%>
+<%--                function() {--%>
+<%--                    var hotel_name = $(this).val();--%>
+<%--                    var url ;--%>
+<%--                    if(hotel_name=="酒店名称"){--%>
+<%--                        url="room/getRoom_All.do";--%>
+<%--                    }else{--%>
+<%--                        url = "room/getRoomByRoomName.do?page=1&hotel_name=" + hotel_name;--%>
+<%--                    }--%>
+<%--                    window.location.href = url;--%>
+<%--                });--%>
+<%--        });--%>
+<%--    </script>--%>
 </head>
 
 <body>
@@ -94,8 +97,67 @@
                 <div id="myTabContent" class="tab-content">
 
                     <div class="tab-pane active in" id="home">
-                        <select class="span2" id="hotelName"></select>
-
+                        <select class="span2" id="hotelName" onchange="selectTwo(this.value)">
+                            <script>
+                                function selectTwo(choice) {
+                                    var s2 = document.getElementById('s2');
+                                    if(choice=='房间类型'){
+                                        s2.innerHTML="";
+                                        var json = {"标间":"标间","单人间":"单人间","双人间":"双人间",
+                                            "情侣间":"情侣间","三人间":"三人间"};
+                                        var i = 0;
+                                        for(var key in json){
+                                            s2.options[i++] = new Option(json[key],key)
+                                        }
+                                    }else if(choice == '楼层'){
+                                        s2.innerHTML="";
+                                        var json = {"1":"1","2":"2","3":"3"};
+                                        var i = 0;
+                                        for(var key in json){
+                                            s2.options[i++] = new Option(json[key],key);
+                                        }
+                                    }else{
+                                        s2.innerHTML="";
+                                        s2.options[0] = new Option("请选择","");
+                                    }
+                                }
+                            </script>
+                            <option selected>请选择</option>
+                            <option>房间类型</option>
+                            <option>楼层</option>
+                        </select>
+                        <select class="span2" id="s2"></select>
+                        <input type="button" value="搜索" class="btn btn-info" onclick="search()">
+                        <script>
+                            function search() {
+                                $.ajax({
+                                    url:'Search.room',
+                                    type:'post',
+                                    async:false,
+                                    cache:false,
+                                    data:{
+                                        data1:$('#hotelName').val(),
+                                        data2:$('#s2').val()
+                                    },
+                                    success:function(data) {
+                                        var show = JSON.parse(data);
+                                        $('#tab1 tr').html('')
+                                        for(var i in show){
+                                            $('#tab1').append('<tr><td>'+show[i].room_id
+                                                +'<td>'+show[i].room_type+'</td>'
+                                                +'<td>'+show[i].room_price+'</td>'
+                                                +'<td>' +show[i].room_num+'</td>'
+                                                +'<td>' +show[i].room_floor+'</td>'
+                                                +'<td>' +show[i].room_status+'</td>'
+                                                +'<td>' +show[i].room_dse+'</td>' +'</tr>')
+                                        }
+                                    },
+                                    error:function(error) {
+                                        alert('选择错误');
+                                    }
+                                })
+                            }
+                        </script>
                         <table class="table table-striped">
                             <thead>
                             <tr>
@@ -108,7 +170,7 @@
                                 <th>房价描述</th>
                             </tr>
                             </thead>
-                            <tbody>
+                            <tbody  id="tab1">
             <c:forEach items="${RoomAll}" var="i">
                             <tr>
                                 <td>${i.room_id}</td>
@@ -149,7 +211,6 @@
 
                     </div>
                 </div>
-
             </div>
         </div>
     </div>

@@ -20,6 +20,7 @@
 <script src="js/jquery-2.0.0.min.js" type="text/javascript"></script>
 <script src="js/bootstrap.js"></script>
 <script src="js/main.js" type="text/javascript"></script>
+<script src="js/confirm.js" type="text/javascript"></script>
 <script type="text/javascript" src="lib/layer/1.9.3/layer.js"></script>
 <body>
 <script>
@@ -56,7 +57,7 @@
             <div class="well">
                 <div id="myTabContent" class="tab-content">
                     <div class="tab-pane active in" id="add_employee">
-                        <form  action="loginStaffAdd.staff" method="post" onsubmit="return loginConfirm()">
+                        <form  action="loginStaffAdd.staff" method="post" onsubmit="return loginAddConfirm()">
                             <select class="span2" id="loginStaffAdd" name="loginStaffAddID">
                                 <option>--请选择工号--</option>
                             </select>
@@ -85,18 +86,25 @@
         </div>
     </div>
 </div>
-<script type="text/javascript">
-    function loginConfirm() {
-        var flag = confirm("确认添加此管理吗？") ;
-        if(flag){
-            alert("添加成功！");
-            return true;
-        }else{
-            return false;
-            alert("添加失败！");
-        }
-    }
-</script>
+<%--<script type="text/javascript">--%>
+<%--    function loginAddConfirm() {--%>
+<%--        if((document.getElementById("loginStaffAdd").value).indexOf("请选择工号")>=0){--%>
+<%--            console.log(document.getElementById("loginStaffAdd").value);--%>
+<%--            var flag = confirm("请先选择要添加员工工号！");--%>
+<%--            return false;--%>
+<%--        }else {--%>
+<%--            var flag1 = confirm("确认添加此管理吗？") ;--%>
+<%--            if(flag1){--%>
+<%--                alert("添加成功！");--%>
+<%--                return true;--%>
+<%--            }else{--%>
+<%--                return false;--%>
+<%--                alert("取消添加！");--%>
+<%--            }--%>
+<%--        }--%>
+
+<%--    }--%>
+<%--</script>--%>
 </body>
 </html>
 

@@ -10,4 +10,5 @@ public interface  Financedao {
     List<Payoff> payoff() throws  Exception;
     List<Statistic> statistic() throws Exception;
     List<StatisticYear> statisticyear() throws Exception;
+    List<Statistic> selectyear(String selectyear) throws Exception;
 }

@@ -1,39 +1,45 @@
 var flag7=false;var flag1=false;var flag2=false;var flag3=false;var flag4=false;var flag5=false;var flag6=false;
+var goods_name=false; g_price = false; goods_num = false;
 $(function () {
-	//购买商品验证信息
+
+	/**
+	 * 采购商品信息核查
+	 */
 	//商品名称
 	$("#shopname").blur(function(){
-		$("#spn2").html("");
-		if($(this).val()!=""){
-			$("#spn2").html("<img src='img/li_ok.gif'>");
-			return true;
+		$("#spn2").html(" ");
+		if($(this).val().indexOf("请选择采购商品名称">=0)){
+			// $("#spn2").html("<img src='img/li_ok.gif'>");
+			goods_name = true;
 		}else{
-			return false;
+			goods_name = false;
 		}
 	});
 	//商品价格
 	$("#shopprice").blur(function(){
-		$("#spp2").html("");
+		$("#spp2").html(" ");
 		var price=/^[0-9]+(\.[0-9]{2})$/;
 		if(price.test($(this).val())){
-			$("#spp2").html("<img src='img/li_ok.gif'>");
+			// $("#spp2").html("<img src='img/li_ok.gif'>");
+			g_price = true;
 			if($("#sum").val()==""){
-				
+				// alert("请输入商品数量");
 			}else{
-				var p=parseFloat($("#shopprice").val());
-				var sum=parseInt($(this).val());
-				var c=(p*sum).toFixed(2);
+				var p = parseFloat($("#shopprice").val());
+				var sum = parseInt($(this).val());
+				var c = (p*sum).toFixed(2);
 				$("#totalprice").val(c);
-				if($("#shopname").val()==""){
-					alert("请输入采购商品名称");
+				if(goods_name==false){
+					alert("请选择采购商品名称");
 				}
-				return true;
+				g_price =  true;
 			}
 			
 		}else if($(this).val()!=""){
 			$("#spp2").html("输入商品价钱格式错误");
 			$("#spp2").css("color","red");
-			return false;
+			// alert("输入商品价钱格式错误")
+			g_price =  false;
 		}
 	});
 	//商品数量--张赵鹏
@@ -41,67 +47,76 @@ $(function () {
 		$("#sps2").html("");
 		var sum = /^[1-9]\d*$/;
 		if (sum.test($(this).val())) {
-			if ($("#shopprice").val() == "") {
+			if (g_price==false) {
 				alert("请输入商品价格");
 			} else {
 				var p = parseFloat($("#shopprice").val());
 				var sum = parseInt($(this).val());
 				var c = (p * sum).toFixed(2);
 				$("#totalprice").val(c);
-				$("#sps2").html("<img src='img/li_ok.gif'>");
-				if ($("#sps2").val() == "") {
+				// $("#sps2").html("<img src='img/li_ok.gif'>");
+				if (goods_name==false) {
 					alert("请输入采购商品名称");
 				}
-				return true;
+				goods_num =  true;
 			}
 		} else if ($(this).val() != "") {
 			$("#sps2").html("输入商品数量不正确");
 			$("#sps2").css("color", "red");
-			return false;
+			goods_num =  false;
 		};
 	});
+
+
+
+
+
 	//商品分发核查数量
 	$("#sum1").blur(function(){
-		var sum =/^[1-9]\d*$/;
+		var numReg = /^[1-9]\d*$/;
 		var num = $("#sum1").val();
 		if(num.length==0){
 			alert("请输入合理的数量");
 		}else{
-			if(!sum.test(num)){
+			if(!numReg.test(num)){
 				alert("请输入数字");
 			}else{
-				$.ajax({
-					url:"CheckGoodsNum.goods",
-					type:"post",
-					dataType:"json",
-					data:{
-						GoodsNum:sum,
-						GoodsName:$("#shopName").val()
-					},
-					success:function (data) {
-						if(data.indexOf("数量不足")>=0){
-							alert("商品数量不足");
-						}else{
-							alert("成功");
+				if($("#shopName").val().indexOf("请选择分发商品名称")>=0){
+					alert("请先选择商品名")
+				}else{
+					$.ajax({
+						url:"CheckGoodsNum.goods",
+						type:"post",
+						data:{
+							GoodsNum:num,
+							GoodsName:$("#shopName").val()
+						},
+						success:function (data) {
+							if(data.indexOf("数量不足")>=0){
+								alert("商品数量不足");
+							}
+						},error:function (error) {
+							console.log(error);
+							alert(error);
 						}
-					},error:function (error) {
-						console.log(error);
-						alert(error);
-					}
-				})
+					})
+				}
 			}
 		}
 	});
 	
 	
-	//李艳岭
-	//人事管理
-	$("#hrManage").click(function(){
-		$("#bgscenter").load("hrManage.jsp");
-		
-	});
+	// //李艳岭
+	// //人事管理
+	// $("#hrManage").click(function(){
+	// 	$("#bgscenter").load("hrManage.jsp");
+	//
+	// });
 
-	//添加新员工--张赵鹏
+	/**
+	 * 添加新员工信息核查
+	 */
+
 	//员工工号
 	$("#staff_id").blur(function () {
 		var reg=/\d{4}$/;
@@ -282,32 +297,6 @@ $(function () {
 	})
 
 
-
-	// 添加的onsubmit事件
-	// $("#staffAddForm").onsubmit(function(){
-	// 	if(flag1==true&&flag2==true&&flag3==true&&flag4==true&&flag6==true&&flag7==true){
-	// 		return false;
-	// 	}
-	// 	return true;
-	// });
-
-	// $("#add_submit").click(function () {
-	// 	if(flag1==false||flag2==false||flag3==false||flag4==false||flag6==false||flag7==false)
-	// 	{
-	// 		if(flag1==false){
-	// 			$("#cname").html("请输入正确的姓名格式");
-	// 		}
-	// 		if(flag2==false){
-	// 			$("#cname").html("请输入正确的姓名格式");			}
-	// 		if(flag3==false){
-	// 			$("#cname").html("请输入正确的姓名格式");			}
-	// 		if(flag4==false){
-	// 			$("#cname").html("请输入正确的姓名格式");			}
-	// 	}else{
-	// 		$("#add_submit").submit();
-	// 	}
-	// });
-
 	function update1(obj){
 		$("#u2 input:eq(0)").val(obj.children("td:eq(1)").html());
 		if(obj.children("td:eq(2)").html()=="男"){
@@ -371,7 +360,8 @@ $(function () {
 		$("#bgscenter").load("Rooms.jsp");
 	});
 });
-function formcheck() {
+//添加员工提交时条件检查
+function staffAddFormCheck() {
 	if(flag1==true&&flag2==true&&flag3==true&&flag4==true&&flag6==true&&flag7==true){
 		return true;
 	}else {
@@ -402,3 +392,30 @@ function formcheck() {
 	}
 
 };
+
+//采购商品提交时条件检查--商品名称单继数量，采购人，采购时间
+function buyConfirm() {
+	if(goods_name==true&&goods_num==true&&g_price==true){
+		var flag = confirm("确认采购该物品吗？") ;
+		if(flag){
+			alert("采购成功！");
+			return true;
+		}else{
+			alert("取消采购！");
+			return false;
+		}
+	}else{
+		if(goods_name==false){
+			alert("请选择采购商品名称");
+			return false;
+		}
+		if(goods_num==false){
+			alert("请确认商品数量");
+			return  false;
+		}
+		if(g_price==false){
+			alert("请确认商品价格");
+			return false;
+		}
+	}
+}

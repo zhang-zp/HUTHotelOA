@@ -12,8 +12,11 @@
 
     <link rel="stylesheet" type="text/css" href="css/bootstrap.css">
     <link rel="stylesheet" type="text/css" href="css/theme.css">
+    <link rel="stylesheet" type="text/css" href="css/selectFilter.css" />
     <script src="js/jquery-2.0.0.min.js" type="text/javascript"></script>
+    <script src="js/json2.js"></script>
     <script src="js/bootstrap.js"></script>
+    <script type="text/javascript" src="js/selectFilter.js"></script>
     <!--[if lt IE 9]>
     <script type="text/javascript" src="lib/html5.js"></script>
     <script type="text/javascript" src="lib/respond.min.js"></script>
@@ -26,11 +29,12 @@
     <script type="text/javascript" src="http://lib.h-ui.net/DD_belatedPNG_0.0.8a-min.js" ></script>
     <script>DD_belatedPNG.fix('*');</script>
     <![endif]-->
-
     <script type="text/javascript">
+        var order;
         $(function(){
-            var order;
-            $("select").bind("change",function () {
+            //通过下拉框触发
+            $("#select").bind("change",function () {
+                //选择年则向后台发请求
                 if(this.value=="year"){
                     $("#thead").empty();
                     $("#tbody").empty();
@@ -65,6 +69,7 @@
 
                         }
                     })
+                    //向后台发月请求
                 }else if(this.value=="month"){
                     $("#head").empty();
                     $("#body").empty();
@@ -88,14 +93,16 @@
                                 // alert(order.length);
                                 for(var i=0;i<order.length;i++){
                                     // alert(order[i].expend_id);
+
                                     $("#tbody").append("<tr style='text-align: center'>" +
-                                        "<td>"+(order[i].month==null?(order[i].month1==null?order[i].month2:order[i].month1):order[i].month)+"</td>"+
+                                        "<td >"+(order[i].month==null?(order[i].month1==null?order[i].month2:order[i].month1):order[i].month)+"</td>"+
                                         "<td>"+(order[i].goods_price==null?'':order[i].goods_price)+"</td>"+
                                         "<td>"+(order[i].salary_price==null?'':order[i].salary_price)+"</td>"+
                                         "<td>"+(order[i].room_price==null?'':order[i].room_price)+"</td>"+
                                         "<td>"+((order[i].room_price==null?0:order[i].room_price)-(order[i].goods_price==null?0:order[i].goods_price)-(order[i].salary_price==null?0:order[i].salary_price))+"</td>"+
                                         "</tr>");
                                 }
+
                             }
 
                         }
@@ -148,11 +155,12 @@
                 <div id="myTabContent" class="tab-content">
 
                     <div class="tab-pane active in" id="home">
-                        <select>
+                        <select id="select">
                             <option value="year">年度报表</option>
                             <option value="month">月度报表</option>
                         </select>
                         <h5>所有分类：</h5>
+
                         <table class="table table-striped" id="tab" border="1">
                             <thead id="head">
                             </thead>
@@ -162,6 +170,7 @@
                             </tbody>
                             <tbody id="body">
                             </tbody>
+                            <tbody id="histo" hidden></tbody>
                         </table>
 
                         <div style=" width:95%;text-align:right">
@@ -187,83 +196,160 @@
         </div>
     </div>
 </div>
-<nav class="breadcrumb"><i class="Hui-iconfont">&#xe67f;</i> 首页 <span class="c-gray en">&gt;</span> 统计管理 <span class="c-gray en">&gt;</span> 柱状图统计 <a class="btn btn-success radius r mr-20" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新" ><i class="Hui-iconfont">&#xe68f;</i></a></nav>
 <div class="pd-20">
     <div id="container" style="min-width:700px;height:400px"></div>
 </div>
-<script type="text/javascript" src="lib/jquery/1.9.1/jquery.min.js"></script>
+
 <script type="text/javascript" src="lib/layer/1.9.3/layer.js"></script>
 <script type="text/javascript" src="js/H-ui.js"></script>
 <script type="text/javascript" src="js/H-ui.admin.js"></script>
 <script type="text/javascript" src="lib/Highcharts/4.1.7/js/highcharts.js"></script>
 <script type="text/javascript" src="lib/Highcharts/4.1.7/js/modules/exporting.js"></script>
+<select id="his">
+</select>
 <script type="text/javascript">
+    //柱状图
     $(function () {
-        $('#container').highcharts({
-            chart: {
-                type: 'column'
-            },
-            title: {
-                text: 'Monthly Average Rainfall'
-            },
-            subtitle: {
-                text: 'Source: WorldClimate.com'
-            },
-            xAxis: {
-                categories: [
-                    '一月',
-                    '二月',
-                    '三月',
-                    '四月',
-                    '五月',
-                    '六月',
-                    '七月',
-                    '八月',
-                    '九月',
-                    '十月',
-                    '十一月',
-                    '十二月'
-                ]
-            },
-            yAxis: {
-                min: 0,
-                title: {
-                    text: 'Rainfall (mm)'
+        //下拉框
+        for(var i=1995;i<2020;i++){
+            $("#his").append("<option class='year'>"+i+"</option>");
+        }
+        var histogram;
+        //根据下拉框的值向后台发请求
+        $("#his").bind("change",function () {
+            var selectyear=$("#his option:selected").text();
+            $.ajax({
+                'tpye':'post',
+                'url':'histogrammonth.finance',
+                'data':{'selectyear':selectyear},
+                'success':function (data,textStatus) {
+                    if(data==null){
+                        alert("没加到数据");
+                    }else{
+
+
+                        histogram=JSON.parse(data);
+                        //向隐藏表格内插入数据以
+                        for(var i=0;i<histogram.length;i++){
+                                //向隐藏表格内插入数据，为之后取值方便
+                            $("#histo").append("<tr style='text-align: center'>" +
+                                "<td class='time'>"+(histogram[i].month==null?(histogram[i].month1==null?histogram[i].month2:histogram[i].month1):histogram[i].month)+"</td>"+
+                                "<td>"+(histogram[i].goods_price==null?'':histogram[i].goods_price)+"</td>"+
+                                "<td>"+(histogram[i].salary_price==null?'':histogram[i].salary_price)+"</td>"+
+                                "<td>"+(histogram[i].room_price==null?'':histogram[i].room_price)+"</td>"+
+                                "<td>"+((histogram[i].room_price==null?0:histogram[i].room_price)-(histogram[i].goods_price==null?0:histogram[i].goods_price)-(histogram[i].salary_price==null?0:histogram[i].salary_price))+"</td>"+
+                                "</tr>");
+                        }
+                        //创建一个空的json对象，初始化12长度，用于替换从histogram
+                        var obj=[];
+                        for(var i=0;i<12;i++){
+                            var o={
+                                goods_price:null,
+                                salary_price:null,
+                                room_price:null
+                            };
+                            obj.push(o);
+                        }
+                        //将histogram的数据填入obj对象
+                        for(var i=0;i<histogram.length;i++){
+                            if(histogram[i].goods_price!=null){
+                                obj[i].goods_price=histogram[i].goods_price;
+                            }
+                            if(histogram[i].salary_price!=null){
+                               obj[i].salary_price= histogram[i].salary_price;
+                            }
+                            if(histogram[i].room_price!=null){
+                               obj[i].room_price= histogram[i].room_price;
+                            }
+                        }
+                        //替换
+                        histogram=obj;
+                        //将数据按月排序
+                        for(var i=0;i<histogram.length;i++){
+                            var t=$(".time:eq("+i+")").text().split('-');
+                            //alert(t[1]);
+                            for(var j=i;j<histogram.length;j++){
+                                var p=$(".time:eq("+j+")").text().split('-');
+                                if(t[1]-p[1]>0){
+                                    var temp=histogram[i];
+                                    histogram[i]=histogram[j];
+                                    histogram[j]=temp;
+                                }
+                            }
+                        }
+
+                        $('#container').highcharts({
+                            chart: {
+                                type: 'column'
+                            },
+                            title: {
+                                text: ''
+                            },
+                            subtitle: {
+                                text: ''
+                            },
+                            xAxis: {
+                                categories: [
+                                    '一月',
+                                    '二月',
+                                    '三月',
+                                    '四月',
+                                    '五月',
+                                    '六月',
+                                    '七月',
+                                    '八月',
+                                    '九月',
+                                    '十月',
+                                    '十一月',
+                                    '十二月'
+                                ]
+                            },
+                            yAxis: {
+                                min: 0,
+                                title: {
+                                    text: '人民币(元)'
+                                }
+                            },
+                            tooltip: {
+                                headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
+                                pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
+                                    '<td style="padding:0"><b>{point.y:.1f}元</b></td></tr>',
+                                footerFormat: '</table>',
+                                shared: true,
+                                useHTML: true
+                            },
+                            plotOptions: {
+                                column: {
+                                    pointPadding: 0.2,
+                                    borderWidth: 0
+                                }
+                            },
+                            series: [{
+                                name: '采购支出',
+                                data: [parseInt(histogram[0].goods_price),parseInt(histogram[1].goods_price),parseInt(histogram[2].goods_price) ,parseInt(histogram[3].goods_price) ,parseInt(histogram[4].goods_price) ,parseInt(histogram[5].goods_price) ,parseInt(histogram[6].goods_price),parseInt(histogram[7].goods_price),parseInt(histogram[8].goods_price),parseInt(histogram[9].goods_price),parseInt(histogram[10].goods_price),parseInt(histogram[11].goods_price)]
+
+                            }, {
+                                name: '工资支出',
+                                data: [parseInt(histogram[0].salary_price),parseInt(histogram[1].salary_price),parseInt(histogram[2].salary_price),parseInt(histogram[3].salary_price),parseInt(histogram[4].salary_price),parseInt(histogram[5].salary_price),parseInt(histogram[6].salary_price),parseInt(histogram[7].salary_price),parseInt(histogram[8].salary_price),parseInt(histogram[9].salary_price),parseInt(histogram[10].salary_price),parseInt(histogram[11].salary_price)]
+
+                            }, {
+                                name: '住宿收入',
+                                data: [parseInt(histogram[0].room_price),parseInt(histogram[1].room_price),parseInt(histogram[2].room_price),parseInt(histogram[3].room_price),parseInt(histogram[4].room_price),parseInt(histogram[5].room_price),parseInt(histogram[6].room_price),parseInt(histogram[7].room_price),parseInt(histogram[8].room_price),parseInt(histogram[9].room_price),parseInt(histogram[10].room_price),parseInt(histogram[11].room_price)]
+
+                            }, {
+                                name: '利润',
+                                data: [parseInt(histogram[0].room_price-histogram[0].goods_price-histogram[0].salary_price),parseInt(histogram[1].room_price-histogram[1].goods_price-histogram[1].salary_price),parseInt(histogram[2].room_price-histogram[2].goods_price-histogram[2].salary_price),parseInt(histogram[3].room_price-histogram[3].goods_price-histogram[3].salary_price),parseInt(histogram[4].room_price-histogram[4].goods_price-histogram[4].salary_price),parseInt(histogram[5].room_price-histogram[5].goods_price-histogram[5].salary_price),parseInt(histogram[6].room_price-histogram[6].goods_price-histogram[6].salary_price),parseInt(histogram[7].room_price-histogram[7].goods_price-histogram[7].salary_price),parseInt(histogram[8].room_price-histogram[8].goods_price-histogram[8].salary_price),parseInt(histogram[9].room_price-histogram[9].goods_price-histogram[9].salary_price),parseInt(histogram[10].room_price-histogram[10].goods_price-histogram[10].salary_price),parseInt(histogram[11].room_price-histogram[11].goods_price-histogram[11].salary_price)]
+
+                            }]
+                        });
+                    }
+
                 }
-            },
-            tooltip: {
-                headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
-                pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
-                    '<td style="padding:0"><b>{point.y:.1f} mm</b></td></tr>',
-                footerFormat: '</table>',
-                shared: true,
-                useHTML: true
-            },
-            plotOptions: {
-                column: {
-                    pointPadding: 0.2,
-                    borderWidth: 0
-                }
-            },
-            series: [{
-                name: '采购支出',
-                data: [$(), 71.5, 106.4, 129.2, 144.0, 176.0, 135.6, 148.5, 216.4, 194.1, 95.6, 54.4]
+            })
 
-            }, {
-                name: '工资支出',
-                data: [83.6, 78.8, 98.5, 93.4, 106.0, 84.5, 105.0, 104.3, 91.2, 83.5, 106.6, 92.3]
-
-            }, {
-                name: '住宿收入',
-                data: [48.9, 38.8, 39.3, 41.4, 47.0, 48.3, 59.0, 59.6, 52.4, 65.2, 59.3, 51.2]
-
-            }, {
-                name: '利润',
-                data: [42.4, 33.2, 34.5, 39.7, 52.6, 75.5, 57.4, 60.4, 47.6, 39.1, 46.8, 51.1]
-
-            }]
         });
-    });
+        })
+
 </script>
 </body>
 </html>

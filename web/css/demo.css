@@ -1,0 +1,127 @@
+@charset "utf-8";
+.title{
+	position: relative;
+	border-bottom:1px solid #999;
+	color:#333;
+	font-size:18px;
+	padding-bottom:5px;
+}
+
+button{
+	padding:7px 15px;
+	background-color: #fff;
+	border:1px solid #aaa;
+	border-radius: 3px;
+}
+.fyAlert-blue .fy-alert-header{
+	background-color: #7272da;
+	color:#fff;
+}
+.fyAlert-blue .fy-alert-btn{
+	background-color: #7272da;
+	border:0;
+	color:#fff;
+}
+.fyAlert-green .fy-alert-header{
+	background-color: #95d495;
+	color:#fff;
+}
+.fyAlert-green .fy-alert-btn{
+	background-color: #95d495;
+	border:0;
+	color:#fff;
+}
+
+/*自定义动画案例*/
+@-webkit-keyframes lightSpeedIn {
+  from {
+	-webkit-transform: translate3d(100%, 0, 0) skewX(-30deg);
+	transform: translate3d(100%, 0, 0) skewX(-30deg);
+	opacity: 0;
+  }
+
+  60% {
+	-webkit-transform: skewX(20deg);
+	transform: skewX(20deg);
+	opacity: 1;
+  }
+
+  80% {
+	-webkit-transform: skewX(-5deg);
+	transform: skewX(-5deg);
+  }
+
+  to {
+	-webkit-transform: translate3d(0, 0, 0);
+	transform: translate3d(0, 0, 0);
+  }
+}
+
+@keyframes lightSpeedIn {
+  from {
+	-webkit-transform: translate3d(100%, 0, 0) skewX(-30deg);
+	transform: translate3d(100%, 0, 0) skewX(-30deg);
+	opacity: 0;
+  }
+
+  60% {
+	-webkit-transform: skewX(20deg);
+	transform: skewX(20deg);
+	opacity: 1;
+  }
+
+  80% {
+	-webkit-transform: skewX(-5deg);
+	transform: skewX(-5deg);
+  }
+
+  to {
+	-webkit-transform: translate3d(0, 0, 0);
+	transform: translate3d(0, 0, 0);
+  }
+}
+
+.lightSpeedIn {
+  -webkit-animation-name: lightSpeedIn;
+  animation-name: lightSpeedIn;
+  -webkit-animation-timing-function: ease-out;
+  animation-timing-function: ease-out;
+}
+
+@-webkit-keyframes lightSpeedIn_hide {
+  from {
+	opacity: 1;
+  }
+
+  to {
+	-webkit-transform: translate3d(100%, 0, 0) skewX(30deg);
+	transform: translate3d(100%, 0, 0) skewX(30deg);
+	opacity: 0;
+  }
+}
+
+@keyframes lightSpeedIn_hide {
+  from {
+	opacity: 1;
+  }
+
+  to {
+	-webkit-transform: translate3d(100%, 0, 0) skewX(30deg);
+	transform: translate3d(100%, 0, 0) skewX(30deg);
+	opacity: 0;
+  }
+}
+
+.lightSpeedIn_hide {
+  -webkit-animation-name: lightSpeedIn_hide;
+  animation-name: lightSpeedIn_hide;
+  -webkit-animation-timing-function: ease-in;
+  animation-timing-function: ease-in;
+}
+
+.pre-box{
+	border:1px solid #aaa;
+	border-radius: 5px;
+	background-color: #f9f9f9;
+	padding:15px;
+}

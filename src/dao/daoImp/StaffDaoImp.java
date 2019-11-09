@@ -1,6 +1,7 @@
 package dao.daoImp;
 
 import dao.StaffDao;
+import entity.Login;
 import entity.StaffInfo;
 import org.apache.commons.dbutils.QueryRunner;
 import org.apache.commons.dbutils.handlers.BeanHandler;
@@ -45,5 +46,19 @@ public class StaffDaoImp implements StaffDao {
         String sql = "select *from staff_info where staff_id =?";
         StaffInfo staffInfo = queryRunner.query(sql,new BeanHandler<StaffInfo>(StaffInfo.class),staff_id);
         return staffInfo==null;
+    }
+
+    @Override
+    public void loginAdd(Login login) throws SQLException {
+        String sql = "insert into login(staff_id,pasword)values(?,?)";
+        queryRunner.update(sql,login.getStaff_id(),login.getPasword());
+    }
+
+    @Override
+    public void updateStaffInfo(StaffInfo staffInfo) throws SQLException {
+        String sql = "update staff_info set staff_name=?,staff_age=?," +
+                "staff_tel=?,staff_num=? where staff_id =?";
+        queryRunner.update(sql,staffInfo.getStaff_name(),staffInfo.getStaff_age(),
+                staffInfo.getStaff_tel(),staffInfo.getStaff_num(),staffInfo.getStaff_id());
     }
 }

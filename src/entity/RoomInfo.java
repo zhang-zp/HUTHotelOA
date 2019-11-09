@@ -8,7 +8,7 @@ public class RoomInfo {
     private String room_type;
     private double room_price;
     private int room_num;
-    private String room_dse;
+    private String room_des;
     private String room_status;
     private int room_floor;
 
@@ -45,11 +45,11 @@ public class RoomInfo {
     }
 
     public String getRoom_dse() {
-        return room_dse;
+        return room_des;
     }
 
     public void setRoom_dse(String room_dse) {
-        this.room_dse = room_dse;
+        this.room_des = room_dse;
     }
 
     public String getRoom_status() {
