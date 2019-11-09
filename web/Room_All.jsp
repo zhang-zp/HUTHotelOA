@@ -11,8 +11,8 @@
 <html>
 <head>
     <title></title>
-    <script src="js/ajax.js" type="text/javascript"></script>
     <script src="js/jquery-2.0.0.min.js" type="text/javascript"></script>
+    <script src="js/room.js" type="text/javascript"></script>
     <link rel="stylesheet" type="text/css" href="css/bootstrap.css">
     <link rel="stylesheet" type="text/css" href="css/theme.css">
     <script type="text/javascript" src="js/bootstrap.js"></script>
@@ -127,37 +127,7 @@
                             <option>楼层</option>
                         </select>
                         <select class="span2" id="s2"></select>
-                        <input type="button" value="搜索" class="btn btn-info" onclick="search()">
-                        <script>
-                            function search() {
-                                $.ajax({
-                                    url:'Search.room',
-                                    type:'post',
-                                    async:false,
-                                    cache:false,
-                                    data:{
-                                        data1:$('#hotelName').val(),
-                                        data2:$('#s2').val()
-                                    },
-                                    success:function(data) {
-                                        var show = JSON.parse(data);
-                                        $('#tab1 tr').html('')
-                                        for(var i in show){
-                                            $('#tab1').append('<tr><td>'+show[i].room_id
-                                                +'<td>'+show[i].room_type+'</td>'
-                                                +'<td>'+show[i].room_price+'</td>'
-                                                +'<td>' +show[i].room_num+'</td>'
-                                                +'<td>' +show[i].room_floor+'</td>'
-                                                +'<td>' +show[i].room_status+'</td>'
-                                                +'<td>' +show[i].room_dse+'</td>' +'</tr>')
-                                        }
-                                    },
-                                    error:function(error) {
-                                        alert('选择错误');
-                                    }
-                                })
-                            }
-                        </script>
+                        <input type="button" value="搜索" class="btn btn-info" id="search">
                         <table class="table table-striped">
                             <thead>
                             <tr>

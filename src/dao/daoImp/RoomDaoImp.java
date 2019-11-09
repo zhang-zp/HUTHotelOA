@@ -100,18 +100,18 @@ public class RoomDaoImp implements RoomDao {
     @Override
     //根据电话号码退宿
     public List<RentRoom> checkByTel(String tel) throws SQLException {
-        String sql = "select * from rent_room where people_tel = ?";
+        String sql = "select * from rent_room where rent_tel = ?";
         return queryRunner.query(sql,new BeanListHandler<RentRoom>(RentRoom.class),tel);
     }
 
     @Override
     //计算住宿的天数
-    public int daysBetween(String date1, String date2) throws ParseException {
+    public long daysBetween(String date1, String date2) throws ParseException {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         Date d1 = sdf.parse(String.valueOf(date1));
-        Date d2 = sdf.parse(String.valueOf(date1));
+        Date d2 = sdf.parse(String.valueOf(date2));
         long days = (d2.getTime()-d1.getTime())/(1000*60*60*24);
-        return (int) days;
+        return days;
     }
 
 

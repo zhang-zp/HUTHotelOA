@@ -10,10 +10,10 @@
 <html>
 <head>
     <title>客房更换</title>
+    <script src="js/jquery-2.0.0.min.js" type="text/javascript"></script>
+    <script src="js/room.js" type="text/javascript"></script>
     <link rel="stylesheet" type="text/css" href="css/bootstrap.css">
     <link rel="stylesheet" type="text/css" href="css/theme.css">
-    <script src="js/ajax.js" type="text/javascript"></script>
-    <script src="js/jquery-2.0.0.min.js" type="text/javascript"></script>
 </head>
 <body>
 
@@ -37,30 +37,7 @@
                         <form id="tab">
                             <label>原房间名</label> <input type="text" value="" class="span2">
                             <label>新房间类型</label>
-                                <select class="span2" id="roomType" onchange="newType()">
-                                    <script>
-                                        function newType() {
-                                          $.ajax({
-                                              async:false,
-                                              cache:false,
-                                              url:"RoomType.room",
-                                              type:"post",
-                                              data:{
-                                                  newType:$('#roomType').val()
-                                              },
-                                              success:function (data) {
-                                                  var newData = JSON.parse(data);
-                                                  $("#freeRoom").empty();
-                                                  for(var i in newData){
-                                                      $("#freeRoom").append("<option>"+newData[i].room_id+"</option>");
-                                        }
-                                              },
-                                              error:function (error) {
-                                                  alert("该类型房间已没有剩余")
-                                              }
-                                          });
-                                        }
-                                    </script>
+                                <select class="span2" id="roomType">
                                     <option selected>--请选择--</option>
                                     <option>标间</option>
                                     <option>单人间</option>
@@ -75,21 +52,7 @@
                                 </select>
                             <label>换房时间</label> <input type="text" value="" class="span2">
                             <div class="btn-toolbar">
-                                <input type="button" value="更换" onclick="$ajax({
-                                url:'ChangeRoom.room',
-                                type:'post',
-                                data:{
-                                    roomId:$('#freeRoom').val()
-                                },
-                                success:function(data) {
-                                  $('#roomType').empty();
-                                  $('#freeRoom').empty();
-                                  alert(data.substring(3,data.length));
-                                },
-                                error:function(error) {
-                                  alert(error);
-                                }
-                                })" class="btn btn-info" />
+                                <input type="button" value="更换" id="roomChange" class="btn btn-info" />
                             </div>
                         </form>
                     </div>

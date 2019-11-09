@@ -35,5 +35,5 @@ public interface RoomDao {
     //根据电话号码退宿
     List<RentRoom> checkByTel(String tel) throws SQLException;
     //计算住宿的天数
-    int daysBetween(String date1, String date2) throws ParseException;
+    long daysBetween(String date1, String date2) throws ParseException;
 }

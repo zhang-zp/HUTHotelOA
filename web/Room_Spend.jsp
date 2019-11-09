@@ -9,8 +9,8 @@
 <html>
 <head>
     <title>退宿管理</title>
-    <script src="js/ajax.js" type="text/javascript"></script>
     <script src="js/jquery-2.0.0.min.js" type="text/javascript"></script>
+    <script src="js/room.js" type="text/javascript"></script>
     <script type="text/javascript" src="js/jquery-2.0.0.min.js"></script>
     <script type="text/javascript" src="js/roomout.js"></script>
     <link rel="stylesheet" type="text/css" href="css/bootstrap.css">
@@ -48,41 +48,9 @@
                 </ul>
                 <div id="myTabContent" class="tab-content">
                     <div>
-<%--                        <form action="roomManage/SelectExistByStr.do" method="post">--%>
                             <input style="width: 200px;height: 30px"
                                    name="str" type="text" value="" id="info"/>
-
-                            <input type="button" value="查询" class="btn btn-info" onclick="check()">
-                            <script>
-                                function check(){
-                                $.ajax({
-                                    async:false,
-                                    cache:false,
-                                    url:"check.room",
-                                    type:"post",
-                                    data:{
-                                        info:$('#info').val()
-                                    },
-                                    success:function(data) {
-                                        var check = JSON.parse(data)
-                                        $('#info').val(' ')
-                                        for(var i in check){
-                                            $('#tb').append('<tr><td>'+check[i].people_name+'</td>'
-                                                +'<td>'+check[i].rent_tel+'</td>'
-                                                +'<td>'+check[i].room_type+'</td>'
-                                                +'<td>'+check[i].enter_time+'</td>'
-                                                +'<td>'+check[i].leave_time+'</td>'
-                                                +'<td>'+check[i].rent_num+'</td></tr>'
-                                            )
-                                        }
-                                    },
-                                    error:function(error) {
-                                        alert('无结果，请检查信息是否正确')
-                                    }
-                                })
-                             }
-                            </script>
-<%--                        </form>--%>
+                            <input type="button" value="查询" class="btn btn-info" id="roomCheck">
                     </div>
 
                     <div class="tab-pane  fade active in" id="home">

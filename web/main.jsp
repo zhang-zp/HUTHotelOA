@@ -15,25 +15,25 @@
     <link rel="stylesheet" type="text/css" href="css/bootstrap_1.css">
     <link rel="stylesheet" type="text/css" href="css/theme.css">
     <script src="js/jquery-3.3.1.min.js"></script>
-    <script>
-       // var staff=JSON.parse(staffInfo);
+<%--    <script>--%>
+<%--       // var staff=JSON.parse(staffInfo);--%>
 
-        $(function () {
-            $("#qiantai,#caiwu,#cangku,#renshi").hide();
-            var dept=$("#id").text().split(" ")[1];
-            if(dept=="前台部" && dept=="客房部"){
-                $("#qiantai").show();
-            }else if(dept=="财务部"){
-                $("#caiwu").show();
-            }else if(dept=="人事部"){
-                $("#renshi").show();
-            }else if(dept=="采购部"){
-                $("#cangku").show();
-            }else if(dept=="行政管理部"){
-                $("#qiantai,#caiwu,#cangku,#renshi").show();
-            }
-        })
-    </script>
+<%--        $(function () {--%>
+<%--            $("#qiantai,#caiwu,#cangku,#renshi").hide();--%>
+<%--            var dept=$("#id").text().split(" ")[1];--%>
+<%--            if(dept=="前台部" && dept=="客房部"){--%>
+<%--                $("#qiantai").show();--%>
+<%--            }else if(dept=="财务部"){--%>
+<%--                $("#caiwu").show();--%>
+<%--            }else if(dept=="人事部"){--%>
+<%--                $("#renshi").show();--%>
+<%--            }else if(dept=="采购部"){--%>
+<%--                $("#cangku").show();--%>
+<%--            }else if(dept=="行政管理部"){--%>
+<%--                $("#qiantai,#caiwu,#cangku,#renshi").show();--%>
+<%--            }--%>
+<%--        })--%>
+<%--    </script>--%>
     <style type="text/css">
         #line-chart {
             height: 300px;
@@ -100,9 +100,9 @@
     <a href="#dashboard-menu" class="nav-header" data-toggle="collapse" ><i
             class="icon-home icon-black" ></i>住宿管理</a>
     <ul id="dashboard-menu" class="nav nav-list collapse" >
-        <li><a href="roomManage/SelectPreplot.do" target="source">预定管理</a></li>
+        <li><a href="Room_Reg.jsp" target="source">预定管理</a></li>
         <li><a href="roomManage/getRoom.do" target="source">住宿管理</a></li>
-        <li><a href="roomManage/SelectExist.do" target="source">退宿查询</a></li>
+        <li><a href="Room_Spend.jsp" target="source">退宿查询</a></li>
 
         <li><a href="RoomPrice.room" target="source">房价调整</a></li>
         <li><a href="RoomAll.room" target="source">查看房间</a>

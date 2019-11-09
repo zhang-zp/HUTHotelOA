@@ -70,6 +70,7 @@
                                         <option>双人间</option>
                                         <option>标间</option>
                                         <option>情侣间</option>
+                                        <option>大床房</option>
                                     </select>
                                 </td>
                             </tr>
@@ -86,32 +87,7 @@
                                 <td><input type="date" id="pLeave"></td>
                             </tr>
                         </table>
-                        <button onclick="javascript:add()">开房</button>
-                        <script>
-                            function  add(type){
-                                $ajax({
-                                    url:"RoomPre.room",
-                                    type:"post",
-                                    data:{
-                                        name:$('#Name').val(),
-                                        ID:$('#pID').val(),
-                                        tel:$('#pTel').val(),
-                                        type:$('#pType').val(),
-                                        num:$('#pNum').val(),
-                                        enter:$('#pEnter').val(),
-                                        leave:$('#pLeave').val()
-                                    },
-                                    success:function (data) {
-                                        var info = data.substring(3,data.length);
-                                        alert(info)
-                                        window.location.href='Room_Preplot.jsp';
-                                    },
-                                    error:function (error) {
-                                        alert("信息不完整，请补全信息")
-                                    }
-                                });
-                            }
-                        </script>
+                        <button id="pre">开房</button>
                         <%--                        <div style=" width:95%;text-align:right">--%>
                         <%--                            <a href="roomtype/selectRoomType_All.do?page=1">首页</a>--%>
 
