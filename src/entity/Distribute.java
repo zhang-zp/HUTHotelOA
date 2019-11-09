@@ -9,7 +9,8 @@ public class Distribute {
     private double goods_price;
     private int goods_num;
     private String distri_time;
-    private String distri_paath;
+    private String distri_path;
+    private String receiver;
 
     public int getGoods_id() {
         return goods_id;
@@ -51,11 +52,19 @@ public class Distribute {
         this.distri_time = distri_time;
     }
 
-    public String getDistri_paath() {
-        return distri_paath;
+    public String getDistri_path() {
+        return distri_path;
     }
 
-    public void setDistri_paath(String distri_paath) {
-        this.distri_paath = distri_paath;
+    public void setDistri_path(String distri_path) {
+        this.distri_path = distri_path;
+    }
+
+    public String getReceiver() {
+        return receiver;
+    }
+
+    public void setReceiver(String receiver) {
+        this.receiver = receiver;
     }
 }

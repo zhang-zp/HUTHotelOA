@@ -14,8 +14,8 @@ public class UserDaoImp implements UserDao {
     public List<User> user(int user,String pwd) throws Exception {
 
         String sql="select *" +
-                " from (select staff_id as staff_id,password " +
-                "from login where staff_id=? and password=?)," +
+                " from (select staff_id as staff_id,pasword " +
+                "from login where staff_id=? and pasword=?)," +
                 "(select staff_id as sid,staff_num,staff_sex,staff_status,staff_name,staff_salary,staff_job,entry_time,fire_time,dept_name " +
                 "from staff_info where staff_id=?)";
         return queryRunner.query(sql,new BeanListHandler<User>(User.class),user,pwd,user);

@@ -2,7 +2,7 @@ package entity;
 
 public class User {
     private int staff_id;
-    private String password;
+    private String pasword;
     private String sid;
     private String staff_name;
     private String staff_num;//员工身份证号
@@ -24,12 +24,12 @@ public class User {
         this.staff_id = staff_id;
     }
 
-    public String getPassword() {
-        return password;
+    public String getPasword() {
+        return pasword;
     }
 
-    public void setPassword(String password) {
-        this.password = password;
+    public void setPasword(String pasword) {
+        this.pasword = pasword;
     }
 
     public String getSid() {

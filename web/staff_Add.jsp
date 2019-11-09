@@ -19,8 +19,13 @@
 <script src="js/jquery-2.0.0.min.js" type="text/javascript"></script>
 <script src="js/bootstrap.js"></script>
 <script src="js/main.js" type="text/javascript"></script>
+<%--<script src="js/test.js" type="text/javascript"></script>--%>
 <body>
-
+<%--<script>--%>
+<%--    function formcheck() {--%>
+<%--        return false;--%>
+<%--    }--%>
+<%--</script>--%>
 <div class="navbar-inner">
     <div class="header">
         <h1 class="page-title">人事管理</h1>
@@ -35,11 +40,11 @@
             <div class="well">
                 <div id="myTabContent" class="tab-content">
                     <div class="tab-pane active in" id="add_employee">
-                        <form  action="staffAdd.staff" method="post" >
+                        <form  action="staffAdd.staff" method="post" id="staffAddForm" onsubmit="return staffAddFormCheck()">
                             <label>工号：</label>
                             <input type="text" class="span2" id="staff_id" name="staff_id"><span id="staff_id1"></span>
                             <label>姓名：</label>
-                            <input type="text"  class="span2" id="cname1" name="staff_name"><span id="cname"></span>
+                            <input type="text"  class="span2" id="cname1" name="staff_name"><span id="cname" ></span>
                             <label>性别：</label>
                             <input type="radio" name="sex" value="男" checked />男 <input type="radio" name="sex" value="女" />女
                             <label>年龄：</label>
@@ -57,7 +62,7 @@
                             <label>身份证号：</label>
                             <input type="text" value="" class="span2" id="idcard1" name="staff_num" maxlength="18"><span id="idcard"></span>
                             <label>入职时间：</label>
-                            <input type="text" value="" class="span2" id="starttime1" name="entryTime" class="Wdate"  placeholder="例：（2014-07-24）"><span id="starttime"></span>
+                            <input type="date" value="" class="span2" id="starttime1" name="entryTime" class="nowTime"><span id="starttime"></span>
                             <div class="btn-toolbar">
                                 <input type="submit" id="add_submit" class="btn btn-info" value="添加">
                                 <input type="reset" class="btn btn-info"  value="重置"/>

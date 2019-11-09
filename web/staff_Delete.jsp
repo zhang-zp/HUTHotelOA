@@ -105,7 +105,6 @@
                     staff_id:id
                 },success:
                 function (data) {
-
                 }
             })
             $(obj).parents("tr").remove();
