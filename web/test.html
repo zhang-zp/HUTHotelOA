@@ -1,0 +1,109 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="renderer" content="webkit|ie-comp|ie-stand">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<meta name="viewport"
+		  content="width=device-width,initial-scale=1,minimum-scale=1.0,maximum-scale=1.0,member-scalable=no"/>
+	<meta http-equiv="Cache-Control" content="no-siteapp"/>
+	<!--[if lt IE 9]>
+	<script type="text/javascript" src="lib/html5.js"></script>
+	<script type="text/javascript" src="lib/respond.min.js"></script>
+	<script type="text/javascript" src="lib/PIE_IE678.js"></script>
+	<![endif]-->
+	<link href="css/H-ui.min.css" rel="stylesheet" type="text/css"/>
+	<link href="css/H-ui.admin.css" rel="stylesheet" type="text/css"/>
+	<link href="lib/icheck/icheck.css" rel="stylesheet" type="text/css"/>
+	<link href="lib/Hui-iconfont/1.0.1/iconfont.css" rel="stylesheet" type="text/css"/>
+	<!--[if IE 6]>
+	<script type="text/javascript" src="http://lib.h-ui.net/DD_belatedPNG_0.0.8a-min.js">
+		<
+		script > DD_belatedPNG.fix('*');</script>
+	<![endif]-->
+	<title>添加用户</title>
+</head>
+<body>
+<div class="pd-20">
+	<div id="bgr">
+		<form action="shopoutAction/insertOutShop.do" method="post">
+			<div id="spn">商品名称：</div>
+			<div id="spn1">
+				<select name="goodsname" id="shopName">
+					<option>请选择分发商品名称</option>
+
+					<option value='${st }'>${st }</option>
+
+				</select>
+			</div>
+
+			<div id="spn2"></div>
+
+			<div id="spp">商品单价：</div>
+			<div id="spp1">
+				<select name="consumption_price" id="price1">
+					<option>请选择分发商品名称</option>
+				</select>
+			</div>
+			<div id="spp2"></div>
+
+			<div id="sps">商品数量：</div>
+			<div id="sps1">
+				<input type="text" name="consumption_count" id="sum1"
+					   placeholder="请输入分发商品数量">
+			</div>
+			<div id="sps2"></div>
+
+			<div id="sptp">商品总价：</div>
+			<div id="sptp1">
+				<input type="text" name="total_price" id="totalprice"
+					   placeholder="商品总价（88.00）" readonly="readonly">
+			</div>
+			<div id="sptp2"></div>
+
+			<div id="spyt">商品用途：</div>
+			<div  class="formControls col-5">
+				<input type="text" name="used" id="shopused"
+					   placeholder="请输入分发商品用途">
+			</div>
+			<div id="spyt1">
+			<textarea name="" cols="" rows="" class="textarea" placeholder="请输入分发商品用途" datatype="*10-100"
+					  dragonfly="true" nullmsg="备注不能为空！" onKeyUp="textarealength(this,100)"></textarea>
+				<p class="textarea-numberbar"><em class="textarea-length">0</em>/100</p>
+			</div>
+			<div id="spyt2"></div>
+			<div id="buymit">
+				<input type="submit" value="确定">
+			</div>
+		</form>
+	</div>
+</div>
+</div>
+</div>
+<script type="text/javascript" src="js/jquery-2.0.0.min.js"></script>
+<script type="text/javascript" src="lib/icheck/jquery.icheck.min.js"></script>
+<script type="text/javascript" src="lib/Validform/5.3.2/Validform.min.js"></script>
+<script type="text/javascript" src="lib/layer/1.9.3/layer.js"></script>
+<script type="text/javascript" src="js/H-ui.js"></script>
+<script type="text/javascript" src="js/H-ui.admin.js"></script>
+<!--<script type="text/javascript">-->
+<!--    $(function () {-->
+<!--        $('.skin-minimal input').iCheck({-->
+<!--            checkboxClass: 'icheckbox-blue',-->
+<!--            radioClass: 'iradio-blue',-->
+<!--            increaseArea: '20%'-->
+<!--        });-->
+
+<!--        $("#form-member-add").Validform({-->
+<!--            tiptype: 2,-->
+<!--            callback: function (form) {-->
+<!--                form[0].submit();-->
+<!--                var index = parent.layer.getFrameIndex(window.name);-->
+<!--                parent.$('.btn-refresh').click();-->
+<!--                parent.layer.close(index);-->
+<!--            }-->
+<!--        });-->
+<!--    });-->
+<!--</script>-->
+</body>
+</html>

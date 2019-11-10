@@ -9,6 +9,7 @@ public class Purchase {
     private double goods_price;
     private int goods_num;
     private String goods_time;
+    private String purchaseAgent;
 
     public int getGoods_id() {
         return goods_id;
@@ -30,7 +31,7 @@ public class Purchase {
         return goods_price;
     }
 
-    public void setGoods_prices(double goods_price) {
+    public void setGoods_price(double goods_price) {
         this.goods_price = goods_price;
     }
 
@@ -48,5 +49,13 @@ public class Purchase {
 
     public void setGoods_time(String goods_time) {
         this.goods_time = goods_time;
+    }
+
+    public String getPurchaseAgent() {
+        return purchaseAgent;
+    }
+
+    public void setPurchaseAgent(String purchaseAgent) {
+        this.purchaseAgent = purchaseAgent;
     }
 }

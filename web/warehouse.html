@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<title>后台管理</title>
+	<meta charset="utf-8" />
+	<link rel="stylesheet" type="text/css" href="css/MyPaging.css">
+	<link rel="stylesheet" type="text/css" href="css/bootstrap.css">
+	<link rel="stylesheet" type="text/css" href="css/theme.css">
+	<link rel="stylesheet" href="css/buy.css" />
+	<script type="text/javascript" src="js/jquery-2.0.0.min.js"></script>
+	<script type="text/javascript" src="js/main.js"></script>
+	<style>
+		* {
+			margin: 0;
+			padding: 0;
+		}
+		.main {
+			margin: 0 auto;
+			padding: 50px 0;
+			width: 1000px;
+			min-height: 1000px;
+		}
+		table {
+			margin-bottom: 20px;
+			width: 100%;
+			border-collapse: collapse;
+			border: none;
+		}
+		table th, table td {
+			padding: 5px 10px;
+			border-color: #999;
+		}
+	</style>
+<!--	<script>-->
+<!--        $(document).ready(function () {-->
+<!--            $("#selectRecord").change(function () {-->
+<!--                $.ajax({-->
+<!--                    url:"goodsRecord.goods",-->
+<!--                    type:"post",-->
+<!--                    data:{-->
+<!--                        selectRecord:$("#selectRecord").val()-->
+<!--                    },-->
+<!--                    success:function(data){-->
+<!--                        goodsData = $.parseJSON(data);-->
+<!--                        console.log(goodsData)-->
+<!--                    },error:function (error) {-->
+<!--                        alert("获取信息异常")-->
+<!--                    }-->
+<!--                });-->
+<!--            });-->
+<!--        });-->
+<!--	</script>-->
+</head>
+
+<body>
+<div class="navbar-inner">
+	<div class="header">
+		<h1 class="page-title">仓库管理</h1>
+	</div>
+	<ul class="breadcrumb">
+		<li>仓库管理<span class="divider">/</span></li>
+		<li class="active">商品记录</li>
+	</ul>
+	<div class="container-fluid">
+		<div class="row-fluid">
+			<form action="#" method="post">
+
+				<ul class="nav nav-tabs">
+
+					<li class="active">
+						<a href="#home" data-toggle="tab">商品记录：</a>
+					</li>
+					<li>
+						<select id="selectRecord" name="selectRecord">
+							<option>采购记录</option>
+							<option>分发记录</option>
+						</select>
+					</li>
+					<li>
+						<input type="text" value="" name="goodsname" value='' placeholder=" 请输入商品名称" id="spinp13">
+						<input type="submit" value="查询" id="spinp23">
+					</li>
+				</ul>
+			</form>
+			<div  class="main">
+				<table border="1">
+					<thead id="thead">
+<!--						<tr>-->
+<!--							<th>商品编号</th>-->
+<!--							<th>商品名称</th>-->
+<!--							<th>商品单价</th>-->
+<!--							<th>商品数量</th>-->
+<!--							<th>采购/分发日期</th>-->
+<!--							<th>采购/分发人</th>-->
+<!--						</tr>-->
+					</thead>
+					<tbody class="tbody" id="tbody">
+					</tbody>
+				</table>
+				<div class="box2">
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<script src="js/bootstrap.js"></script>
+<script src="js/MyPaging.js"></script>
+<script src="js/script.js"></script>
+</body>
+</html>

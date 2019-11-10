@@ -1,82 +1,122 @@
-var i=0;
-$(function() {
-	//张国钊
-	//购买商品验证信息
+var flag7=false;var flag1=false;var flag2=false;var flag3=false;var flag4=false;var flag5=false;var flag6=false;
+var goods_name=false; g_price = false; goods_num = false;
+$(function () {
+
+	/**
+	 * 采购商品信息核查
+	 */
 	//商品名称
 	$("#shopname").blur(function(){
-		$("#spn2").html("");
-		if($(this).val()!=""){
-			$("#spn2").html("<img src='img/li_ok.gif'>");
-			return true;
+		$("#spn2").html(" ");
+		if($(this).val().indexOf("请选择采购商品名称">=0)){
+			// $("#spn2").html("<img src='img/li_ok.gif'>");
+			goods_name = true;
 		}else{
-			return false;
+			goods_name = false;
 		}
 	});
 	//商品价格
 	$("#shopprice").blur(function(){
-		$("#spp2").html("");
+		$("#spp2").html(" ");
 		var price=/^[0-9]+(\.[0-9]{2})$/;
 		if(price.test($(this).val())){
-			$("#spp2").html("<img src='img/li_ok.gif'>");
+			// $("#spp2").html("<img src='img/li_ok.gif'>");
+			g_price = true;
 			if($("#sum").val()==""){
-				
+				// alert("请输入商品数量");
 			}else{
-				var p=parseFloat($("#shopprice").val());
-				var sum=parseInt($(this).val());
-				var c=(p*sum).toFixed(2);
+				var p = parseFloat($("#shopprice").val());
+				var sum = parseInt($(this).val());
+				var c = (p*sum).toFixed(2);
 				$("#totalprice").val(c);
-				if($("#shopname").val()==""){
-					alert("请输入采购商品名称");
+				if(goods_name==false){
+					alert("请选择采购商品名称");
 				}
-				return true;
+				g_price =  true;
 			}
 			
 		}else if($(this).val()!=""){
 			$("#spp2").html("输入商品价钱格式错误");
 			$("#spp2").css("color","red");
-			return false;
+			// alert("输入商品价钱格式错误")
+			g_price =  false;
 		}
 	});
-	
-	//商品核查数量
-	$("#sum1").blur(function(){
-		var sum=/^[1-9]\d*$/;
-		if($("#price1").val()=="请选择亏损商品价钱"||$("#price1").val()=="请选择亏损商品名称"){
-			alert("请选择商品价钱");
-		}else{
-			if(sum.test($(this).val())){
-				if($(this).val()>parseInt($("#spsum").html())){
-					$(this).val(parseInt($("#spsum").html()));
-					var s=parseInt($(this).val());
-					var p=parseFloat($("#price1").val());
-					var m=(s*p).toFixed(2);
-					$("#totalprice").val(m);
-					return true;
-				}else{
-					var s=parseInt($(this).val());
-					var p=parseFloat($("#price1").val());
-					var m=(s*p).toFixed(2);
-					$("#totalprice").val(m);
+	//商品数量--张赵鹏
+	$("#sum").blur(function() {
+		$("#sps2").html("");
+		var sum = /^[1-9]\d*$/;
+		if (sum.test($(this).val())) {
+			if (g_price==false) {
+				alert("请输入商品价格");
+			} else {
+				var p = parseFloat($("#shopprice").val());
+				var sum = parseInt($(this).val());
+				var c = (p * sum).toFixed(2);
+				$("#totalprice").val(c);
+				// $("#sps2").html("<img src='img/li_ok.gif'>");
+				if (goods_name==false) {
+					alert("请输入采购商品名称");
 				}
-			}else if($(this).val()!=""){
-				$("#sps2").html("输入商品数量不正确");
-				$("#sps2").css("color","red");
-				return false;
+				goods_num =  true;
+			}
+		} else if ($(this).val() != "") {
+			$("#sps2").html("输入商品数量不正确");
+			$("#sps2").css("color", "red");
+			goods_num =  false;
+		};
+	});
+
+
+
+
+
+	//商品分发核查数量
+	$("#sum1").blur(function(){
+		var numReg = /^[1-9]\d*$/;
+		var num = $("#sum1").val();
+		if(num.length==0){
+			alert("请输入合理的数量");
+		}else{
+			if(!numReg.test(num)){
+				alert("请输入数字");
+			}else{
+				if($("#shopName").val().indexOf("请选择分发商品名称")>=0){
+					alert("请先选择商品名")
+				}else{
+					$.ajax({
+						url:"CheckGoodsNum.goods",
+						type:"post",
+						data:{
+							GoodsNum:num,
+							GoodsName:$("#shopName").val()
+						},
+						success:function (data) {
+							if(data.indexOf("数量不足")>=0){
+								alert("商品数量不足");
+							}
+						},error:function (error) {
+							console.log(error);
+							alert(error);
+						}
+					})
+				}
 			}
 		}
 	});
 	
 	
-	//李艳岭
-	//人事管理
-	$("#hrManage").click(function(){
-		$("#bgscenter").load("hrManage.jsp");
-		
-	});
+	// //李艳岭
+	// //人事管理
+	// $("#hrManage").click(function(){
+	// 	$("#bgscenter").load("hrManage.jsp");
+	//
+	// });
 
+	/**
+	 * 添加新员工信息核查
+	 */
 
-	//添加新员工--张赵鹏
-	var flag7=false;var flag1=false;var flag2=false;var flag3=false;var flag4=false;var flag5=false;var flag6=false;
 	//员工工号
 	$("#staff_id").blur(function () {
 		var reg=/\d{4}$/;
@@ -111,13 +151,11 @@ $(function() {
 							alert(error)
 						}
 					})
-
 				}
 			}
 		}
 	});
 	//员工姓名
-
 	$("#cname1").blur(function(){
 		var cname=$("#cname1").val();
 		var reg=/^[\u4e00-\u9fa5]{2,10}$/g;
@@ -197,13 +235,15 @@ $(function() {
 	//员工身份证号
 	$("#idcard1").blur(function(){
 		var idcard = $("#idcard1").val();
-		var reg=/^\d{18}$/g;
+		// var reg=/^\d{18}$/g;
+		var reg = /^[1-9]\d{5}(18|19|([23]\d))\d{2}((0[1-9])|(10|11|12))(([0-2][1-9])|10|20|30|31)\d{3}[0-9Xx]$/;
 		if(idcard.length==0){
-			$("#idcard").html("");
+			$("#idcard").css("color","red");
+			$("#idcard").html("身份证号不能为空");
 		}else{
 			if(!reg.test(idcard)){
 				$("#idcard").css("color","red");
-				$("#idcard").html("员工身份证号需为18位");
+				$("#idcard").html("请输入正确的身份证号");
 			}else{
 				$.ajax({
 					url:"checkID.staff?idcard="+idcard,
@@ -226,39 +266,6 @@ $(function() {
 			}
 		}	
 	});
-	//员工所属酒店
-	$("#hotel1").blur(function(){
-		var hotel=$("#hotel1").val();
-		var reg=/^[\u4e00-\u9fa5]{2,10}$/g;
-		if(hotel.length==0){
-			$("#hotel").css("color","red");
-			$("#hotel").html("员工所属酒店不能为空");
-		}else{
-			if(!reg.test(hotel)){
-				$("#hotel").css("color","red");
-				$("#hotel").html("员工所属酒店不符合规定");
-			}else{
-				$.ajax({
-					url:"employeeAdd/getHotel.do?hotel="+hotel,
-					type:"post",
-					async:false,
-					cache:false,
-					success:function(data){
-						if(data!=""){
-							$("#hotel").html("<img src='img/li_ok.gif'>");
-							flag5=true;
-						}else{
-							$("#hotel").css("color","red");
-							$("#hotel").html("您输入的酒店不是本公司的，请重新输入。");
-						}
-					},
-					error:function(){
-						alert("errors");
-					}
-				});
-			}
-		}
-	});
 	//员工入职时间
 	$("#starttime1").blur(function(){	
 		var starttime=$("#starttime1").val();
@@ -278,18 +285,18 @@ $(function() {
 	 	    } 
 	    }   
 	});
-	// 添加的onsubmit事件
-	$("#add_submit").submit(function(){
-		if(flag1==true&&flag2==true&&flag3==true&&flag4==true&&flag5==true&&flag6==true&&flag7==true){
-			return false;
-		}
-		return true;
-	});
-	// if(flag1==true&&flag2==true&&flag3==true&&flag4==true&&flag6==true&&flag7==true){
-	// 	document.getElementById("add_submit").disabled=false;
-	// }else{
-	// 	document.getElementById("add_submit").disabled=true;
-	// }
+
+	//class属性为nowTime
+	//时间类型默认显示当前时间--张赵鹏
+	$(document).ready(function () {
+		var time = new Date();
+		var day = ("0" + time.getDate()).slice(-2);
+		var month = ("0" + (time.getMonth() + 1)).slice(-2);
+		var today = time.getFullYear() + "-" + (month) + "-" + (day);
+		$(".nowTime").val(today);
+	})
+
+
 	function update1(obj){
 		$("#u2 input:eq(0)").val(obj.children("td:eq(1)").html());
 		if(obj.children("td:eq(2)").html()=="男"){
@@ -341,12 +348,7 @@ $(function() {
 			$("#rk").append("<option value='"+depart[department][i]+"'>"+depart[department][i]+"</option>");
 		} 
 	}); 
-	
-	
-	
-	
-	
-	
+
     //王瑞
 	//财务管理
 	$("#finance").click(function(){
@@ -358,3 +360,67 @@ $(function() {
 		$("#bgscenter").load("Rooms.jsp");
 	});
 });
+//添加员工提交时条件检查
+function staffAddFormCheck() {
+	if(flag1==true&&flag2==true&&flag3==true&&flag4==true&&flag6==true&&flag7==true){
+		var addStaff = confirm("确认添加操作！");
+		if(addStaff){
+			return true;
+		}else{
+			return false;
+		}
+	}else {
+		if(flag7==false){
+			alert("请输入合适的工号")
+			return false;
+		}
+		if(flag1==false){
+			alert("请输入正确的姓名格式");
+			return false;
+		}
+		if(flag2==false){
+			alert("年龄不在范围内");
+			return false;
+		}
+		if(flag3==false){
+			alert("请输入正确的电话号码");
+			return false;
+		}
+		if(flag4==false){
+			alert("请输入正确身份证号");
+			return false;
+		}
+		if(flag6==false){
+			alert("日期格式不正确");
+			return false;
+		}
+	}
+
+};
+
+//采购商品提交时条件检查--商品名称单继数量，采购人，采购时间
+function buyConfirm() {
+	if(goods_name==true&&goods_num==true&&g_price==true){
+		var flag = confirm("确认采购该物品吗？") ;
+		if(flag){
+			alert("采购成功！");
+			return true;
+		}else{
+			alert("取消采购！");
+			return false;
+		}
+	}else{
+		if(goods_name==false){
+			alert("请选择采购商品名称");
+			return false;
+		}
+		if(goods_num==false){
+			alert("请确认商品数量");
+			return  false;
+		}
+		if(g_price==false){
+			alert("请确认商品价格");
+			return false;
+		}
+	}
+}

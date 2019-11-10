@@ -1,0 +1,88 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+
+	<title>后台管理</title>
+	<link rel="stylesheet" type="text/css" href="css/bootstrap.css">
+	<link rel="stylesheet" type="text/css" href="css/theme.css">
+	<link rel="stylesheet" href="css/buy.css"/>
+	<script type="text/javascript" src="js/jquery-2.0.0.min.js"></script>
+	<script type="text/javascript" src="js/bootstrap.js"></script>
+	<script type="text/javascript" src="js/main.js"></script>
+	<script type="text/javascript" src="js/confirm.js"></script>
+</head>
+<body>
+<div class="navbar-inner">
+	<div class="container-fluid">
+		<div class="row-fluid">
+			<div class="bgsright2">
+				<div id="bgr">r
+					<form action="shopout.goods" method="post" onsubmit="return disConfirm()">
+						<div id="spn">商品名称：</div>
+						<div id="spn1">
+							<select name="goods_name" id="shopName">
+							<option>请选择分发商品名称</option>
+							<option>吹风机</option>
+							<option>洗漱套装</option>
+							<option>衣柜</option>
+							<option>笔记本</option>
+						</select>
+						</div>
+
+						<div id="spp2"></div>
+						<div id="sps">商品数量：</div>
+						<div id="sps1">
+							<input type="text" name="goods_count" id="sum1"
+								   placeholder="请输入分发商品数量">
+						</div>
+
+						<div id="sptp2"></div>
+						<div id="spyt">商品用途：</div>
+						<div id="spyt1">
+							<input type="text" name="goods_use" id="shopused"
+								   placeholder="请输入分发商品用途">
+						</div>
+
+						<div id="spn2"></div>
+						<div id="spp">领取人：</div>
+						<div id="spp1">
+							<input type="text" name="receiver"
+								   placeholder="请输入领取人姓名">
+						</div>
+
+						<div id="sps2"></div>
+						<div id="sptp">领取时间：</div>
+						<div id="sptp1">
+							<input type="date" name="receive_time" id="" class="nowTime">
+						</div>
+
+						<div id="spyt2"></div>
+						<div id="buymit">
+							<input type="submit" value="确认发放">
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<!--<script type="text/javascript">-->
+<!--	function disConfirm() {-->
+<!--        if((document.getElementById("shopName").value).indexOf("请选择分发商品名称")>=0){-->
+<!--            console.log(document.getElementById("shopName").value);-->
+<!--            var flag = confirm("请先选择商品名称！") ;-->
+<!--            return false;-->
+<!--        }else {-->
+<!--            var flag1 = confirm("确认分发该物品吗？") ;-->
+<!--            if(flag1){-->
+<!--                alert("分发成功！");-->
+<!--                return true;-->
+<!--            }else{-->
+<!--                return false;-->
+<!--                alert("取消分发！");-->
+<!--            }-->
+<!--        }-->
+<!--    }-->
+<!--</script>-->
+</body>
+</html>

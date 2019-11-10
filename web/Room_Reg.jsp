@@ -9,13 +9,13 @@
 <html>
 <head>
     <title>客房登记</title>
-    <script src="js/ajax.js" type="text/javascript"></script>
+    <script type="text/javascript" src="js/jquery-2.0.0.min.js"></script>
+    <script src="js/room.js" type="text/javascript"></script>
     <link rel="stylesheet" type="text/css" href="css/bootstrap-responsive.min.css"/>
     <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css"/>
     <link rel="stylesheet" type="text/css" href="css/common.css"/>
     <link rel="stylesheet" type="text/css" href="css/bootstrap.css">
     <link rel="stylesheet" type="text/css" href="css/theme.css">
-    <script type="text/javascript" src="js/jquery-2.0.0.min.js"></script>
     <script type="text/javascript" src="js/preplot.js"></script>
     <script type="text/javascript" src="js/bootstrap.js"></script>
     <style type="text/css">
@@ -31,6 +31,7 @@
             text-align: center;
         }
     </style>
+
 </head>
 <body>
 <div class="navbar-inner">
@@ -49,15 +50,15 @@
                         <table class="table table-striped">
                             <tr>
                                 <td>姓名：</td>
-                                <td><input type="text" id="name"></td>
+                                <td><input type="text" id="name"><span id="sName"></span></td>
                             </tr>
                             <tr>
                                 <td>身份证号：</td>
-                                <td><input type="text" id="ID"></td>
+                                <td><input type="text" id="ID"><span id="sID"></span></td>
                             </tr>
                             <tr>
                                 <td>联系电话：</td>
-                                <td><input type="text" id="tel"></td>
+                                <td><input type="text" id="tel"><span id="sTel"></span></td>
                             </tr>
                             <tr>
                                 <td>房间类型：</td>
@@ -73,7 +74,7 @@
                             </tr>
                             <tr>
                                 <td>房间数量：</td>
-                                <td><input type="text" id="num"></td>
+                                <td><input type="text" id="num"><span id="sNum"></span></td>
                             </tr>
                             <tr>
                                 <td>入住时间：</td>
@@ -84,32 +85,7 @@
                                 <td><input type="date" id="leave"></td>
                             </tr>
                         </table>
-                            <button onclick="javascript:add()">开房</button>
-                        <script>
-                            function  add(type){
-                                $ajax({
-                                    url:"RoomReg.room",
-                                    type:"post",
-                                    data:{
-                                        name:$('#name').val(),
-                                        ID:$('#ID').val(),
-                                        tel:$('#tel').val(),
-                                        type:$('#type').val(),
-                                        num:$('#num').val(),
-                                        enter:$('#enter').val(),
-                                        leave:$('#leave').val()
-                                    },
-                                    success:function (data) {
-                                        var info = data.substring(3,data.length);
-                                        alert(info)
-                                        window.location.href='Room_Reg.jsp';
-                                    },
-                                    error:function (error) {
-                                        alert("信息不完整，请补全信息")
-                                    }
-                                });
-                            }
-                        </script>
+                            <button id="regRoom">开房</button>
                         <%--                        <div style=" width:95%;text-align:right">--%>
                         <%--                            <a href="roomtype/selectRoomType_All.do?page=1">首页</a>--%>
 

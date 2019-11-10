@@ -1,5 +1,6 @@
 package dao;
 
+import entity.Login;
 import entity.StaffInfo;
 
 import java.sql.SQLException;
@@ -40,4 +41,16 @@ public interface StaffDao {
      * @throws SQLException
      */
     boolean checkStaff_id(int staff_id) throws SQLException;
+
+    /**
+     * 添加可登录用户
+     * @param login
+     */
+    void loginAdd(Login login) throws SQLException;
+
+    /**
+     * 更新个人信息
+     * @param staffInfo
+     */
+    void updateStaffInfo(StaffInfo staffInfo) throws SQLException;
 }

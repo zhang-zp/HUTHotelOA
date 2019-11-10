@@ -140,6 +140,7 @@
                         </form>
                         <div class="main">
 
+
                             <table  id="tab" class="table table-striped" border>
                                 <thead>
                                 <tr>
@@ -148,7 +149,7 @@
                                     <th>离店日期</th>
                                     <th>房间号</th>
                                     <th>收入</th>
-
+                                    <th>操作</th>
                                 </tr>
                                 </thead>
 
