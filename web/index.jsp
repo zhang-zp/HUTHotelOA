@@ -3,8 +3,11 @@
 <html>
 <head>
     <title></title>
+    <script>
+        location.href='login.jsp';
+    </script>
 </head>
 <body>
-欢迎来到HUTHotel
+
 </body>
 </html>

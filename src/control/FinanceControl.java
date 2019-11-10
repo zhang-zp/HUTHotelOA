@@ -77,6 +77,33 @@ public class FinanceControl extends HttpServlet {
             } catch (Exception e) {
                 e.printStackTrace();
             }
+        }else if(uri.indexOf("detial1")>=0){
+            String time=req.getParameter("time");
+            try {
+                List<Purchase> detailList=financeImp.detailfun1(time);
+                String json6=JSON.toJSONString(detailList);
+                out.write(json6);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }else if(uri.indexOf("detial2")>=0){
+            String time=req.getParameter("time");
+            try {
+                List<Salary> detailList=financeImp.detailfun2(time);
+                String json6=JSON.toJSONString(detailList);
+                out.write(json6);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }else if(uri.indexOf("detial3")>=0){
+            String time=req.getParameter("time");
+            try {
+                List<RentRoom> detailList=financeImp.detailfun3(time);
+                String json6=JSON.toJSONString(detailList);
+                out.write(json6);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
     }
 }

@@ -66,7 +66,9 @@
                                     success : function() {
                                         fyAlert.msg("验证成功",{icon:1,animateType:1} )
                                         setTimeout(function (){
-                                            window.location.href="main.user?dept_name="+order[0].dept_name+"&staff_name="+order[0].staff_name;
+                                                window.location.href="main.user?dept_name="+order[0].dept_name+"&staff_name="+order[0].staff_name;
+
+
                                         },2000);
 
                                         //......后续操作
@@ -112,11 +114,6 @@
     $(function(){
         Victor("container", "output");   //登录背景函数
         $("#username").focus();
-        $(document).keydown(function(event){
-            if(event.keyCode==13){
-                $("#login").click();
-            }
-        });
     });
 
 </script>

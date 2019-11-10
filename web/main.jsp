@@ -124,7 +124,7 @@
             <a href="statement.jsp" target="source">财务报表</a>
         </li>
         <li>
-            <a href="salary.jsp" target="source">员工薪资</a>
+            <a href="salary.jsp" target="source">员工薪资记录</a>
         </li>
     </ul>
     </div>

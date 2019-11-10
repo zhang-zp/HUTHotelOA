@@ -5,7 +5,7 @@ package entity;
  */
 public class Login {
     private int staff_id;
-    private int pasword;
+    private String pasword;
 
     public int getStaff_id() {
         return staff_id;
@@ -15,11 +15,11 @@ public class Login {
         this.staff_id = staff_id;
     }
 
-    public int getPasword() {
+    public String getPassword() {
         return pasword;
     }
 
-    public void setPasword(int pasword) {
+    public void setPassword(String pasword) {
         this.pasword = pasword;
     }
 }

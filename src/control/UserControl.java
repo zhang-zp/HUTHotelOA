@@ -40,7 +40,6 @@ public class UserControl extends HttpServlet {
 //            String staff=req.getParameter("staff");
             String dept=req.getParameter("dept_name");
             String name=req.getParameter("staff_name");
-            System.out.println(dept);
 //            req.setAttribute("staffInfo",staff);
             req.setAttribute("dept",dept);
             req.setAttribute("name",name);
