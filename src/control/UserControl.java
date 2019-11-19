@@ -28,7 +28,7 @@ public class UserControl extends HttpServlet {
             String password=req.getParameter("password");
             Login login = new Login();
             login.setStaff_id(Integer.parseInt(username));
-            login.setPasword(password);
+            login.setPassword(password);
             req.getSession().setAttribute("loginInfo",login);
             try {
                List<User> userList=userDao.user(Integer.parseInt(username),password);

@@ -112,7 +112,7 @@ public class StaffControl extends HttpServlet {
             System.out.println(staff_id);
             Login login = new Login();
             login.setStaff_id(Integer.parseInt(staff_id));
-            login.setPasword(password);
+            login.setPassword(password);
             try {
                 staffDao.loginAdd(login);
             } catch (SQLException e) {

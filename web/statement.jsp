@@ -15,9 +15,8 @@
     <link rel="stylesheet" type="text/css" href="css/selectFilter.css" />
     <link rel="stylesheet" type="text/css" href="css/MyPaging.css">
     <link rel="stylesheet" type="text/css" href="fy-alert/css/fy-alert.css">
-
+    <link href="css/style2.css" type="text/css" rel="stylesheet" />
     <link rel="stylesheet" type="text/css" href="css/demo.css">
-
     <script src="js/jquery.min.js"></script>
     <script src="js/jquery-2.0.0.min.js" type="text/javascript"></script>
     <script src="js/json2.js"></script>
@@ -76,10 +75,10 @@
                                         var i=0;
                                         setTimeout(function () {
                                             //先清空表格数据
-                                            $("#tbody").empty();
+                                            $("#body").empty();
                                             //循环打印表，i=每页数*（当前页-1）
                                             for( i=_this.size*(_this.current-1);i<_this.size*_this.current;i++){
-                                                if(i<order.length){
+                                                if(i<order1.length){
                                                     $("#body").append("<tr style='text-align: center'>" +
                                                         "<td>"+(order1[i].year==null?(order1[i].year1==null?order1[i].year2:order1[i].year1):order1[i].year)+"</td>"+
                                                         "<td>"+(order1[i].goods_price==null?'':order1[i].goods_price)+"</td>"+
@@ -91,7 +90,7 @@
 
                                             }
                                             // 必须调用，参数是总条数
-                                            _this.setTotal(order.length);
+                                            _this.setTotal(order1.length);
                                         }, 100);
                                     }
                                 });
@@ -147,7 +146,7 @@
                                                         "<td>"+(order[i].salary_price==null?'':order[i].salary_price)+"</td>"+
                                                         "<td>"+(order[i].room_price==null?'':order[i].room_price)+"</td>"+
                                                         "<td>"+((order[i].room_price==null?0:order[i].room_price)-(order[i].goods_price==null?0:order[i].goods_price)-(order[i].salary_price==null?0:order[i].salary_price))+"</td>"+
-                                                        "<td><input type='button' value='详情' id='q"+i+"' ></td>" +
+                                                        "<td><button  id='q"+i+"' >详情</button></td>" +
                                                         "</tr>");
                                                 }
                                                 $("#q"+i).click(function () {
@@ -178,6 +177,7 @@
             })
         });
     </script>
+    <script type="text/javascript" src="js/script1.js"></script>
 </head>
 <body>
 <div class="navbar-inner">
@@ -223,7 +223,7 @@
 
 
 
-                        <script src="js/MyPaging.js"></script>
+
 
 
                     </div>
@@ -239,7 +239,7 @@
 <div class="pd-20">
     <div id="container" style="min-width:700px;height:400px"></div>
 </div>
-
+<script src="js/MyPaging.js"></script>
 <script type="text/javascript" src="lib/layer/1.9.3/layer.js"></script>
 <script type="text/javascript" src="js/H-ui.js"></script>
 <script type="text/javascript" src="js/H-ui.admin.js"></script>
@@ -391,5 +391,6 @@
         })
 
 </script>
+
 </body>
 </html>

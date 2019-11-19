@@ -51,7 +51,7 @@ public class StaffDaoImp implements StaffDao {
     @Override
     public void loginAdd(Login login) throws SQLException {
         String sql = "insert into login(staff_id,pasword)values(?,?)";
-        queryRunner.update(sql,login.getStaff_id(),login.getPasword());
+        queryRunner.update(sql,login.getStaff_id(),login.getPassword());
     }
 
     @Override
