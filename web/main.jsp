@@ -85,15 +85,15 @@
             class="icon-home icon-black"></i>住宿管理</a>
     <ul id="dashboard-menu" class="nav nav-list collapse">
         <li><a href="Room_Reg.jsp" target="source">客房登记</a></li>
-        <li><a href="#" target="source">退宿结算</a></li>
-        <li><a href="RoomPreplot.room" target="source">预定客房</a></li>
-        <li><a href="RoomType.room" target="source">客房更换</a></li>
+        <li><a href="Room_Spend.jsp" target="source">退宿结算</a></li>
+<%--        <li><a href="RoomPreplot.room" target="source">预定客房</a></li>--%>
+        <li><a href="Room_Change.jsp" target="source">客房更换</a></li>
         <li><a href="RoomPrice.room" target="source">房价调整</a></li>
         <li><a href="RoomAll.room" target="source">查看房间</a>
     </ul>
 
-    <a href="#error-menu" class="nav-header collapsed"
-       data-toggle="collapse"><i class="icon-lock"></i>财务管理</a>
+    <a href="#" class="nav-header collapsed"
+       data-toggle="collapse" ><i class="icon-lock" ></i>财务管理</a>
     <ul id="error-menu" class="nav nav-list collapse">
         <li>
             <a href="income.jsp" target="source">收入明细</a>
@@ -109,7 +109,7 @@
         </li>
     </ul>
 
-    <a href="#legal-menu" class="nav-header" data-toggle="collapse"><i
+    <a href="#" class="nav-header" data-toggle="collapse"><i
             class="icon-shopping-cart"></i>仓库管理</a>
     <ul id="legal-menu" class="nav nav-list collapse">
         <li>
@@ -127,7 +127,7 @@
     </ul>
 
     <%--人事管理--张赵鹏--%>
-    <a href="#person_manger" class="nav-header" data-toggle="collapse"><i
+    <a href="#" class="nav-header" data-toggle="collapse"><i
             class="icon-user icon-black"></i>人事管理</a>
     <ul id="person_manger" class="nav nav-list collapse">
         <li>
