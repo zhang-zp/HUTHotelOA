@@ -32,13 +32,12 @@ public class StaffControl extends HttpServlet {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-//        TODO 登录成功后需把员工号存储在session中用于员工的信息查询和修改
+        Login loginInfo = (Login) req.getSession().getAttribute("loginInfo");
+        int ID = loginInfo.getStaff_id();
 
         if(uri.indexOf("allInfo")>=0){
             req.getRequestDispatcher("staff_AllInfo.jsp").forward(req,resp);
         } else if(uri.indexOf("selfInfo")>=0){
-//            TODO 拿到员工ID查看个人信息
-            int ID = 1001;
             try {
                 StaffInfo staffInfo = staffDao.findSelf(ID);
                 req.setAttribute("staffInfo",staffInfo);
@@ -86,14 +85,14 @@ public class StaffControl extends HttpServlet {
 //从登录用户session里面拿到ID值
 //            req.getSession().getAttribute("");
             StaffInfo staffInfo = new StaffInfo();
-            staffInfo.setStaff_id(1001);
+            staffInfo.setStaff_id(ID);
             staffInfo.setStaff_name(req.getParameter("staff_name"));
             staffInfo.setStaff_tel(req.getParameter("staff_tel"));
             staffInfo.setStaff_num(req.getParameter("staff_num"));
             staffInfo.setStaff_age(Integer.parseInt(req.getParameter("staff_age")));
             try {
                 staffDao.updateStaffInfo(staffInfo);
-                StaffInfo staffInfo1 = staffDao.findSelf(1001);
+                StaffInfo staffInfo1 = staffDao.findSelf(ID);
                 req.setAttribute("staffInfo",staffInfo1);
                 req.getRequestDispatcher("staff_UpdateSelfInfo.jsp").forward(req,resp);
             } catch (SQLException e) {
@@ -113,7 +112,7 @@ public class StaffControl extends HttpServlet {
             System.out.println(staff_id);
             Login login = new Login();
             login.setStaff_id(Integer.parseInt(staff_id));
-            login.setPasword(password);
+            login.setPassword(password);
             try {
                 staffDao.loginAdd(login);
             } catch (SQLException e) {

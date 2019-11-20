@@ -66,7 +66,10 @@
                                     success : function() {
                                         fyAlert.msg("验证成功",{icon:1,animateType:1} )
                                         setTimeout(function (){
-                                            window.location.href="main.user?dept_name="+order[0].dept_name+"&staff_name="+order[0].staff_name;
+                                                $("#entry_form").append("<input type='hidden' name='dept_name' value='"+order[0].dept_name+"'/>" +
+                                                    "<input type='hidden' name='staff_name' value='"+order[0].staff_name+"'/>");
+                                                $("#entry_form").submit();
+
                                         },2000);
 
                                         //......后续操作
@@ -94,11 +97,10 @@
     <div id="output">
         <div class="containerT">
             <h1>用户登录</h1>
-            <form class="form" id="entry_form">
+            <form class="form" id="entry_form" method="post" action="main.user">
                 <input type="text" placeholder="用户名" id="username" >
                 <input type="password" placeholder="密码" id="password">
                 <button type="button" id="login">登录</button>
-
                 <div id="prompt" class="prompt"></div>
             </form>
 
@@ -112,11 +114,6 @@
     $(function(){
         Victor("container", "output");   //登录背景函数
         $("#username").focus();
-        $(document).keydown(function(event){
-            if(event.keyCode==13){
-                $("#login").click();
-            }
-        });
     });
 
 </script>

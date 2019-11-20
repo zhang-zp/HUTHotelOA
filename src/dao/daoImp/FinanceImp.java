@@ -66,4 +66,22 @@ public class FinanceImp implements Financedao {
         return queryRunner.query(sql,new BeanListHandler<Statistic>(Statistic.class),selectyear,selectyear,selectyear);
     }
 
+    @Override
+    public List<Purchase> detailfun1(String time) throws Exception {
+        String sql="select * from (select * from purchase )  where goods_time   like ?||'%'";
+        return queryRunner.query(sql,new BeanListHandler<>(Purchase.class),time);
+    }
+
+    @Override
+    public List<Salary> detailfun2(String time) throws Exception {
+        String sql="select * from  (select * from salary)   where salary_time  like ?||'%'";
+        return queryRunner.query(sql,new BeanListHandler<>(Salary.class),time);
+    }
+
+    @Override
+    public List<RentRoom> detailfun3(String time) throws Exception {
+        String sql="select * from (select * from rent_room)  where enter_time  like ?||'%'";
+        return queryRunner.query(sql,new BeanListHandler<>(RentRoom.class),time);
+    }
+
 }

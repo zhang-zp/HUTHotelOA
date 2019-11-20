@@ -363,7 +363,12 @@ $(function () {
 //添加员工提交时条件检查
 function staffAddFormCheck() {
 	if(flag1==true&&flag2==true&&flag3==true&&flag4==true&&flag6==true&&flag7==true){
-		return true;
+		var addStaff = confirm("确认添加操作！");
+		if(addStaff){
+			return true;
+		}else{
+			return false;
+		}
 	}else {
 		if(flag7==false){
 			alert("请输入合适的工号")

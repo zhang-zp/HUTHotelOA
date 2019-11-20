@@ -15,11 +15,11 @@ public class Login {
         this.staff_id = staff_id;
     }
 
-    public String getPasword() {
+    public String getPassword() {
         return pasword;
     }
 
-    public void setPasword(String pasword) {
+    public void setPassword(String pasword) {
         this.pasword = pasword;
     }
 }

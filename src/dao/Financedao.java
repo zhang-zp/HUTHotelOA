@@ -11,4 +11,7 @@ public interface  Financedao {
     List<Statistic> statistic() throws Exception;
     List<StatisticYear> statisticyear() throws Exception;
     List<Statistic> selectyear(String selectyear) throws Exception;
+    List<Purchase> detailfun1(String time) throws Exception;
+    List<Salary> detailfun2(String time) throws Exception;
+    List<RentRoom> detailfun3(String time) throws Exception;
 }
