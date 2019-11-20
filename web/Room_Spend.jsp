@@ -58,9 +58,10 @@
                             <caption></caption>
                             <thead>
                             <tr>
+                                <th>订单编号</th>
                                 <th>顾客名称</th>
                                 <th>手机号码</th>
-<%--                                <th>房间名</th>--%>
+                                <th>房间号</th>
                                 <th>房间类型</th>
                                 <th>入住时间</th>
                                 <th>退宿时间</th>
@@ -71,6 +72,7 @@
                             <tbody id="tb">
                             </tbody>
                         </table>
+                        <button id="leaveRoom">退房</button>
 
 <%--                        <div style="margin-left:72%">--%>
 <%--                            <input class="btn btn-default" type="button" value="上一页"--%>

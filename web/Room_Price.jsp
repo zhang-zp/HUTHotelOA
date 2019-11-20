@@ -97,14 +97,14 @@
                                 <td>${i.room_type}</td>
                                 <td>${i.room_price}</td>
                                 <td><input type="text" class="span2" id="${i.room_type}"></td>
-                                <td><button class="btn btn-info" name="sub" onclick="javascript:update('${i.room_type}')">提交</button></td>
+                                <td><button class="btn btn-info" name="sub" onclick="javascript:update('${i.room_type}')"
+                                 >提交</button></td>
                             </tr>
                             <script type="text/javascript">
                             function  update(type){
                                 //获得对象下的列的数组
                                 var cells = document.getElementsByName(type).cells;
                                 var op = document.getElementById(type).parentElement.previousElementSibling.innerHTML;
-                                console.log(cells)
                                 $.ajax({
                                     async:false,
                                     cache:false,
@@ -115,9 +115,15 @@
                                         price:$('#'+type).val()
                                     },
                                     success:function (data) {
-                                        alert(data.substring(3,data.length));
-                                        document.getElementById(type).parentElement.previousElementSibling.innerHTML = $('#'+type).val();
-                                        $('#'+type).val(" ");
+                                        if(data.indexOf("成功")>=0){
+                                            alert(data);
+                                            document.getElementById(type).parentElement.previousElementSibling.innerHTML = $('#'+type).val();
+                                            $('#'+type).val("");
+                                        }else{
+                                            alert(data);
+                                            $('#'+type).val("");
+                                        }
+
 
                                     },
                                     error:function (error) {

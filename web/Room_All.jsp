@@ -97,36 +97,47 @@
                 <div id="myTabContent" class="tab-content">
 
                     <div class="tab-pane active in" id="home">
-                        <select class="span2" id="hotelName" onchange="selectTwo(this.value)">
-                            <script>
-                                function selectTwo(choice) {
-                                    var s2 = document.getElementById('s2');
-                                    if(choice=='房间类型'){
-                                        s2.innerHTML="";
-                                        var json = {"标间":"标间","单人间":"单人间","双人间":"双人间",
-                                            "情侣间":"情侣间","三人间":"三人间"};
-                                        var i = 0;
-                                        for(var key in json){
-                                            s2.options[i++] = new Option(json[key],key)
-                                        }
-                                    }else if(choice == '楼层'){
-                                        s2.innerHTML="";
-                                        var json = {"1":"1","2":"2","3":"3"};
-                                        var i = 0;
-                                        for(var key in json){
-                                            s2.options[i++] = new Option(json[key],key);
-                                        }
-                                    }else{
-                                        s2.innerHTML="";
-                                        s2.options[0] = new Option("请选择","");
-                                    }
-                                }
-                            </script>
-                            <option selected>请选择</option>
-                            <option>房间类型</option>
-                            <option>楼层</option>
+                        <select class="span2" id="hotelName" >
+<%--                            onchange="selectTwo(this.value)--%>
+<%--                            <script>--%>
+<%--                                function selectTwo(choice) {--%>
+<%--                                    var s2 = document.getElementById('s2');--%>
+<%--                                    if(choice=='房间类型'){--%>
+<%--                                        s2.innerHTML="";--%>
+<%--                                        var json = {"标间":"标间","单人间":"单人间","双人间":"双人间",--%>
+<%--                                            "情侣间":"情侣间","三人间":"三人间"};--%>
+<%--                                        var i = 0;--%>
+<%--                                        for(var key in json){--%>
+<%--                                            s2.options[i++] = new Option(json[key],key)--%>
+<%--                                        }--%>
+<%--                                    }else if(choice == '楼层'){--%>
+<%--                                        s2.innerHTML="";--%>
+<%--                                        var json = {"1":"1","2":"2","3":"3"};--%>
+<%--                                        var i = 0;--%>
+<%--                                        for(var key in json){--%>
+<%--                                            s2.options[i++] = new Option(json[key],key);--%>
+<%--                                        }--%>
+<%--                                    }else{--%>
+<%--                                        s2.innerHTML="";--%>
+<%--                                        s2.options[0] = new Option("请选择","");--%>
+<%--                                    }--%>
+<%--                                }--%>
+<%--                            </script>--%>
+                            <option selected>请选择楼层</option>
+                                <option>1</option>
+                                <option>2</option>
+                                <option>3</option>
+<%--                            <option>房间类型</option>--%>
+<%--                            <option>楼层</option>--%>
                         </select>
-                        <select class="span2" id="s2"></select>
+                        <select class="span2" id="s2">
+                        <option selected>请选择房间类型</option>
+                        <option>单人间</option>
+                        <option>双人间</option>
+                        <option>标间</option>
+                        <option>三人间</option>
+                        <option>情侣间</option>
+                        </select>
                         <input type="button" value="搜索" class="btn btn-info" id="search">
                         <table class="table table-striped">
                             <thead>
