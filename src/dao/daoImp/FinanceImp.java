@@ -84,4 +84,10 @@ public class FinanceImp implements Financedao {
         return queryRunner.query(sql,new BeanListHandler<>(RentRoom.class),time);
     }
 
+    @Override
+    public List<Expend> searchexpend(String search) throws Exception {
+        String sql="select SALARY_TIME,GOODS_TIME,GOODS_PRICE*goods_num as GOODS_PRICE,sum(RENISH_AMOUNT) as renish_amount from (SELECT * from PURCHASE where goods_time=?) full join (SELECT * from SALARY where SALARY_TIME=?) on goods_time=salary_time  GROUP BY SALARY_TIME,GOODS_TIME,GOODS_PRICE,goods_num";
+        return queryRunner.query(sql,new BeanListHandler<Expend>(Expend.class),search,search);
+    }
+
 }

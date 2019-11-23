@@ -14,4 +14,5 @@ public interface  Financedao {
     List<Purchase> detailfun1(String time) throws Exception;
     List<Salary> detailfun2(String time) throws Exception;
     List<RentRoom> detailfun3(String time) throws Exception;
+    List<Expend> searchexpend(String search) throws Exception;
 }

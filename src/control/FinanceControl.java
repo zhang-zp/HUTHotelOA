@@ -104,6 +104,17 @@ public class FinanceControl extends HttpServlet {
             } catch (Exception e) {
                 e.printStackTrace();
             }
+        }else if(uri.indexOf("searchexpend")>=0){
+            String search=req.getParameter("search");
+            try {
+                List<Expend> detailList=financeImp.searchexpend(search);
+                String json7=JSON.toJSONString(detailList);
+                System.out.println(111);
+                System.out.println(json7);
+                out.write(json7);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
     }
 }

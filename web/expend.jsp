@@ -30,8 +30,9 @@
                         alert("没加到数据");
                     }else{
                         // alert("有数据");
-                        var order=JSON.parse(data);
+                        var order1=JSON.parse(data);
                          //分页方法
+
                         $(".box2").MyPaging({
                             size: 5,//每页显示条数
                             total: 0,//初始化总条数
@@ -50,11 +51,11 @@
                                     $("#tbody").empty();
                                             //循环打印表，i=每页数*（当前页-1）
                                             for( i=_this.size*(_this.current-1);i<_this.size*_this.current;i++){
-                                                if(i<order.length){
+                                                if(i<order1.length){
                                                     $("#tbody").append("<tr style='text-align: center'>" +
-                                                        "<td>"+(order[i].goods_time==null?order[i].salary_time:order[i].goods_time)+"</td>"+
-                                                        "<td>"+(order[i].renish_amount==0?'':order[i].renish_amount)+"</td>" +
-                                                        "<td>"+(order[i].goods_price==0?'':order[i].goods_price)+"</td>" +
+                                                        "<td>"+(order1[i].goods_time==null?order1[i].salary_time:order1[i].goods_time)+"</td>"+
+                                                        "<td>"+(order1[i].renish_amount==0?'':order1[i].renish_amount)+"</td>" +
+                                                        "<td>"+(order1[i].goods_price==0?'':order1[i].goods_price)+"</td>" +
 
                                                         "</tr>");
 
@@ -62,7 +63,7 @@
 
                                             }
                                     // 必须调用，参数是总条数
-                                    _this.setTotal(order.length);
+                                    _this.setTotal(order1.length);
                                 }, 100);
                             }
                         });
@@ -70,6 +71,59 @@
 
                 }
             })
+            $("#ser").click(function () {
+                var search=$("#search").val();
+                $.ajax({
+                    'tpye':'post',
+                    'url':'searchexpend.finance',
+                    'data':{'search':search},
+                    'success':function (data,textStatus) {
+                        if(data==null){
+                            alert("没加到数据");
+                        }else{
+                            // alert("有数据");
+                            var order=JSON.parse(data);
+                            //分页方法
+                            $(".box2").empty();
+                            $(".box2").MyPaging({
+                                size: 5,//每页显示条数
+                                total: 0,//初始化总条数
+                                current: 1,//当前显示页
+                                prevHtml: '上一页',
+                                nextHtml: '下一页',
+                                layout: 'total, totalPage, prev, pager, next, jumper',
+                                //必须调用的jump方法
+                                jump: function () {
+                                    //取到size，和current的方式
+                                    var _this = this;
+                                    //i是循环变量
+                                    var i=0;
+                                    setTimeout(function () {
+                                        //先清空表格数据
+                                        $("#tbody").empty();
+                                        //循环打印表，i=每页数*（当前页-1）
+                                        for( i=_this.size*(_this.current-1);i<_this.size*_this.current;i++){
+                                            if(i<order.length){
+                                                $("#tbody").append("<tr style='text-align: center'>" +
+                                                    "<td>"+(order[i].goods_time==null?order[i].salary_time:order[i].goods_time)+"</td>"+
+                                                    "<td>"+(order[i].renish_amount==0?'':order[i].renish_amount)+"</td>" +
+                                                    "<td>"+(order[i].goods_price==0?'':order[i].goods_price)+"</td>" +
+                                                    "</tr>");
+
+                                            }
+
+                                        }
+                                        // 必须调用，参数是总条数
+                                        _this.setTotal(order.length);
+                                    }, 100);
+                                }
+                            });
+                        }
+
+                    }
+                })
+            });
+
         });
 
     </script>
@@ -95,7 +149,7 @@
 
                     <div class="tab-pane active in" id="home">
                         <div class="main">
-
+                                <input type="date" id="search"><button id="ser" style="color: #0e90d2">搜索</button>
                             <table class="table table-striped" id="tab" border="1">
                                 <thead>
                                 <tr>
