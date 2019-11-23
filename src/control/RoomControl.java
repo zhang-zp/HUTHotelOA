@@ -27,8 +27,8 @@ public class RoomControl extends HttpServlet {
     @Override
     protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String uri = req.getRequestURI();
-        if(uri.indexOf("RoomAll")>=0){
             //房间信息
+        if(uri.indexOf("RoomAll")>=0){
             try {
                 List<RoomInfo> list = roomDao.findAll();
                 req.setAttribute("RoomAll",list);
@@ -36,8 +36,9 @@ public class RoomControl extends HttpServlet {
             } catch (SQLException e) {
                 e.printStackTrace();
             }
-        }else if(uri.indexOf("RoomPrice")>=0){
+        }
             //获取房间类型和价格
+        else if(uri.indexOf("RoomPrice")>=0){
             try {
                 List<RoomInfo> list = roomDao.getInfo();
                 req.setAttribute("RoomPrice",list);
@@ -45,49 +46,61 @@ public class RoomControl extends HttpServlet {
             } catch (SQLException e) {
                 e.printStackTrace();
             }
-        }else if(uri.indexOf("update")>=0){
+        }
             //修改房价
+        else if(uri.indexOf("update")>=0){
             try {
                 String type = req.getParameter("type");
                 String price = req.getParameter("price");
-                System.out.println(type+price);
                 double price1 = Double.parseDouble(price);
+                String reg = "/^[+]{0,1}(\\d+)$|^[+]{0,1}(\\d+\\.\\d+)$/";
                 //进行修改
-                roomDao.update(type,price1);
-                //获取修改后的房间类型和价格
-                List<RoomInfo> list = roomDao.getInfo();
-                req.setAttribute("RoomPrice",list);
-                pw = resp.getWriter();
-                pw.write("ms修改成功");
+                if(price1>0){
+                    roomDao.update(type,price1);
+                    //获取修改后的房间类型和价格
+                    List<RoomInfo> list = roomDao.getInfo();
+                    req.setAttribute("RoomPrice",list);
+                    resp.getWriter().write("修改成功");
+                }else{
+                    resp.getWriter().write("价格需为正数");
+                }
+
             } catch (SQLException e) {
                 e.printStackTrace();
             }
         }
-        else if(uri.indexOf("RoomPreplot")>=0){
-
-        }else if(uri.indexOf("RoomReg")>=0){
             //开房登记
+        else if(uri.indexOf("RoomReg")>=0){
             RentRoom rentRoom = new RentRoom();
+            rentRoom.setRent_id(req.getParameter("bookId"));
+            rentRoom.setRoom_price(req.getParameter("price"));
+            rentRoom.setRoom_id(req.getParameter("roomId"));
             rentRoom.setPeople_name(req.getParameter("name"));
             rentRoom.setPeople_id(req.getParameter("ID"));
             rentRoom.setRent_tel(req.getParameter("tel"));
             rentRoom.setRoom_type(req.getParameter("type"));
-            rentRoom.setRent_num(Integer.parseInt(req.getParameter("num")));
+            rentRoom.setRent_num(1);
             rentRoom.setEnter_time(req.getParameter("enter"));
             rentRoom.setLeave_time(req.getParameter("leave"));
             rentRoom.setRent_status("已入住");
-            try {
-                //添加开房信息
-                roomDao.addRoom(rentRoom);
-                pw = resp.getWriter();
-                pw.write("msg开房成功");
-            } catch (SQLException e) {
-//                pw = resp.getWriter();
-//                pw.write("msg信息不完整，请补全信息");
-                e.printStackTrace();
+            System.out.println(rentRoom.getEnter_time()+rentRoom.getLeave_time());
+            if(rentRoom.getEnter_time().indexOf("1")<0||rentRoom.getLeave_time().indexOf("1")<0){
+                resp.getWriter().write("请检查补全信息");
+            }else{
+                try {
+                    //添加开房信息
+                    roomDao.addRoom(rentRoom);
+                    //修改房间状态
+                    roomDao.status(Integer.parseInt(req.getParameter("roomId")));
+                    resp.getWriter().write("开房成功");
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
             }
-        }else if(uri.indexOf("RoomType")>=0){
+
+        }
             //根据房间类型获取空闲房间
+        else if(uri.indexOf("RoomType")>=0){
             try {
                 String roomType = req.getParameter("newType");
                 List<RoomInfo> freeRoom = roomDao.freeRoom(roomType);
@@ -96,16 +109,34 @@ public class RoomControl extends HttpServlet {
             } catch (SQLException e) {
                 e.printStackTrace();
             }
-        }else if(uri.indexOf("ChangeRoom")>=0){
+        }
+            //换房
+        else if(uri.indexOf("ChangeRoom")>=0){
+            String reRoomId = req.getParameter("reRoomId");
+            String newRoomId = req.getParameter("newRoomId");
+            String rentId = req.getParameter("rentId");
+            String changeTime = req.getParameter("changeTime");
             try {
-                roomDao.changeRoom(Integer.parseInt(req.getParameter("roomId")));
-                pw = resp.getWriter();
-                pw.print("msg换房成功");
+                roomDao.changeRoom(Integer.parseInt(req.getParameter("reRoomId")),
+                        Integer.parseInt(req.getParameter("newRoomId")),rentId);
+                resp.getWriter().write("换房成功");
             } catch (SQLException e) {
                 e.printStackTrace();
             }
-        }else if(uri.indexOf("RoomPre")>=0){
+        }
+            //换房时根据手机号查询信息
+        else if(uri.indexOf("look")>=0){
+            String tel = req.getParameter("tel");
+            try {
+                List<RentRoom> list = roomDao.look(tel);
+                System.out.println(JSON.toJSONString(list));
+                resp.getWriter().write(JSON.toJSONString(list));
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
             //房间预订
+        else if(uri.indexOf("RoomPre")>=0){
                 RentRoom preRoom = new RentRoom();
                 preRoom.setPeople_name(req.getParameter("pName"));
                 preRoom.setPeople_id(req.getParameter("pID"));
@@ -123,37 +154,42 @@ public class RoomControl extends HttpServlet {
             } catch (SQLException e) {
                 e.printStackTrace();
             }
-        }else if(uri.indexOf("Search")>=0) {
+        }
             //根据具体信息搜索房间
+        else if(uri.indexOf("Search")>=0) {
             String data1 = req.getParameter("data1");
             String data2 = req.getParameter("data2");
             try {
-                if(data1.equals("房间类型")) {
-                    List<RoomInfo> list = roomDao.searchType(data2);
-//                    System.out.println(JSON.toJSONString(list));
-                    resp.getWriter().write(JSON.toJSONString(list));
-//                    resp.getWriter().write("msg你妈死了");
-
-                }else{
-                    List<RoomInfo> list = roomDao.searchFloor(Integer.parseInt(data2));
-//                    System.out.println(JSON.toJSONString(list));
-                    resp.getWriter().write(JSON.toJSONString(list));
-                }
+                List<RoomInfo> list = roomDao.sel(Integer.parseInt(data1),data2);
+                resp.getWriter().write(JSON.toJSONString(list));
             } catch (SQLException e) {
                 e.printStackTrace();
             }
-        }else if(uri.indexOf("check")>=0){
+//            try {
+//                if(data1.equals("房间类型")) {
+//                    List<RoomInfo> list = roomDao.searchType(data2);
+////                    System.out.println(JSON.toJSONString(list));
+//                    resp.getWriter().write(JSON.toJSONString(list));
+////                    resp.getWriter().write("msg你妈死了");
+//
+//                }else{
+//                    List<RoomInfo> list = roomDao.searchFloor(Integer.parseInt(data2));
+////                    System.out.println(JSON.toJSONString(list));
+//                    resp.getWriter().write(JSON.toJSONString(list));
+//                }
+//            } catch (SQLException e) {
+//                e.printStackTrace();
+//            }
+        }
             //退宿信息查询
+        else if(uri.indexOf("check")>=0){
             String info = req.getParameter("info");
             if(info.indexOf("1")>0){
                 //电话退宿
                 try {
-                    System.out.println(info);
                     List<RentRoom> list = roomDao.checkByTel(info);
                     long days = roomDao.daysBetween(list.get(0).getEnter_time(),list.get(0).getLeave_time());
-                    //此功能有待完善
                     list.get(0).setRent_num((int) days);
-//                    System.out.println(JSON.toJSONString(list));
                     resp.getWriter().write(JSON.toJSONString(list));
                 } catch (SQLException | ParseException e) {
                     e.printStackTrace();
@@ -161,16 +197,38 @@ public class RoomControl extends HttpServlet {
             }else{
                 //名字退宿
                 try {
-                    System.out.println(info);
                     List<RentRoom> list = roomDao.checkByName(info);
                     long days = roomDao.daysBetween(list.get(0).getEnter_time(),list.get(0).getLeave_time());
-                    //此功能有待完善
-                    list.get(0).setRent_num((int) days);
-                    System.out.println(JSON.toJSONString(list));
+                    list.get(0).setRent_num((int) days*Integer.parseInt(list.get(0).getRoom_price()));
                     resp.getWriter().write(JSON.toJSONString(list));
                 } catch (SQLException | ParseException e) {
                     e.printStackTrace();
                 }
+            }
+        }
+            //开房时根据房间类型拿到价格
+        else if(uri.indexOf("regPrice")>=0){
+                String type = req.getParameter("newType");
+            try {
+                List<RoomInfo> list = roomDao.price(type);
+                resp.getWriter().write(JSON.toJSONString(list));
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+            //获取订单编号
+        else if(uri.indexOf("get")>=0){
+            resp.getWriter().write(JSON.toJSONString(roomDao.time()+roomDao.enterDate()));
+        }
+            //点击退宿
+        else if(uri.indexOf("leave")>=0){
+            String roomId = req.getParameter("roomId");
+            String rentId = req.getParameter("rentId");
+            try {
+                roomDao.leaveRoom(rentId,roomId);
+                resp.getWriter().write("退房成功");
+            } catch (SQLException e) {
+                e.printStackTrace();
             }
         }
     }

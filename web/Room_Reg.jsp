@@ -16,6 +16,8 @@
     <link rel="stylesheet" type="text/css" href="css/common.css"/>
     <link rel="stylesheet" type="text/css" href="css/bootstrap.css">
     <link rel="stylesheet" type="text/css" href="css/theme.css">
+    <link rel="stylesheet" type="text/css" href="css/bootstrap-datetimepicker.css">
+    <link rel="stylesheet" type="text/css" href="css/bootstrap-datetimepicker.min.css">
     <script type="text/javascript" src="js/preplot.js"></script>
     <script type="text/javascript" src="js/bootstrap.js"></script>
     <style type="text/css">
@@ -49,40 +51,49 @@
                     <div class="tab-pane active in" id="home">
                         <table class="table table-striped">
                             <tr>
+                                <td>订单编号：</td>
+                                <td id="bookId"></td>
+                            </tr>
+                            <tr>
                                 <td>姓名：</td>
-                                <td><input type="text" id="name"><span id="sName"></span></td>
+                                <td><input type="text" id="name" class="span3"><span id="sName"></span></td>
                             </tr>
                             <tr>
                                 <td>身份证号：</td>
-                                <td><input type="text" id="ID"><span id="sID"></span></td>
+                                <td><input type="text" id="ID" class="span3"><span id="sID"></span></td>
                             </tr>
                             <tr>
                                 <td>联系电话：</td>
-                                <td><input type="text" id="tel"><span id="sTel"></span></td>
+                                <td><input type="text" id="tel" class="span3"><span id="sTel"></span></td>
                             </tr>
                             <tr>
                                 <td>房间类型：</td>
                                 <td>
-                                    <select id="type">
-                                        <option selected>--请选择--</option>
+                                    <select id="regType" class="span3">
+                                        <option selected id="st">--请选择--</option>
                                         <option>单人间</option>
                                         <option>双人间</option>
                                         <option>标间</option>
                                         <option>情侣间</option>
+                                        <option>三人间</option>
                                     </select>
                                 </td>
                             </tr>
                             <tr>
-                                <td>房间数量：</td>
-                                <td><input type="text" id="num"><span id="sNum"></span></td>
+                                <td>价格：</td>
+                                <td><input type="text" id="roomPrice" class="span3"></td>
+                            </tr>
+                            <tr>
+                                <td>房间号：</td>
+                                <td><select id="freeRoom" class="span3"></select></td>
                             </tr>
                             <tr>
                                 <td>入住时间：</td>
-                                <td><input type="date" id="enter"></td>
+                                <td><input type="date"  id="enter" class="span3" ></td>
                             </tr>
                             <tr>
                                 <td>离开时间：</td>
-                                <td><input type="date" id="leave"></td>
+                                <td><input type="date"  id="leave" class="span3"></td>
                             </tr>
                         </table>
                             <button id="regRoom">开房</button>

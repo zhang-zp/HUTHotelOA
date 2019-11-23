@@ -34,27 +34,29 @@
                 </ul>
                 <div id="myTabContent" class="tab-content">
                     <div class="tab-pane  fade active in" id="home">
-                        <form id="tab">
-                            <label>原房间名</label> <input type="text" value="" class="span2">
+
+                            <input type="text"  id="telInfo" class="span2">
+                            <button id="look" class="btn btn-info">查看</button>
+                            <label>订单号</label><input type="text" class="span3" id="rentId">
+                            <label>原房间号</label> <input type="text"  class="span3" id="reRoomId">
                             <label>新房间类型</label>
-                                <select class="span2" id="roomType">
+                                <select class="span3" id="roomType">
                                     <option selected>--请选择--</option>
                                     <option>标间</option>
                                     <option>单人间</option>
                                     <option>双人间</option>
                                     <option>情侣间</option>
                                     <option>三人间</option>
-                                    <option>大床房</option>
                                 </select>
-                            <label>新房间名</label>
-                                <select class="span2" id="freeRoom">
+                            <label>新房间号</label>
+                                <select class="span3" id="freeRoom">
                                     <option>请选择</option>
                                 </select>
-                            <label>换房时间</label> <input type="text" value="" class="span2">
+                            <label>换房时间</label> <input type="date" value="" class="span3" id="changeTime">
                             <div class="btn-toolbar">
                                 <input type="button" value="更换" id="roomChange" class="btn btn-info" />
                             </div>
-                        </form>
+
                     </div>
                 </div>
             </div>
